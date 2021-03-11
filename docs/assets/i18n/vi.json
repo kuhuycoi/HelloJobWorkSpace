@@ -1,0 +1,18 @@
+{
+    "marialStatus": {
+        "notMaried":"Chưa kết hôn",
+        "maried":"Đã kết hôn",
+        "divorced":"Đã ly hôn",
+        "widowed":"Góa",
+        "noChildren":"Chưa có con",
+        "haveChildren":"Đã có con"
+    },
+    "gender": {
+        "male":"Nam",
+        "female":"Nữ"
+    },
+    "province":{
+        "tinh":"Tỉnh",
+        "thanh-pho":"Thành phố"
+    }
+}
