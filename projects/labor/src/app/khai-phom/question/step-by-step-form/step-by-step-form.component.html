@@ -1,0 +1,195 @@
+<ng-container [ngSwitch]="selectedIndex">
+    <ng-container *ngSwitchCase="formControls.length">
+        <div id="smart-form" class="step-confirm">
+            <div class="d-flex flex-column step-wrapper">
+                <div class="question text-justify d-flex align-items-end justify-content-center">
+                    <div class="question-wrapper">
+                        <div class="question-content text-center">Đây là tất cả thông tin của bạn?</div>
+                        <span class="robot"></span>
+                    </div>
+                </div>
+                <div class="answer flex-fill">
+                    <div class="container">
+                        <div class="answer-wrapper">
+                            <div class="text-left" *ngFor="let item of formControls; let i = index">
+                                <p class="mb-1">
+                                    <b style="width: 30%;">{{item.placeholder}} <span
+                                            class="text-danger">{{item.required?'*':''}}</span></b>
+
+                                    <button mat-icon-button type="button" (click)="goToStep($event,i)" class="btn-edit">
+                                        <mat-icon color="warn">edit</mat-icon>
+                                    </button>
+                                </p>
+                                <ng-container [ngSwitch]="item.usingType?.code">
+                                    <ng-container *ngSwitchCase="'QUESTION_TABLE'">
+                                        <app-customer-question-table-header [question]="item.placeholder"
+                                            [readonly]="true" [dataSource]="item.value">
+                                        </app-customer-question-table-header>
+                                    </ng-container>
+                                    <div *ngSwitchDefault>
+                                        <span [ngSwitch]="item.value!=null">
+                                            <ng-container *ngSwitchCase="true">{{item.value}}</ng-container>
+                                            <ng-container *ngSwitchDefault><i>({{'label.noProvide'|translate}})</i>
+                                            </ng-container>
+                                        </span>
+                                    </div>
+                                </ng-container>
+                                <hr />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="action">
+                    <div class="container d-flex align-items-center justify-content-between">
+                        <button mat-raised-button type="button" (click)="goToStep($event,formControls.length-1)">
+                            {{'label.return'|translate}}
+                        </button>
+                        <button mat-raised-button color="warn" (click)="save()">{{'label.complete'|translate}}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+    <ng-container *ngSwitchDefault>
+        <div id="smart-form" *ngIf="selectedControl">
+            <div class="d-flex flex-column step-wrapper">
+                <div class="question text-center d-flex align-items-end justify-content-center">
+                    <div class="question-wrapper">
+                        <div class="question-content">{{selectedControl.placeholder}}</div>
+                        <span class="robot"></span>
+                    </div>
+                </div>
+                <div class="answer flex-fill">
+                    <div class="container">
+                        <ng-container [ngSwitch]="selectedControl.isEditable">
+                            <ng-container *ngSwitchCase="true">
+                                <ng-container [ngSwitch]="selectedControl.usingType?.code">
+                                    <div class="answer-wrapper" *ngSwitchCase="'QUESTION_SELECT'">
+                                        <mat-form-field style="width: 100%" multiple>
+                                            <mat-select [formControl]="selectedControl"
+                                                [required]="selectedControl.required">
+                                                <mat-option *ngFor="let elm of selectedControl.answers" [value]="elm">
+                                                    {{elm}}
+                                                </mat-option>
+                                            </mat-select>
+                                            <mat-hint *ngIf="selectedControl.hint">{{selectedControl.hint}}</mat-hint>
+                                            <mat-error *ngIf="selectedControl.invalid">
+                                                {{getErrorMessage(selectedControl)}}
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="answer-wrapper" *ngSwitchCase="'QUESTION_ONE_ANSWER'">
+                                        <mat-radio-group [formControl]="selectedControl"
+                                            [required]="selectedControl.required" class="d-flex flex-column">
+                                            <mat-radio-button *ngFor="let elm of selectedControl.answers" [value]="elm"
+                                                class="mb-2" color="primary">
+                                                {{elm}}
+                                            </mat-radio-button>
+                                        </mat-radio-group>
+                                        <mat-hint *ngIf="selectedControl.hint">{{selectedControl.hint}}</mat-hint>
+                                        <mat-error *ngIf="selectedControl.invalid">{{getErrorMessage(selectedControl)}}
+                                        </mat-error>
+                                    </div>
+                                    <div class="answer-wrapper" *ngSwitchCase="'QUESTION_CHECK_BOX'">
+                                        <mat-checkbox *ngFor="let elm of selectedControl.answers"
+                                            (change)="checkboxChange(selectedControl,elm,$event.checked)"
+                                            class="mb-2 d-block" [value]="elm" color="primary" [checked]="isChecked(elm,selectedControl.value)">{{elm}}
+                                        </mat-checkbox>
+                                    </div>
+                                    <app-customer-question-table-header *ngSwitchCase="'QUESTION_TABLE'"
+                                        [question]="selectedControl.placeholder" [dataSource]="selectedControl.value"
+                                        (changeAnswer)="changeAnswer($event,selectedControl)">
+                                    </app-customer-question-table-header>
+                                    <div class="answer-wrapper" *ngSwitchCase="'QUESTION_ATTACH'">
+                                        <mat-form-field style="width: 100%">
+                                            <input matInput required [value]="selectedControl.value?.name"
+                                                (click)="hiddenInput.click()" readonly style="cursor: pointer"
+                                                [required]="selectedControl.required"
+                                                [placeholder]="selectedControl.placeholder">
+                                            <mat-hint *ngIf="selectedControl.hint">{{selectedControl.hint}}</mat-hint>
+                                            <mat-error *ngIf="selectedControl.invalid">
+                                                {{getErrorMessage(selectedControl)}}
+                                            </mat-error>
+                                        </mat-form-field>
+                                        <input type="file" #hiddenInput class="d-none" accept="image/*"
+                                            (change)="onFileChange($event,selectedControl)" class="d-none">
+                                    </div>
+                                    <div class="answer-wrapper" *ngSwitchCase="'QUESTION_DATE'">
+                                        <mat-form-field style="width: 100%">
+                                            <input matInput [matDatepicker]="picker" [formControl]="selectedControl"
+                                                [required]="selectedControl.required">
+                                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                            <mat-datepicker #picker></mat-datepicker>
+                                            <mat-hint *ngIf="selectedControl.hint">{{selectedControl.hint}}</mat-hint>
+                                            <mat-error *ngIf="selectedControl.invalid">
+                                                {{getErrorMessage(selectedControl)}}
+                                            </mat-error>
+                                        </mat-form-field>
+                                        <input type="file" #hiddenInput class="d-none"
+                                            (change)="onFileChange($event,selectedControl)" class="d-none">
+                                    </div>
+                                    <div class="answer-wrapper" *ngSwitchCase="'QUESTION'">
+                                        <div class="d-flex flex-column justify-content-start">
+                                            <mat-form-field style="width: 100%">
+                                                <input matInput [formControl]="selectedControl"
+                                                    [matAutocomplete]="matAuto" [required]="selectedControl.required"
+                                                    autocomplete="off" placeholder="Viết gì đó">
+                                                <mat-autocomplete #matAuto="matAutocomplete">
+                                                    <mat-option
+                                                        *ngFor="let suggestion of selectedControl.filteredSuggestions | async"
+                                                        [value]="suggestion.content">
+                                                        {{suggestion.content}}
+                                                    </mat-option>
+                                                </mat-autocomplete>
+                                                <mat-hint *ngIf="selectedControl.hint">{{selectedControl.hint}}
+                                                </mat-hint>
+                                                <mat-error *ngIf="selectedControl.invalid&&selectedControl.required">
+                                                    {{getErrorMessage(selectedControl)}}
+                                                </mat-error>
+                                            </mat-form-field>
+
+                                            <a href="javascript:void(0)" class="btn-mic"
+                                                (click)="record($event,selectedControl)">
+                                                <mat-icon>mic</mat-icon>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                            </ng-container>
+                            <ng-container *ngSwitchDefault>
+                                <mat-form-field style="width: 100%">
+                                    <input matInput [formControl]="selectedControl"
+                                        [required]="selectedControl.required" autocomplete="off"
+                                        placeholder="{{'placeholder.writeSomething'|translate}}" [readonly]="true">
+                                </mat-form-field>
+                            </ng-container>
+                        </ng-container>
+                    </div>
+                </div>
+                <div class="action">
+                    <div class="container d-flex align-items-center justify-content-end">
+                        <button mat-raised-button type="button" *ngIf="selectedIndex" class="mr-auto"
+                            (click)="prevStep()">
+                            <i class="material-icons">
+                                navigate_before
+                            </i>
+                        </button>
+                        <button mat-raised-button color="primary" type="button" (click)="nextStep()"
+                            [disabled]="selectedControl.invalid" class="mr-1">
+                            <i class="material-icons">
+                                navigate_next
+                            </i>
+                        </button>
+                        <button mat-raised-button color="warn" type="button" *ngIf="!form.invalid"
+                            (click)="goLastStep($event)">
+                            <i class="material-icons">
+                                skip_next
+                            </i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <a href="javascript:void(0)" target="_blank" class="d-none" #hiddenLink id="hiddenLink"></a>
+        </div>
+    </ng-container>
+</ng-container>

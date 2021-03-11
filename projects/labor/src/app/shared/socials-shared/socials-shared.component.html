@@ -1,0 +1,22 @@
+<ng-container *ngIf="vertical; else horizontal">
+    <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{url}}" class="btn-facebook dropdown-item"><i
+            class="fab fa-facebook-f"></i> Facebook</a>
+    <a target="_blank" href="https://plus.google.com/share?url={{url}}" class="btn-google dropdown-item"><i
+            class="fab fa-google-plus-g"></i> Google+</a>
+    <a target="_blank" href="https://twitter.com/intent/tweet?url={{url}}" class="btn-twitter dropdown-item"><i
+            class="fab fa-twitter"></i> Twitter</a>
+    <a href="mailto:anyone@mail.com?subject=Tham gia đơn hàng ngay hôm nay&body=Gửi đến bạn đơn hàng tốt nhất trên Hello Job."
+        class="btn-email dropdown-item"><i class="fas fa-envelope"></i> Email</a>
+</ng-container>
+<ng-template #horizontal>
+    <div class="d-flex align-items-center horizontal">
+        <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{url}}" class="btn-facebook"><i
+                class="fab fa-facebook-f"></i></a>
+        <a target="_blank" href="https://plus.google.com/share?url={{url}}" class="btn-google"><i
+                class="fab fa-google-plus-g"></i></a>
+        <a target="_blank" href="https://twitter.com/intent/tweet?url={{url}}" class="btn-twitter"><i
+                class="fab fa-twitter"></i></a>
+        <a href="mailto:anyone@mail.com?subject=Tham gia đơn hàng ngay hôm nay&body=Gửi đến bạn đơn hàng tốt nhất trên Hello Job."
+            class="btn-email"><i class="fas fa-envelope"></i></a>
+    </div>
+</ng-template>

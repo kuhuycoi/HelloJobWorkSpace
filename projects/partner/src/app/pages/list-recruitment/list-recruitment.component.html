@@ -1,0 +1,155 @@
+<div id="filter">
+    <div class="container">
+        <div class="current-filter" (click)="advanceFilter()">
+            <b class="color-blue">
+                {{'label.listApplied'|translate}}
+            </b>
+        </div>
+    </div>
+</div>
+<div class="result">
+    <div class="container">
+        <ng-container [ngSwitch]="pager?.totalResult">
+            <ng-container *ngSwitchCase="0">
+                <span class="text-danger">{{'label.noLaborApplied'|translate}}</span>
+            </ng-container>
+            <ng-container *ngSwitchDefault>
+                {{'label.page'|translate}} <b class="color-blue">{{pager.currentPage}}/{{pager.totalPage}}</b>.
+                {{'label.found'|translate}} <b class="color-blue">{{pager.totalResult}}</b>
+                {{'label.orderApplied'|translate}}
+            </ng-container>
+        </ng-container>
+    </div>
+</div>
+<div class="container mb-3">
+    <mat-chip-list aria-label="Fish selection">
+        <div [matBadge]="countRecruit?.wait" matBadgeOverlap="true">
+            <mat-chip (click)="filterStatus(0);" selected>{{'label.waitingForApprove'|translate}} </mat-chip>
+        </div>
+        <div [matBadge]="countRecruit?.accepted" matBadgeOverlap="true" selected>
+            <mat-chip color="primary" (click)="filterStatus(1);">{{'label.approved'|translate}} </mat-chip>
+        </div>
+        <div [matBadge]="countRecruit?.refuse" matBadgeOverlap="true">
+            <mat-chip color="warn" (click)="filterStatus(2);" selected>{{'label.rejected'|translate}} </mat-chip>
+        </div>
+        <div [matBadge]="countTotalResult" matBadgeOverlap="true">
+            <mat-chip color="primary" (click)="filterStatus(null);" selected>{{'label.all'|translate}} </mat-chip>
+        </div>
+    </mat-chip-list>
+</div>
+<div class="recruitments">
+    <div class="recruitment" *ngFor="let item of items">
+        <div class="recruitment-wrapper">
+            <div class="d-flex">
+                <div class="avatar img-cover">
+                    <ng-container [ngSwitch]="isEmpty(item.customerID?.urlAvatar)">
+                        <ng-container *ngSwitchCase="true">
+                            <img src="/assets/img/noimg.jpg">
+                        </ng-container>
+                        <ng-container *ngSwitchDefault>
+                            <img [src]="localStorage.getItem('ServerUrl')+item.customerID?.urlAvatar">
+                        </ng-container>
+                    </ng-container>
+                </div>
+                <div class="desc flex-fill">
+                    <h3 class="name">{{item.fullname}}</h3>
+                    <div class="info company"><i class="fas fa-file-contract"></i>{{item.website_OrderContractID.name}}
+                    </div>
+                    <div class="info mobile">
+                        <i class="fas fa-phone-square-alt"></i> <a class="text-danger" href="tel:0902045222">0902045222</a>&nbsp; - &nbsp;<a class="text-danger" href="tel:0397633633">0397633633</a>
+                    </div>
+                    <div class="info time">
+                        <i class="far fa-calendar-alt"></i>{{item.createdDate | date:'dd/MM/yyyy'}}
+                    </div>
+                    <div>
+                        <small>
+                            <a routerLink="/cv/{{item.customerID.id}}" class="color-blue" *ngIf="item.customerID"><i
+                                    class="fas fa-external-link-alt"></i>
+                                {{'label.previewHelloJobCV'|translate}} </a>&nbsp;
+                            <a *ngIf="item.urlCV" [href]="localStorage.getItem('ServerUrl')+item.urlCV" target="_blank"
+                                class="color-blue"><i
+                                    class="fas fa-file-download"></i>{{'label.attackCV'|translate}}</a>
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="contract-action">
+            <div class="contract-action-wrapper d-flex align-items-center justify-content-between">
+                <button mat-button color="primary" (click)="detail(item)"
+                    class="d-flex align-items-center justify-content-center flex-fill">
+                    <i class="fas fa-search"></i> {{'label.see'|translate}}
+                </button>
+                <ng-container [ngSwitch]="item.status">
+                    <ng-container *ngSwitchCase="1">
+                        <button mat-button class="text-success flex-fill">
+                            <i class="fas fa-check-square"></i> {{'label.approved'|translate}}
+                        </button>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="2">
+                        <button mat-button class="text-danger flex-fill">
+                            <i class="fas fa-exclamation-circle"></i> {{'label.rejected'|translate}}
+                        </button>
+                    </ng-container>
+                    <ng-container *ngSwitchDefault>
+                        <button mat-button class="text-success" (click)="accept(item)">
+                            <i class="fas fa-check-square"></i> {{'label.approve'|translate}}
+                        </button>
+                        <button mat-button class="text-danger" (click)="deny(item)">
+                            <i class="fas fa-exclamation-circle"></i> {{'label.reject'|translate}}
+                        </button>
+                    </ng-container>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="paginator" *ngIf="pager.totalResult>pager.displayPerPage">
+    <div class="container">
+        <ul>
+            <ng-container *ngIf="pager.currentPage>1">
+                <li>
+                    <a (click)="changePage(1)"><i class="fas fa-angle-double-left"></i></a>
+                </li>
+                <li>
+                    <a (click)="changePage(pager.currentPage-1)"><i class="fas fa-angle-left"></i></a>
+                </li>
+            </ng-container>
+            <li *ngIf="pager.currentPage===2">
+                <a (click)="changePage(1)">1</a>
+            </li>
+            <ng-container *ngIf="pager.currentPage>2">
+                <li>
+                    <a (click)="changePage(pager.currentPage-2)">{{pager.currentPage-2}}</a>
+                </li>
+                <li>
+                    <a (click)="changePage(pager.currentPage-1)">{{pager.currentPage-1}}</a>
+                </li>
+            </ng-container>
+            <li>
+                <a class="active">{{pager.currentPage}}</a>
+            </li>
+            <li *ngIf="pager.currentPage===pager.totalPage-1">
+                <a (click)="changePage(pager.totalPage)">{{pager.totalPage}}</a>
+            </li>
+            <ng-container *ngIf="pager.currentPage<pager.totalPage-1">
+                <li>
+                    <a (click)="changePage(pager.currentPage+1)">{{pager.currentPage+1}}</a>
+                </li>
+                <li>
+                    <a (click)="changePage(pager.currentPage+2)">{{pager.currentPage+2}}</a>
+                </li>
+            </ng-container>
+            <ng-container *ngIf="pager.currentPage<pager.totalPage">
+                <li>
+                    <a (click)="changePage(pager.currentPage+1)"><i class="fas fa-angle-right"></i></a>
+                </li>
+                <li>
+                    <a (click)="changePage(pager.totalPage)"><i class="fas fa-angle-double-right"></i></a>
+                </li>
+            </ng-container>
+        </ul>
+    </div>
+</div>
+
+<app-footer class="d-print-none"></app-footer>

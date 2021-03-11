@@ -1,0 +1,701 @@
+<div class="container">
+    <div class="card">
+        <div class="card-content">
+            <div class="auth-wrapper" [ngStyle]="{'border-radius': '0'}">
+                <div>
+                    <h3 *ngIf="!isEdit">{{'label.postOrderContract'|translate}} Nhật Bản</h3>
+                    <h3 *ngIf="isEdit">{{'label.editOrderContract'|translate}} Nhật Bản</h3>
+                </div>
+                <img [src]="imgResultBeforeCompress" alt=""><br />
+                <img [src]="imgResultAfterCompress" alt=""><br />
+                <form (submit)="onSubmit()" [formGroup]="form" novalidate>
+                    <!-- <div class="avatar mb-3">
+                        <label class="mb-2"> {{'label.avatar'|translate}}</label>
+                        <div class="avatar-content">
+                            <div class="change-bg"
+                                [ngStyle]="{'background-image': f.websiteOrderBackgroundID.value?'url('+localStorage.getItem('ServerUrl')+f.websiteOrderBackgroundID.value.backgroundUrl+')':null}"
+                                [matMenuTriggerFor]="menu"></div>
+                            <ng-container [ngSwitch]="f.websiteOrderBackgroundID.value==null">
+                                <ng-container *ngSwitchCase="true">
+                                    <div class="img-cover preview-cover d-flex align-items-center">
+                                        <img [src]="previewUrl" id="preview" />
+                                        <input type="file" name="attachFile" id="attachFile"
+                                            (change)="onFileChange($event)" />
+                                    </div>
+                                </ng-container>
+                                <ng-container *ngSwitchDefault>
+                                    <div class="edit-content" [ngStyle]="{'background-image': 'url('+localStorage.getItem('ServerUrl')+f.websiteOrderBackgroundID.value.backgroundUrl+')',
+                                        'color': f.websiteOrderBackgroundID.value.color}">
+                                        <div class="placeholder" [ngClass]="{'d-none': f.richTextWithBG.value}">
+                                            <span>Nội
+                                                dung
+                                                đơn
+                                                hàng của bạn</span></div>
+                                        <textarea #editContent formControlName="richTextWithBG" rows="1"
+                                            class="edit-area" id="editContent"></textarea>
+                                    </div>
+                                </ng-container>
+                            </ng-container>
+                        </div>
+                    </div>
+                    <mat-menu #menu="matMenu" class="menu-bgs">
+                        <div class="d-flex">
+                            <div class="menu-item first">
+                                <span (click)="changeOrderBG(null)" class="choice-bg img-cover">
+                                    <img src="/assets/img/x.png" />
+                                </span>
+                            </div>
+                            <div *ngFor="let item of orderBackgrounds" class="menu-item"
+                                [ngClass]="{'active': f.websiteOrderBackgroundID.value?.id===item.id}">
+                                <span (click)="changeOrderBG(item)" class="choice-bg img-cover">
+                                    <img src="{{localStorage.getItem('ServerUrl')}}{{item.backgroundUrl}}" />
+                                </span>
+                            </div>
+                        </div>
+                    </mat-menu> -->
+                    <div class="or">
+                        <span>
+                            <h3 class="text-primary">Thông tin cơ bản</h3>
+                        </span>
+                    </div>
+                    <!-- <app-order-contract-gallery *ngIf="gallery.length" [gallery]="gallery"></app-order-contract-gallery> -->
+                    <!-- <mat-menu #matMenuNotDelete="matMenu">
+                        <button mat-menu-item (click)="changeGalleryItem()">Sử dụng ảnh</button>
+                        <button mat-menu-item>Sử dụng video</button>
+                    </mat-menu> -->
+                    <!-- <br />
+                    <button mat-mini-fab></button> -->
+                    <br />
+                    <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                        <mat-label>{{'label.orderContractName'|translate}}</mat-label>
+                        <input matInput formControlName="name" required maxlength="500">
+                        <mat-error *ngIf="f.name.hasError('required')">
+                            {{'label.enterThisField'|translate}}
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                        <mat-label>{{'label.orderContractCode'|translate}}</mat-label>
+                        <input matInput formControlName="code" required readonly>
+                        <mat-error *ngIf="f.code.hasError('required')">
+                            {{'label.enterThisField'|translate}}
+                        </mat-error>
+                    </mat-form-field>
+                    <!-- <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                        <mat-label>{{'label.phoneNumber'|translate}}</mat-label>
+                        <input matInput formControlName="phonenumber" required>
+                        <mat-error *ngIf="f.phonenumber.hasError('pattern')">
+                            {{'label.wrongPhoneNumberFormat'|translate}}
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                        <mat-label> {{'label.linkZalo'|translate}}</mat-label>
+                        <div class="d-flex">
+                            <span>https://zalo.me/</span>
+                            <input type="tel" formControlName="zaloContact" matInput>
+                        </div>
+                    </mat-form-field> -->
+
+                    <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                        <mat-label>{{'label.syndicationName'|translate}}</mat-label>
+                        <input matInput formControlName="syndicationName" maxlength="200">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                        <mat-label>{{'label.factoryName'|translate}}</mat-label>
+                        <input matInput formControlName="factoryName" maxlength="200">
+                    </mat-form-field>
+                    <!-- <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                        <mat-label>{{'label.companyAddress'|translate}}</mat-label>
+                        <input matInput formControlName="companyAddress">
+                    </mat-form-field> -->
+                    <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                        <mat-label>{{'label.trainingRequired'|translate}}</mat-label>
+                        <mat-select formControlName="trainingRequired">
+                            <mat-option *ngFor="let item of trainingRequiredList" [value]="item.value">
+                                {{'label.'+item.text|translate}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                        <mat-label>{{'label.orderRoadmap'|translate}}</mat-label>
+                        <mat-select formControlName="orderRoadmap">
+                            <mat-option *ngFor="let item of orderRoadmapList" [value]="item.value">
+                                {{'label.'+item.text|translate}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <div class="or">
+                        <span>
+                            <h3 class="text-primary">Chi phí</h3>
+                        </span>
+                    </div>
+                    <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                        <mat-label>Phí thông thường</mat-label>
+                        <input type="number" matInput min="0" formControlName="preDeposit">
+                        <!-- <small matSuffix>USD</small> -->
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                        <mat-label>Phí qua HelloJob</mat-label>
+                        <input type="number" matInput min="0" formControlName="discount"
+                            [readonly]="advancePrice.value">
+                        <!-- <small matSuffix>USD</small> -->
+                    </mat-form-field>
+                    <div class="mb-3">
+                        <mat-checkbox [formControl]="advancePrice" color="primary" class="mb-3">
+                            <b>Chi tiết phí qua hello job</b>
+                        </mat-checkbox>
+                    </div>
+                    <ng-container *ngIf="advancePrice.value">
+                        <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                            <mat-label>Trúng tuyển</mat-label>
+                            <input type="number" matInput min="0" formControlName="moneyBackOrigin">
+                            <!-- <small matSuffix>USD</small> -->
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                            <mat-label>Học phí đào tạo</mat-label>
+                            <input type="number" matInput min="0" formControlName="price">
+                            <!-- <small matSuffix>USD</small> -->
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                            <mat-label>Ra tư cách</mat-label>
+                            <input type="number" matInput min="0" formControlName="moneyAfterFly">
+                            <!-- <small matSuffix>USD</small> -->
+                        </mat-form-field>
+                    </ng-container>
+
+                    <div [ngClass]="{'d-none': !f.isAdvance.value}">
+                        <!-- <app-tree-select-data [property]="f['moduleIDs']" label='label.careerGroup' [data]="websiteModuleData">
+                        </app-tree-select-data> -->
+                        <!-- <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                            <mat-label>{{'label.careerGroup'|translate}}</mat-label>
+                            <mat-select multiple formControlName="moduleIDs">
+                                <mat-option *ngFor="let item of this.websiteModules" [value]="item.id">{{item.name}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field> -->
+                        <div class="or">
+                            <span>
+                                <h3 class="text-primary">Thông tin tuyển dụng</h3>
+                            </span>
+                        </div>
+                        <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                            <mat-label>{{'label.careerGroup'|translate}}</mat-label>
+                            <mat-select formControlName="moduleIDs" multiple>
+                                <ng-container *ngFor="let item of websiteModules">
+                                    <mat-option [value]="item.id"><b>{{item.name}}</b></mat-option>
+                                    <ng-container *ngFor="let child of item.childs">
+                                        <mat-option [value]="child.id" style="padding-left: 36px;">{{child.name}}
+                                        </mat-option>
+                                    </ng-container>
+                                </ng-container>
+                            </mat-select>
+                        </mat-form-field>
+                        <div class="mb-3">
+                            <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                                <mat-label>Diện visa</mat-label>
+                                <mat-select formControlName="visaType">
+                                    <mat-option value="">
+                                        {{'label.postJob.NotMust'|translate}}
+                                    </mat-option>
+                                    <mat-option *ngFor="let item of contractTypeList" [value]="item.value">
+                                        {{'label.postJob.'+item.text|translate}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                            <mat-label>{{'label.careerGroupSelectForVISA'|translate}}</mat-label>
+                            <mat-select formControlName="careerSelectVisa">
+                                <mat-option value="">
+                                    {{'label.postJob.NotMust'|translate}}
+                                </mat-option>
+                                <ng-container *ngFor="let item of websiteModules">
+                                    <mat-option [value]="item.id"><b>{{item.name}}</b></mat-option>
+                                    <ng-container *ngFor="let child of item.childs">
+                                        <mat-option [value]="child.id">
+                                            <div style="padding-left: 20px;">{{child.name}}</div>
+                                        </mat-option>
+                                    </ng-container>
+                                </ng-container>
+                            </mat-select>
+                        </mat-form-field>
+                        <ng-container [ngSwitch]="requireGender.value">
+                            <ng-container *ngSwitchCase="false">
+                                <div class="row">
+                                    <div class="col-md-6 col-12">
+                                        <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                                            <mat-label>{{'label.numberLaborNeed'|translate}}</mat-label>
+                                            <input type="number" [readonly]="requireGender.value" min="0" matInput
+                                                formControlName="contractQuantity">
+                                            <small matSuffix [translate]="'label.person'">người</small>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                                            <mat-label>{{'label.numberLaborNeedJoin'|translate}}</mat-label>
+                                            <input type="number" [readonly]="requireGender.value" min="0" matInput
+                                                formControlName="contractQuantityJoin">
+                                            <small matSuffix [translate]="'label.person'">người</small>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </ng-container>
+                            <ng-container *ngSwitchCase="true">
+                                <b class="mb-2 d-block">{{'label.numberLaborNeed'|translate}}</b>
+                                <div class="row">
+                                    <div class="col-md-6 col-12">
+                                        <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                                            <mat-label [translate]="'label.male'">Nam</mat-label>
+                                            <input type="number" (keyup)="matchGender()" matInput min="0"
+                                                formControlName="contractQuantityMale">
+                                            <small matSuffix [translate]="'label.person'">người</small>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                                            <mat-label [translate]="'label.female'">Nữ</mat-label>
+                                            <input type="number" (keyup)="matchGender()" matInput min="0"
+                                                formControlName="contractQuantityFemale">
+                                            <small matSuffix [translate]="'label.person'">người</small>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <b class="mb-2 d-block">{{'label.numberLaborNeedJoin'|translate}}</b>
+                                <div class="row">
+                                    <div class="col-md-6 col-12">
+                                        <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                                            <mat-label [translate]="'label.male'">Nam</mat-label>
+                                            <input type="number" (keyup)="matchGender()" matInput min="0"
+                                                formControlName="contractQuantityJoinMale">
+                                            <small matSuffix [translate]="'label.person'">người</small>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                                            <mat-label [translate]="'label.female'">Nữ</mat-label>
+                                            <input type="number" (keyup)="matchGender()" matInput min="0"
+                                                formControlName="contractQuantityJoinFemale">
+                                            <small matSuffix [translate]="'label.person'">người</small>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </ng-container>
+                        </ng-container>
+                        <div class="mb-2">
+                            <mat-checkbox [formControl]="requireGender" color="primary" class="mb-2">
+                                <b>{{'label.requiredMaleFemale'|translate}}</b>
+                            </mat-checkbox>
+                        </div>
+                        <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                            <mat-label>{{'label.recruitmentDeadline'|translate}}</mat-label>
+                            <input matInput [matDatepicker]="datePicker" formControlName="contractDate">
+                            <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
+                            <mat-datepicker #datePicker touchUi></mat-datepicker>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                            <mat-label>{{'label.examinationForm'|translate}}</mat-label>
+                            <mat-select formControlName="examinationForm">
+                                <mat-option value="">
+                                    {{'label.postJob.NotMust'|translate}}
+                                </mat-option>
+                                <mat-option *ngFor="let item of examinationFormList" [value]="item.value">
+                                    {{'label.'+item.text|translate}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                            <mat-label>{{'label.workAddress'|translate}}</mat-label>
+                            <mat-select formControlName="jobProvinceID">
+                                <mat-option value="">
+                                    {{'label.postJob.NotMust'|translate}}
+                                </mat-option>
+                                <mat-option *ngFor="let item of jobProvinces" [value]="item">
+                                    {{item.name}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                            <mat-label>{{'label.workInfo'|translate}}</mat-label>
+                            <textarea matInput formControlName="workInfo" rows="4" maxlength="500"></textarea>
+                        </mat-form-field>
+                        <!-- <div class="mb-3">
+                            <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                                <mat-label>{{'label.province'|translate}}</mat-label>
+                                <mat-select formControlName="jobProvinceID">
+                                    <mat-option value="">
+                                        {{'label.postJob.NotMust'|translate}}
+                                    </mat-option>
+                                    <mat-option *ngFor="let item of jobProvinces" [value]="item">
+                                        {{item.name}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div> -->
+                        <b class="mb-2 d-block">Hình ảnh công việc ({{galleryPreview.length}}/15)</b>
+                        <div class="order-gallery mb-3" id="gallery">
+                            <div class="wrapper">
+                                <owl-carousel-o [options]="customOptions" #owl (initialized)="owl.to(galleryPreview.length.toString())">
+                                    <ng-container *ngFor="let item of galleryPreview; let i = index">
+                                        <ng-template carouselSlide [id]="i" [width]="200">
+                                            <div class="item" (click)="selectedGalleryIndex=i"
+                                                [matMenuTriggerFor]="appMenu">
+                                                <div class="item-wrapper">
+                                                    <div *ngIf="item.fileType==='img';" class="img">
+                                                        <img [src]="item.url" />
+                                                    </div>
+                                                    <div *ngIf="item.fileType==='video'" class="img video">
+                                                        <i class="fas fa-play"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </ng-template>
+                                    </ng-container>
+                                    <ng-container *ngIf="galleryPreview.length<15">
+                                        <ng-template carouselSlide [id]="galleryPreview.length" [width]="200">
+                                            <div class="item item-add">
+                                                <div class="item-wrapper"
+                                                    (click)="selectedGalleryIndex=galleryPreview.length;changeGalleryItem()">
+                                                    <div class="img">
+                                                        <mat-icon>add_circle_outline</mat-icon>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </ng-template>
+                                    </ng-container>
+                                </owl-carousel-o>
+                            </div>
+                        </div>
+                        <p class="mt-1 text-danger">
+                            <small><i>{{'label.postJob.note'|translate}} {{invalidExtStr}}</i></small>
+                        </p>
+                        <mat-menu #appMenu="matMenu">
+                            <button mat-menu-item (click)="changeGalleryItem()"
+                                [translate]="'label.postJob.change'">Thay
+                                đổi</button>
+                            <!-- <button mat-menu-item>Sử dụng video</button> -->
+                            <button mat-menu-item (click)="deleteGalleryItem()"
+                                [translate]="'label.deleteReferal'">Xóa</button>
+                        </mat-menu>
+                        <input type="file" name="attachGalleryFile" id="attachGalleryFile"
+                            (change)="onChangeImage($event)" />
+                        <div class="or">
+                            <span>
+                                <h3 [translate]="'label.jobRequirement'" class="text-primary">Yêu cầu công việc</h3>
+                            </span>
+                        </div>
+                        <b class="mb-2 d-block" [translate]="'label.ageRange'">Độ tuổi</b>
+                        <div class="row">
+                            <div class="col-md-6 col-12">
+                                <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                                    <mat-label>{{'label.from'|translate}}</mat-label>
+                                    <input type="number" matInput min="0" formControlName="ageFrom">
+                                    <small matSuffix [translate]="'label.age'">tuổi</small>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                                    <mat-label>{{'label.to'|translate}}</mat-label>
+                                    <input type="number" matInput min="0" formControlName="ageTo">
+                                    <small matSuffix [translate]="'label.age'">tuổi</small>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                                <mat-label>{{'label.educationLevel'|translate}}</mat-label>
+                                <mat-select formControlName="academicLevel">
+                                    <mat-option value="">
+                                        {{'label.postJob.NotMust'|translate}}
+                                    </mat-option>
+                                    <mat-option *ngFor="let item of educationLevelList" [value]="item.value">
+                                        {{'label.'+item.text|translate}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="mb-3">
+                            <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                                <mat-label>{{'label.experience'|translate}}</mat-label>
+                                <input type="text" matInput formControlName="experience">
+                            </mat-form-field>
+                        </div>
+                        <b class="mb-2 d-block" [translate]="'label.height'">Chiều cao</b>
+                        <div class="row">
+                            <div class="col-md-6 col-12">
+                                <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                                    <mat-label>{{'label.from'|translate}}</mat-label>
+                                    <input type="number" matInput min="0" formControlName="heightFrom">
+                                    <small matSuffix>cm</small>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                                    <mat-label>{{'label.to'|translate}}</mat-label>
+                                    <input type="number" matInput min="0" formControlName="heightTo">
+                                    <small matSuffix>cm</small>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <b class="mb-2 d-block" [translate]="'label.weight'">Cân nặng</b>
+                        <div class="row">
+                            <div class="col-md-6 col-12">
+                                <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                                    <mat-label>{{'label.from'|translate}}</mat-label>
+                                    <input type="number" matInput min="0" formControlName="weightFrom">
+                                    <small matSuffix>kg</small>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                                    <mat-label>{{'label.to'|translate}}</mat-label>
+                                    <input type="number" matInput min="0" formControlName="weightTo">
+                                    <small matSuffix>kg</small>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="row ">
+                                <div class="col-md-6 col-12">
+                                    <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                                        <mat-label>{{'label.eyeSight'|translate}}</mat-label>
+                                        <input type="number" matInput min="0" formControlName="eyeSight">
+                                        <small matSuffix>/10</small>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6 col-12">
+                                    <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                                        <mat-label>{{'label.fancyHandsStatus'|translate}}</mat-label>
+                                        <mat-select formControlName="fancyHands">
+                                            <mat-option value="">
+                                                {{'label.postJob.NotMust'|translate}}
+                                            </mat-option>
+                                            <mat-option *ngFor="let item of fancyHandsList" [value]="item.value">
+                                                {{'label.'+item.text|translate}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <mat-checkbox formControlName="notSmoking" color="primary" class="mb-3 mr-3">
+                                <b>{{'label.notSmoking' |translate}}</b>
+                            </mat-checkbox>
+                            <mat-checkbox formControlName="notDrinking" color="primary" class="mb-3">
+                                <b>{{'label.notDrinking' |translate}}</b>
+                            </mat-checkbox>
+                        </div>
+                        <div class="mb-3">
+                            <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                                <mat-label>{{'label.marriedStatus'|translate}}</mat-label>
+                                <mat-select formControlName="maritalStatus">
+                                    <mat-option value="">
+                                        {{'label.postJob.NotMust'|translate}}
+                                    </mat-option>
+                                    <mat-option *ngFor="let item of maritalStatusList" [value]="item.value">
+                                        {{'label.'+item.text|translate}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                            <mat-label>Yêu cầu đặc biệt khác</mat-label>
+                            <textarea matInput rows="4" formControlName="representative" maxlength="500"></textarea>
+                        </mat-form-field>
+                        <!-- <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                            <mat-label>{{'label.character'|translate}}</mat-label>
+                            <mat-select multiple formControlName="character">
+                                <mat-option *ngFor="let item of this.characterList" [value]="item.value">
+                                    {{'label.'+item.text|translate}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field> -->
+                        <!-- <div class="mb-3">
+                            <mat-checkbox formControlName="visitFamilyLabour" color="primary" class="mb-3 mr-2">
+                                {{'label.visitFamilyLabour' |translate}}
+                            </mat-checkbox>
+                        </div> -->
+                        <div class="or">
+                            <span>
+                                <h3 class="text-primary">Chế độ phúc lợi</h3>
+                            </span>
+                        </div>
+                        <b class="mb-2 d-block">{{'label.salaryDescription'|translate}}</b>
+                        <div class="row">
+                            <div class="col-md-6 col-12">
+                                <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                                    <mat-label>{{'label.from'|translate}}</mat-label>
+                                    <input type="number" matInput min="0" formControlName="contractSalaryFrom">
+                                    <small matSuffix>{{'label.yen'|translate}}</small>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                                    <mat-label>{{'label.to'|translate}}</mat-label>
+                                    <input type="number" matInput min="0" formControlName="contractSalaryTo">
+                                    <small matSuffix>{{'label.yen'|translate}}</small>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                            <mat-label>{{'label.trainingAllowance'|translate}}</mat-label>
+                            <input type="number" matInput min="0" formControlName="trainingAllowance">
+                            <small matSuffix [translate]="'label.yen'">yên</small>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                            <mat-label>{{'label.workTime'|translate}}</mat-label>
+                            <input type="number" matInput min="0" formControlName="workTime">
+                            <small matSuffix><span [translate]="'label.hour'"></span>/<span
+                                    [translate]="'label.day'"></span></small>
+                        </mat-form-field>
+                        <!-- <div class="mb-3">
+                            <div class="row ">
+                            <div class="col-md-6 col-12">
+                                    <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                                        <mat-label>{{'label.monthlySalary'|translate}}</mat-label>
+                                        <input type="number" matInput min="0" formControlName="monthlySalary">
+                                        <small matSuffix [translate]="'label.yen'">yên</small>
+                                    </mat-form-field>
+                                </div>
+                            <div class="col-md-6 col-12">
+                                    <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                                        <mat-label>{{'label.hourlyWage'|translate}}</mat-label>
+                                        <input type="number" matInput min="0" formControlName="hourlyWage">
+                                        <small matSuffix [translate]="'label.yen'">yên</small>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div> -->
+                        <div class="mb-3">
+                            <div class="row ">
+                                <div class="col-md-6 col-12">
+                                    <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                                        <mat-label>{{'label.socialInsurance'|translate}}</mat-label>
+                                        <input type="number" matInput min="0" formControlName="socialInsurance">
+                                        <small matSuffix [translate]="'label.yen'">yên</small>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6 col-12">
+                                    <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                                        <mat-label>{{'label.taxesAndInsurance'|translate}}</mat-label>
+                                        <input type="number" matInput min="0" formControlName="taxesAndInsurance">
+                                        <small matSuffix [translate]="'label.yen'">yên</small>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="row ">
+                                <div class="col-md-6 col-12">
+                                    <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                                        <mat-label>{{'label.dormitoryExpenses'|translate}}</mat-label>
+                                        <input type="number" matInput min="0" formControlName="dormitoryExpenses">
+                                        <small matSuffix [translate]="'label.yen'">yên</small>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6 col-12">
+                                    <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                                        <mat-label>{{'label.utilityCosts'|translate}}</mat-label>
+                                        <input type="number" matInput min="0" formControlName="utilityCosts">
+                                        <small matSuffix [translate]="'label.yen'">yên</small>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="mb-3">
+                            <div class="row ">
+                            <div class="col-md-6 col-12">
+                                    <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                                        <mat-label>{{'label.workingHoursYear'|translate}}</mat-label>
+                                        <input type="number" matInput min="0" formControlName="workingHoursYear">
+                                        <small matSuffix [translate]="'label.hour'">giờ</small>
+                                    </mat-form-field>
+                                </div>
+                            <div class="col-md-6 col-12">
+                                    <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                                        <mat-label>{{'label.holidaysOfYear'|translate}}</mat-label>
+                                        <input type="number" matInput min="0" formControlName="holidaysOfYear">
+                                        <small matSuffix [translate]="'label.day'">ngày</small>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div> -->
+                        <!-- <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                            <mat-label>{{'label.realSalary'|translate}}</mat-label>
+                            <input type="number" matInput min="0" formControlName="realSalary">
+                            <small matSuffix [translate]="'label.yen'">yên</small>
+                        </mat-form-field> -->
+                        <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                            <mat-label>{{'label.otherInfo'|translate}}</mat-label>
+                            <textarea matInput formControlName="otherInfo" rows="4" maxlength="500"></textarea>
+                        </mat-form-field>
+                        <div class="or">
+                            <span>
+                                <h3 class="text-primary">Lịch trình dự kiến</h3>
+                            </span>
+                        </div>
+                        <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                            <mat-label>Nhận form</mat-label>
+                            <input matInput [matDatepicker]="startFormPicker" formControlName="startFormDate">
+                            <mat-datepicker-toggle matSuffix [for]="startFormPicker"></mat-datepicker-toggle>
+                            <mat-datepicker #startFormPicker touchUi></mat-datepicker>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                            <mat-label>Chốt form</mat-label>
+                            <input matInput [matDatepicker]="endFormPicker" formControlName="endFormDate">
+                            <mat-datepicker-toggle matSuffix [for]="endFormPicker"></mat-datepicker-toggle>
+                            <mat-datepicker #endFormPicker touchUi></mat-datepicker>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                            <mat-label>{{'label.exampDate'|translate}}</mat-label>
+                            <input matInput [matDatepicker]="examDatePicker" formControlName="examDate">
+                            <mat-datepicker-toggle matSuffix [for]="examDatePicker"></mat-datepicker-toggle>
+                            <mat-datepicker #examDatePicker touchUi></mat-datepicker>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                            <mat-label>{{'label.expectedDepartureDate'|translate}}</mat-label>
+                            <input matInput [matDatepicker]="expectedDepartureDate"
+                                formControlName="expectedDepartureDate">
+                            <mat-datepicker-toggle matSuffix [for]="expectedDepartureDate"></mat-datepicker-toggle>
+                            <mat-datepicker #expectedDepartureDate touchUi></mat-datepicker>
+                        </mat-form-field>
+                        <!-- <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                            <mat-label>{{'label.recruitmentLink'|translate}}</mat-label>
+                            <input matInput formControlName="urlApply">
+                        </mat-form-field>
+                        <div class="mb-3">
+                            <mat-checkbox formControlName="isTraditional" color="primary" class="mb-3">
+                                {{'label.isTranditional.post'|translate}}
+                            </mat-checkbox>
+                        </div> -->
+                    </div>
+                    <button type="submit" class="mt-3">{{'label.save'|translate}}</button>
+                </form>
+                <!-- <ng-container [ngSwitch]="isQuick">
+                    <ng-container *ngSwitchCase="true">
+                        <app-quick-post [websiteModules]="websiteModules" [isEdit]="isEdit"></app-quick-post>
+                    </ng-container>
+                    <ng-container *ngSwitchDefault>
+                        <app-advance-post [websiteModules]="websiteModules" [isEdit]="isEdit"></app-advance-post>
+                    </ng-container>
+                </ng-container> -->
+            </div>
+            <div class="rules">
+                <div class="container">
+                    {{'label.postOrderContractPolicy'|translate}}
+                    <a href="#" class="color-blue">{{'label.termAndService'|translate}}</a>
+                    {{'label.accept'|translate}}
+                    <a href="#" class="color-blue">{{'label.cookiePolicy'|translate}}</a>
+                    {{'label.also'|translate}}
+                    <a href="#" class="color-blue">{{'label.securePolicy'|translate}}</a>
+                    {{'label.ofHelloJob'|translate}}<br />
+                    {{'label.captchaProtect'|translate}}
+                    <a href="#" class="color-blue">{{'label.privatePolicy'|translate}}</a>
+                    {{'label.and'|translate}}
+                    <a href="#" class="color-blue">{{'label.serviceRule'|translate}}</a>
+                    {{'label.ofGoogleApply'|translate}}
+                </div>
+            </div>
+            <app-footer class="d-print-none"></app-footer>
+        </div>
+    </div>
+</div>

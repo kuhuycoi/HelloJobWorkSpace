@@ -1,0 +1,210 @@
+<!-- <div id="filter">
+    <div class="container">
+        <div class="current-filter">
+            <ng-container [ngSwitch]="!pager.place">
+                <ng-container *ngSwitchCase="true">
+                    {{'label.looking4Wokrer'|translate}}
+                </ng-container>
+                <ng-container *ngSwitchDefault>
+                    {{'label.looking4Wokrer'|translate}}
+                    <ng-container *ngIf="pager.place">
+                        {{'label.at'|translate}} <b class="color-blue">{{pager.place}}</b>
+                    </ng-container>
+                </ng-container>
+            </ng-container>
+        </div>
+    </div>
+</div> -->
+<div class="container mb-3">
+    <div class="card text-center">
+        <div class="card-content">
+            <div class="card-body py-1">
+                <div class="flex-fill text-center">
+                    <div class="d-flex justify-content-center align-items-end">
+                        <i class="bx bx-link text-success mr-1" style="font-size: 3.7rem"></i>
+                        <h2 class="mb-50">Đường dẫn giới thiệu</h2>
+                    </div>
+                    <div class="form-group position-relative has-icon-right">
+                        <input type="text" class="form-control round text-center" readonly="" id="invite-link"
+                            [value]="refUrl">
+                        <div class="form-control-position">
+                            <i class="fas fa-copy text-success btn-coppy-invite" (click)="copyRefLink()"></i>
+                        </div>
+                    </div>
+                    <!--                                        <button type="button" class="btn btn-success round btn-sync-balance text-uppercase btn-coppy-invite">
+                                                                <i class="bx bx-copy"></i>
+                                                                <span class="align-middle ml-25">Coppy</span>
+                                                            </button>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<app-page-action></app-page-action>
+<div class="result">
+    <div class="container">
+        <ng-container [ngSwitch]="pager?.totalResult">
+            <ng-container *ngSwitchCase="0">
+                <span class="text-danger">{{'label.noLaborFound'|translate}}</span>
+            </ng-container>
+            <ng-container *ngSwitchDefault>
+                {{'label.page'|translate}} <b class="color-blue">{{pager.currentPage}}/{{pager.totalPage}}</b>.
+                {{'label.found'|translate}}<b class="color-blue">{{pager.totalResult}}</b> {{'label.labor'|translate}}
+            </ng-container>
+        </ng-container>
+    </div>
+</div>
+<div class="container">
+    <div class="recruitments">
+        <ng-container *ngFor="let item of items">
+            <div class="recruitment">
+                <div class="company-info d-flex align-items-center">
+                    <div>
+                        <div class="img-cover">
+                            <img src="/assets/img/noimg.jpg" />
+                        </div>
+                    </div>
+                    <div class="flex-fill desc">
+                        <div class="company">
+                            <ng-container *ngIf="item?.fullName;else notProvide">{{item?.fullName}}</ng-container>
+                        </div>
+                        <div class="time">
+                            {{item?.createdDate|date:'d \''+('label.month'|translate)+'\' M
+                            \''+('label.time'|translate)+'\' HH:mm'}}
+                        </div>
+                    </div>
+                    <!-- <div class="top-action">
+                        <button mat-icon-button [matMenuTriggerFor]="menu">
+                            <mat-icon>more_horiz</mat-icon>
+                        </button>
+                        <mat-menu #menu="matMenu" class="top-action-menu">
+                            <a href="javascript:void(0)" mat-menu-item>
+                                <i class="fas fa-eye"></i>{{'label.viewCV'|translate}}
+                            </a>
+                            <a href="javascript:void(0)" mat-menu-item>
+                                <i class="fas fa-edit"></i>{{'label.editReferal'|translate}}
+                            </a>
+                            <mat-divider></mat-divider>
+                            <a href="javascript:void(0)" mat-menu-item>
+                                <i class="fas fa-user-plus"></i> {{'label.share'|translate}}
+                            </a>
+                            <mat-divider></mat-divider>
+                            <a href="javascript:void(0)" mat-menu-item>
+                                <i class="fas fa-trash-alt"></i> {{'label.deleteReferal'|translate}}
+                            </a>
+                        </mat-menu>
+                    </div> -->
+                </div>
+                <div class="recruitment-wrapper" #recruitmentWrapper>
+                    <table>
+                        <tr>
+                            <td>
+                                <app-icon-phone-animate class="text-danger"></app-icon-phone-animate>
+                            </td>
+                            <td>{{'label.contact'|translate}}:</td>
+                            <td>
+                                <a href="tel:{{item?.phoneNumber}}"
+                                    class="text-primary"><strong>{{item?.phoneNumber}}</strong></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><i class="far fa-address-card"></i></td>
+                            <td>{{'label.fullname'|translate}}:</td>
+                            <td>
+                                <ng-container *ngIf="item?.fullName;else notProvide">
+                                    <b class="text-uppercase">{{item.fullName}}</b>
+                                </ng-container>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><i class="fas fa-birthday-cake"></i></td>
+                            <td>{{'label.wish'|translate}}:</td>
+                            <td>
+                                <span *ngIf="item?.wishlist;else notProvide" class="text-primary">
+                                    {{item.wishlist}}
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><i class="fas fa-check"></i></td>
+                            <td>{{'label.status'|translate}}:</td>
+                            <td>
+                                <ng-container [ngSwitch]="item?.isCheck">
+                                    <ng-container *ngSwitchCase="true">
+                                        <b class="text-success">{{'label.contacted'|translate}}</b>
+                                    </ng-container>
+                                    <ng-container *ngSwitchDefault>
+                                        <b class="text-warning">{{'label.notContacted'|translate}}</b>
+                                    </ng-container>
+                                </ng-container>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="contract-action">
+                    <div class="contract-action-wrapper d-flex align-items-center justify-content-between">
+                        <button color="primary" mat-button class="flex-fill" disabled="{{item?.isCheck?true:false}}" (click)="checkAffiliate(item)">
+                            <i class="fas fa-check"></i> {{'label.contacted'|translate}}
+                        </button>
+                        <button color="warn" mat-button class="flex-fill" disabled="{{item?.isCheck?true:false}}" (click)="deleteAffiliate(item)">
+                            <i class="fas fa-trash-alt"></i> {{'label.deleteReferal'|translate}}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+    <ng-template #notProvide>
+        <i class="text-danger">({{'label.notProvided'|translate}})</i>
+    </ng-template>
+</div>
+<div class="paginator" *ngIf="pager.totalResult>pager.displayPerPage">
+    <div class="container">
+        <ul>
+            <ng-container *ngIf="pager.currentPage>1">
+                <li>
+                    <a (click)="changePage(1)"><i class="fas fa-angle-double-left"></i></a>
+                </li>
+                <li>
+                    <a (click)="changePage(pager.currentPage-1)"><i class="fas fa-angle-left"></i></a>
+                </li>
+            </ng-container>
+            <li *ngIf="pager.currentPage===2">
+                <a (click)="changePage(1)">1</a>
+            </li>
+            <ng-container *ngIf="pager.currentPage>2">
+                <li>
+                    <a (click)="changePage(pager.currentPage-2)">{{pager.currentPage-2}}</a>
+                </li>
+                <li>
+                    <a (click)="changePage(pager.currentPage-1)">{{pager.currentPage-1}}</a>
+                </li>
+            </ng-container>
+            <li>
+                <a class="active">{{pager.currentPage}}</a>
+            </li>
+            <li *ngIf="pager.currentPage===pager.totalPage-1">
+                <a (click)="changePage(pager.totalPage)">{{pager.totalPage}}</a>
+            </li>
+            <ng-container *ngIf="pager.currentPage<pager.totalPage-1">
+                <li>
+                    <a (click)="changePage(pager.currentPage+1)">{{pager.currentPage+1}}</a>
+                </li>
+                <li>
+                    <a (click)="changePage(pager.currentPage+2)">{{pager.currentPage+2}}</a>
+                </li>
+            </ng-container>
+            <ng-container *ngIf="pager.currentPage<pager.totalPage">
+                <li>
+                    <a (click)="changePage(pager.currentPage+1)"><i class="fas fa-angle-right"></i></a>
+                </li>
+                <li>
+                    <a (click)="changePage(pager.totalPage)"><i class="fas fa-angle-double-right"></i></a>
+                </li>
+            </ng-container>
+        </ul>
+    </div>
+</div>
+<br />
+
+<app-footer class="d-print-none"></app-footer>

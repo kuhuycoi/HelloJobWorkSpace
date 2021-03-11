@@ -1,0 +1,221 @@
+<app-hot-order></app-hot-order>
+<div id="filter">
+    <div class="container">
+        <div class="current-filter" (click)="advanceFilter()">
+            <ng-container [ngSwitch]="!pager.place">
+                <ng-container *ngSwitchCase="true">
+                    {{'label.looking4Wokrer'|translate}}
+                </ng-container>
+                <ng-container *ngSwitchDefault>
+                    {{'label.looking4Wokrer'|translate}}
+                    <ng-container *ngIf="pager.place">
+                        {{'label.at'|translate}} <b class="color-blue">{{pager.place}}</b>
+                    </ng-container>
+                </ng-container>
+            </ng-container>
+        </div>
+    </div>
+</div>
+<div class="result">
+    <div class="container">
+        <ng-container [ngSwitch]="pager?.totalResult">
+            <ng-container *ngSwitchCase="0">
+                <span class="text-danger">{{'label.noLaborFound'|translate}}</span>
+            </ng-container>
+            <ng-container *ngSwitchDefault>
+                {{'label.page'|translate}} <b class="color-blue">{{pager.currentPage}}/{{pager.totalPage}}</b>.
+                {{'label.found'|translate}} <b class="color-blue">{{pager.totalResult}}</b> {{'label.labor'|translate}}
+            </ng-container>
+        </ng-container>
+    </div>
+</div>
+<div class="container">
+    <div class="recruitments">
+        <ng-container *ngFor="let item of items">
+            <div class="recruitment" *ngIf="item.customerWishID?.customerID">
+                <div class="company-info d-flex align-items-center">
+                    <div>
+                        <div [ngSwitch]="isEmpty(item.customerWishID.customerID.urlAvatar)" class="img-cover"
+                            [routerLink]="['/cv',item.customerWishID.customerID?.id]">
+                            <img *ngSwitchCase="true" src="/assets/img/noimg.jpg" />
+                            <img *ngSwitchDefault
+                                [src]="localStorage.getItem('ServerUrl')+item.customerWishID.customerID.urlAvatar" />
+                        </div>
+                    </div>
+                    <div class="flex-fill desc">
+                        <div class="company" [routerLink]="['/cv',item.customerWishID.customerID?.id]">
+                            {{item.customerWishID.customerID.fullName}}</div>
+                        <div class="time">
+                            {{item.customerWishID.createdDate|date:'d \'tháng\' M \'lúc\' HH:mm'}}</div>
+                    </div>
+                    <div>
+                        <mat-icon class="color-blue" (click)="save(item.customerWishID.id)">bookmark
+                        </mat-icon>
+                    </div>
+                </div>
+                <div class="recruitment-wrapper" #recruitmentWrapper>
+                    <table>
+                        <tr>
+                            <ng-container *ngIf="item.customerWishID.partnerCompanyID;else noReferral">
+                                <td><i class="fas fa-user-shield"></i></td>
+                                <td>{{'label.origin'|translate}}:</td>
+                                <td>
+                                    <span
+                                        [routerLink]="['/danh-gia-nha-moi-gioi', item.customerWishID.partnerCompanyID.id]"
+                                        [ngClass]="{'color-blue': item.customerWishID.partnerCompanyID.isVerify}">{{item.customerWishID.partnerCompanyID.name}}</span>
+                                    <app-hj-verified class="color-blue"
+                                        *ngIf="item.customerWishID.partnerCompanyID.isVerify">
+                                    </app-hj-verified>
+                                </td>
+                            </ng-container>
+                        </tr>
+                        <tr *ngIf="getPublicPhonenumber(item.customerWishID.customerID)">
+                            <td>
+                                <app-icon-phone-animate class="text-danger"></app-icon-phone-animate>
+                            </td>
+                            <td>{{'label.contact'|translate}}</td>
+                            <td>
+                                <a class="text-danger" href="tel:0902045222">0902045222</a>&nbsp; - &nbsp;<a class="text-danger" href="tel:0397633633">0397633633</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><i class="fas fa-transgender"></i></td>
+                            <td>{{'label.gender'|translate}}:</td>
+                            <td>
+                                <ng-container *ngIf="item.customerWishID.customerID.gender;else notProvide">
+                                    {{item.customerWishID.customerID.gender}}
+                                </ng-container>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><i class="fas fa-birthday-cake"></i></td>
+                            <td>Tuổi:</td>
+                            <td>
+                                <ng-container *ngIf="item.customerWishID.customerID.dateOfBirth;else notProvide">
+                                    {{item.customerWishID.customerID.dateOfBirth|age}}
+                                </ng-container>
+                            </td>
+                        </tr>
+                    </table>
+                    <table>
+                        <tr>
+                            <td colspan="3" class="bg-gray">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <span>{{'label.needsToFindJob'|translate}}</span>
+                                    <i class="fas fa-caret-down"></i>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><i class="fas fa-yen-sign text-danger"></i></td>
+                            <td>Mức lương:</td>
+                            <td>
+                                <ng-container
+                                    [ngSwitch]="!item.customerWishID.customerID.salaryFrom&&!item.customerWishID.customerID.salaryTo">
+                                    <ng-container *ngSwitchCase="true">
+                                        <i class="text-danger">({{'label.noRequirement'|translate}})</i>
+                                    </ng-container>
+                                    <ng-container *ngSwitchDefault>
+                                        <span
+                                            *ngIf="item.customerWishID.customerID.salaryFrom"><small>{{'label.from'|translate}}</small>&nbsp;<b
+                                                class="text-danger">{{item.customerWishID.customerID.salaryFrom}}</b>&nbsp;<small>{{'label.yen'|translate}}</small></span>
+                                        <b
+                                            *ngIf="item.customerWishID.customerID.salaryFrom&&item.customerWishID.customerID.salaryTo">&nbsp;-&nbsp;</b>
+                                        <span *ngIf="item.customerWishID.customerID.salaryTo"><small>{{'label.to'|translate}}</small>&nbsp;<b
+                                                class="text-danger">{{item.customerWishID.customerID.salaryTo}}</b>&nbsp;<small>{{'label.yen'|translate}}</small></span>
+                                    </ng-container>
+                                </ng-container>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><i class="fas fa-map-marker-alt"></i></td>
+                            <td>{{'label.workAddress'|translate}}:</td>
+                            <td>
+                                <ng-container [ngSwitch]="isEmpty(item.customerWishID.customerID.address)">
+                                    <ng-container *ngSwitchCase="true">
+                                        <i class="text-danger">({{'label.noRequirement'|translate}})</i>
+                                    </ng-container>
+                                    <ng-container *ngSwitchDefault>
+                                        <span class="text-primary">{{item.customerWishID.customerID.address}}</span>
+                                    </ng-container>
+                                </ng-container>
+                            </td>
+                        </tr>
+                        <tr *ngIf="!isEmpty(item.customerWishID.customerID.note)">
+                            <td><i class="fas fa-quote-left"></i></td>
+                            <td colspan="2">{{item.note}}</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="contract-action">
+                    <div class="contract-action-wrapper d-flex align-items-center justify-content-between">
+                        <button mat-button [routerLink]="['/cv',item.customerWishID.customerID?.id]" class="flex-fill">
+                            <i class="fas fa-external-link-alt"></i> {{'label.viewCV'|translate}}
+                        </button>
+                        <button mat-button class="flex-fill" (click)="recruitmentChoose(item.id)">
+                            <i class="fab fa-telegram"></i> {{'label.recruitment'|translate}}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+    <ng-template #noReferral>
+        <td><i class="fas fa-user-tie"></i></td>
+        <td>{{'label.origin'|translate}}</td>
+        <td class="text-muted text-left"><i>{{'label.freelancerLabor'|translate}}</i></td>
+    </ng-template>
+    <ng-template #notProvide>
+        <i class="text-danger">({{'label.noProvide'|translate}})</i>
+    </ng-template>
+</div>
+<div class="paginator" *ngIf="pager.totalResult>pager.displayPerPage">
+    <div class="container">
+        <ul>
+            <ng-container *ngIf="pager.currentPage>1">
+                <li>
+                    <a (click)="changePage(1)"><i class="fas fa-angle-double-left"></i></a>
+                </li>
+                <li>
+                    <a (click)="changePage(pager.currentPage-1)"><i class="fas fa-angle-left"></i></a>
+                </li>
+            </ng-container>
+            <li *ngIf="pager.currentPage===2">
+                <a (click)="changePage(1)">1</a>
+            </li>
+            <ng-container *ngIf="pager.currentPage>2">
+                <li>
+                    <a (click)="changePage(pager.currentPage-2)">{{pager.currentPage-2}}</a>
+                </li>
+                <li>
+                    <a (click)="changePage(pager.currentPage-1)">{{pager.currentPage-1}}</a>
+                </li>
+            </ng-container>
+            <li>
+                <a class="active">{{pager.currentPage}}</a>
+            </li>
+            <li *ngIf="pager.currentPage===pager.totalPage-1">
+                <a (click)="changePage(pager.totalPage)">{{pager.totalPage}}</a>
+            </li>
+            <ng-container *ngIf="pager.currentPage<pager.totalPage-1">
+                <li>
+                    <a (click)="changePage(pager.currentPage+1)">{{pager.currentPage+1}}</a>
+                </li>
+                <li>
+                    <a (click)="changePage(pager.currentPage+2)">{{pager.currentPage+2}}</a>
+                </li>
+            </ng-container>
+            <ng-container *ngIf="pager.currentPage<pager.totalPage">
+                <li>
+                    <a (click)="changePage(pager.currentPage+1)"><i class="fas fa-angle-right"></i></a>
+                </li>
+                <li>
+                    <a (click)="changePage(pager.totalPage)"><i class="fas fa-angle-double-right"></i></a>
+                </li>
+            </ng-container>
+        </ul>
+    </div>
+</div>
+<app-page-action></app-page-action>
+
+<app-footer class="d-print-none"></app-footer>

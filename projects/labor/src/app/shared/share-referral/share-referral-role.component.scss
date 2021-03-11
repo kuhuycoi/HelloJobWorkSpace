@@ -1,0 +1,75 @@
+h4.title {
+  font-size: 16px;
+  color: #222;
+  margin-bottom: 5px;
+  font-weight: 500;
+  margin-top: 15px;
+}
+.role {
+  padding: 10px 0;
+  font-size: 13px;
+  font-weight: 500;
+  * {
+    white-space: normal;
+  }
+  .icon {
+    padding-right: 10px;
+    i {
+      height: 29px;
+      width: 29px;
+      background-color: #f5f5f5;
+      line-height: 29px;
+      color: #6e6e6e;
+      text-align: center;
+    }
+  }
+  .desc {
+    line-height: 1.2;
+    margin-top: 3px;
+  }
+}
+.mat-radio-group .mat-radio-button {
+  width: 100%;
+  ::ng-deep .mat-radio-label-content {
+    width: 100%;
+  }
+}
+.mat-radio-group .mat-radio-button + .mat-radio-button {
+  border-top: 1px solid #ebebeb;
+}
+
+.action {
+  margin-top: 20px;
+  button {
+    border-radius: 2px;
+    cursor: default;
+    font-size: 11px;
+    font-weight: 500;
+    text-align: center;
+    white-space: nowrap;
+    margin-right: 16px;
+    height: 27px;
+    line-height: 25px;
+    min-width: 54px;
+    outline: 0;
+    padding: 0 8px;
+    border: 1px solid transparent;
+  }
+  button[type="submit"] {
+    box-shadow: none;
+    background-color: #4d90fe;
+    background-image: -webkit-linear-gradient(to bottom, #4d90fe, #4787ed);
+    background-image: linear-gradient(to bottom, #4d90fe, #4787ed);
+    border: 1px solid #3079ed;
+    color: #fff;
+  }
+  button[type="reset"] {
+    box-shadow: none;
+    background-color: #f5f5f5;
+    background-image: -webkit-linear-gradient(to bottom, #f5f5f5, #f1f1f1);
+    background-image: linear-gradient(to bottom, #f5f5f5, #f1f1f1);
+    color: #444;
+    border: 1px solid #dcdcdc;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+}

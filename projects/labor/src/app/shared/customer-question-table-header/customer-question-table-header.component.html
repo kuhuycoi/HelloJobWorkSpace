@@ -1,0 +1,105 @@
+<ng-container [ngSwitch]="readonly">
+  <ng-container *ngSwitchCase="false">
+    <table class="table table-edit">
+      <thead class="thead-dark" *ngIf="question">
+        <tr>
+          <th colspan="2">{{question}}</th>
+        </tr>
+      </thead>
+      <tr *ngFor="let item of dataSource; let i = index">
+        <td class="pl-0 pd-1">{{findFirstData(item)}}</td>
+        <td style="width: 1%;white-space: nowrap;">
+          <a href="javascript:void(0)" (click)="edit(i,item)">
+            <mat-icon color="primary">edit</mat-icon>
+          </a>
+          <a href="javascript:void(0)" (click)="delete(item)">
+            <mat-icon color="warn">delete_forever</mat-icon>
+          </a>
+        </td>
+      </tr>
+    </table>
+    <div class="row">
+      <div class="col-12 col-sm-6 col-md-4 col-lg-3 align-self-end" *ngFor="let item of formControls; let i = index">
+        <ng-container [ngSwitch]="item.usingType?.code">
+          <div class="form-group" *ngSwitchCase="'QUESTION_SELECT'">
+            <mat-form-field style="width: 100%" multiple appearance="outline" color="primary" floatLabel="always">
+              <mat-label>{{item.placeholder}}</mat-label>
+              <mat-select [formControl]="item" [required]="item.required">
+                <ng-container [ngSwitch]="item.indexkey">
+                  <ng-container *ngSwitchCase="questionProvinceKey">
+                    <mat-option *ngFor="let elm of provinces" [value]="elm.Name">
+                      {{elm.Name}}
+                    </mat-option>
+                  </ng-container>
+                  <ng-container *ngSwitchDefault>
+                    <mat-option *ngFor="let elm of item.answers" [value]="elm">
+                      {{elm}}
+                    </mat-option>
+                  </ng-container>
+                </ng-container>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="form-group" *ngSwitchCase="'QUESTION'">
+            <div class="d-flex flex-column justify-content-start">
+              <mat-form-field style="width: 100%" appearance="outline" color="primary" floatLabel="always">
+                <mat-label>{{item.placeholder}}</mat-label>
+                <input matInput [formControl]="item" [matAutocomplete]="matAuto" [required]="item.required"
+                  autocomplete="off">
+                <mat-autocomplete #matAuto="matAutocomplete">
+                  <mat-option *ngFor="let suggestion of item.filteredSuggestions | async" [value]="suggestion.content">
+                    {{suggestion.content}}
+                  </mat-option>
+                </mat-autocomplete>
+                <a href="javascript:void(0)" matSuffix (click)="record($event,item)">
+                  <mat-icon>mic</mat-icon>
+                </a>
+                <!-- <ng-container *ngIf="item.id!==questionProvinceID;else elseTemplate">
+                  
+                </ng-container>
+                <ng-template #elseTemplate>
+                  <mat-select [formControl]="item" [required]="item.required">
+                    <mat-option *ngFor="let elm of provinces" [value]="elm.Name">
+                      {{elm.Name}}
+                    </mat-option>
+                  </mat-select>
+                </ng-template> -->
+                <mat-hint *ngIf="item.hint">{{item.hint}}
+                </mat-hint>
+                <mat-error *ngIf="item.invalid&&item.required">Vui lòng nhập trường này</mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="form-group" *ngSwitchCase="'QUESTION_NUMBER'">
+            <div class="d-flex flex-column justify-content-start">
+              <mat-form-field style="width: 100%" appearance="outline" color="primary" floatLabel="always">
+                <mat-label>{{item.placeholder}}</mat-label>
+                <input matInput type="number" [formControl]="item" [required]="item.required" autocomplete="off">
+                <span matSuffix *ngIf="item.suffix">{{item.suffix}}</span>
+                <mat-hint *ngIf="item.hint">{{item.hint}}
+                </mat-hint>
+                <mat-error *ngIf="item.invalid&&item.required">Vui lòng nhập trường này</mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+    <div class="form-group text-center">
+      <button class="btn btn-sm btn-primary" (click)="create()">Lưu</button>
+    </div>
+    <hr />
+  </ng-container>
+  <ng-container *ngSwitchDefault>
+    <table width="100%" class="table-readonly">
+      <tr *ngFor="let item of dataSource; let i = index">
+        <td>
+          <div class="info d-flex justify-content-between" *ngFor="let column of displayedColumns; let i = index">
+            <b>{{column}}</b>
+            <span>{{item[column]}}</span>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </ng-container>
+</ng-container>

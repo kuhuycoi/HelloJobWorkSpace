@@ -1,0 +1,37 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+#side-nav{
+  height: 100%;
+}
+#side-nav,
+#notify-nav {
+  width: 100%;
+  max-width: 100%;
+}
+#content {
+  height: 100%;
+  .scroll {
+    overflow: auto;
+    padding-bottom: 49px;
+  }
+}
+mat-sidenav{
+  background-color: transparent;
+}
+@media print {
+  #content {
+    height: auto;
+    .scroll {
+      overflow: visible;
+    }
+  }
+  ::ng-deep .mat-drawer-content {
+    overflow: visible;
+  }
+  ::-webkit-scrollbar {
+    display: none;
+  }
+}

@@ -1,0 +1,33 @@
+<div class="text-right">
+    <a href="javascript:void(0)" (click)="dialogRef.close()"><b>{{'label.exit'|translate}}</b></a>
+</div>
+<section id="search-form">
+    <form (submit)="onSubmit()" [formGroup]="form">
+        <div class="form-group">
+            <label>Tìm kiếm</label>
+            <div class="form-item">
+                <input formControlName="keyword" type="text" class="form-control" placeholder="Tên, sđt người lao động" />
+                <img src="/assets/img/search.svg" alt="">
+            </div>
+        </div>
+        <div class="robot text-center">
+            <img src="/assets/img/robot.svg" alt="">
+        </div>
+        <div class="form-group">
+            <ul class="filter-options list-unstyled">
+                <li><a [ngClass]="{'active': pager?.orderColumn==='fullname'}" (click)="changeOrderColumn('fullname')">Sắp xếp theo tên</a></li>
+                <li><a [ngClass]="{'active': pager?.orderColumn==='createdDate'}" (click)="changeOrderColumn('createdDate')">Sắp xếp theo ngày tạo</a></li>
+            </ul>
+        </div>
+        <div class="robot text-center">
+            <img src="/assets/img/robot.svg" alt="">
+        </div>
+        <div class="form-group">
+            <ul class="filter-options list-unstyled">
+                <li><a [ngClass]="{'active': pager.asc}" (click)="changeAsc(true)">Thứ tự tăng dần</a></li>
+                <li><a [ngClass]="{'active': !pager.asc}" (click)="changeAsc(false)">Thứ tự giảm dần</a></li>
+            </ul>
+        </div>
+        <button type="submit">Cập nhật</button>
+    </form>
+</section>

@@ -1,0 +1,143 @@
+<div id="filter">
+    <div class="container">
+        <div class="current-filter" (click)="advanceFilter()">
+            <b class="color-blue">
+                {{'label.orderContractsApplied'|translate}}
+            </b>
+        </div>
+    </div>
+</div>
+<div class="result">
+    <div class="container">
+        <ng-container [ngSwitch]="pager.totalResult">
+            <ng-container *ngSwitchCase="0">
+                <span class="text-danger">{{'label.noOrderApplied'|translate}}</span>
+            </ng-container>
+            <ng-container *ngSwitchDefault>
+                {{'label.page'|translate}} <b class="color-blue">{{pager.currentPage}}/{{pager.totalPage}}</b>.
+                {{'label.found'|translate}} <b class="color-blue">{{pager.totalResult}}</b>
+                {{'label.orderContract'|translate}}
+            </ng-container>
+        </ng-container>
+    </div>
+</div>
+<div class="contracts">
+    <div class="contract" *ngFor="let item of items">
+        <div class="contract-wrapper">
+            <h3 [routerLink]="['/don-hang', item.website_OrderContractID?.id]">{{item.website_OrderContractID?.name}}
+            </h3>
+            <ng-container [ngSwitch]="item.website_OrderContractID?.partnerCompanyID?.isVerify"
+                *ngIf="item.website_OrderContractID?.partnerCompanyID">
+                <ng-container *ngSwitchCase="true">
+                    <div class="company verified" matTooltip="Đã được kiểm duyệt bởi HJ"
+                        matTooltipClass="tooltip-primary" matTooltipPosition="after">
+                        {{item.website_OrderContractID?.partnerCompanyID.name}}
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                </ng-container>
+                <ng-container *ngSwitchDefault>
+                    <div class="company">
+                        {{item.website_OrderContractID?.partnerCompanyID.name}}
+                    </div>
+                </ng-container>
+            </ng-container>
+            <div class="d-flex align-items-end mb-1">
+                <div class="info phone d-inline-flex align-items-end"
+                    *ngIf="!isEmpty(item.website_OrderContractID?.phonenumber)">
+                    <app-icon-phone-animate class="mr-1"></app-icon-phone-animate>
+                    <a href="tel:0902045222">0902045222</a>&nbsp; - &nbsp;<a href="tel:0397633633">0397633633</a>
+                </div>
+                <a class="info zalo ml-3" href="//zalo.me/0902045222" target="_blank"
+                    *ngIf="!isEmpty(item.website_OrderContractID?.zaloContact)">
+                    <img src="/assets/img/icon-zalo.svg"> {{'label.contact'|translate}}
+                </a>
+            </div>
+            <div class="info salary" *ngIf="!isEmpty(item.website_OrderContractID?.contractSalary)"><i
+                    class="fas fa-yen-sign"></i>
+                {{item.website_OrderContractID?.contractSalary}}</div>
+            <div class="info location" *ngIf="!isEmpty(item.website_OrderContractID?.contractAddress)"><i
+                    class="fas fa-map-marker-alt"></i>
+                {{item.website_OrderContractID?.contractAddress}}</div>
+            <div class="info time"><i class="far fa-calendar-alt"></i>
+                {{item.createdDate|date:'dd/MM/yyyy'}}</div>
+        </div>
+        <div class="contract-action">
+            <div class="contract-action-wrapper d-flex justify-content-center align-items-center">
+                <ng-container [ngSwitch]="item.status">
+                    <ng-container *ngSwitchCase="0">
+                        <button mat-button>
+                            <i class="fas fa-spinner"></i>{{'label.waitingForApprove'|translate}}
+                        </button>
+                        <button mat-button class="d-flex align-items-center justify-content-center" [disabled]="true">
+                            <i class="fab fa-telegram"></i>{{'label.apply'|translate}}
+                        </button>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="1">
+                        <button mat-button color="primary">
+                            <i class="fas fa-check-square"></i>{{'label.approved'|translate}}
+                        </button>
+                        <button mat-button class="d-flex align-items-center justify-content-center" [disabled]="true">
+                            <i class="fab fa-telegram"></i>{{'label.apply'|translate}}
+                        </button>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="2">
+                        <button mat-button color="warn">
+                            <i class="fas fa-exclamation-circle"></i> {{'label.rejected'|translate}}
+                        </button>
+                        <button color="primary" [routerLink]="['/dang-ky-ung-tuyen',item.id]" mat-button
+                            class="d-flex align-items-center justify-content-center">
+                            <i class="fab fa-telegram"></i>{{'label.reApply'|translate}}
+                        </button>
+                    </ng-container>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="paginator" *ngIf="pager.totalResult>pager.displayPerPage">
+    <div class="container">
+        <ul>
+            <ng-container *ngIf="pager.currentPage>1">
+                <li>
+                    <a (click)="changePage(1)"><i class="fas fa-angle-double-left"></i></a>
+                </li>
+                <li>
+                    <a (click)="changePage(pager.currentPage-1)"><i class="fas fa-angle-left"></i></a>
+                </li>
+            </ng-container>
+            <li *ngIf="pager.currentPage===2">
+                <a (click)="changePage(1)">1</a>
+            </li>
+            <ng-container *ngIf="pager.currentPage>2">
+                <li>
+                    <a (click)="changePage(pager.currentPage-2)">{{pager.currentPage-2}}</a>
+                </li>
+                <li>
+                    <a (click)="changePage(pager.currentPage-1)">{{pager.currentPage-1}}</a>
+                </li>
+            </ng-container>
+            <li>
+                <a class="active">{{pager.currentPage}}</a>
+            </li>
+            <li *ngIf="pager.currentPage===pager.totalPage-1">
+                <a (click)="changePage(pager.totalPage)">{{pager.totalPage}}</a>
+            </li>
+            <ng-container *ngIf="pager.currentPage<pager.totalPage-1">
+                <li>
+                    <a (click)="changePage(pager.currentPage+1)">{{pager.currentPage+1}}</a>
+                </li>
+                <li>
+                    <a (click)="changePage(pager.currentPage+2)">{{pager.currentPage+2}}</a>
+                </li>
+            </ng-container>
+            <ng-container *ngIf="pager.currentPage<pager.totalPage">
+                <li>
+                    <a (click)="changePage(pager.currentPage+1)"><i class="fas fa-angle-right"></i></a>
+                </li>
+                <li>
+                    <a (click)="changePage(pager.totalPage)"><i class="fas fa-angle-double-right"></i></a>
+                </li>
+            </ng-container>
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,19 @@
+:host{
+    .page-form{
+        place-content: center;
+    }
+
+    .top-panel{
+        height: unset;
+        margin-bottom: 30px;        
+
+        .description {
+            margin-top: 30px;
+        }
+    }
+
+    .commands{
+        margin-top: 30px;
+        bottom: unset;        
+    }
+}

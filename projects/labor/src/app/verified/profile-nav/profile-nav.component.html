@@ -1,0 +1,35 @@
+<div class="avatar">
+    <div class="avatar-content">
+        <div class="img-cover">
+            <ng-container [ngSwitch]="currentCustomer?.urlAvatar">
+                <ng-container *ngSwitchCase="null">
+                    <img src="/assets/img/noimg.jpg" />
+                </ng-container>
+                <ng-container *ngSwitchDefault>
+                    <img src="{{localStorage.getItem('ServerUrl')}}{{currentCustomer.urlAvatar}}">
+                </ng-container>
+            </ng-container>
+            <a href="javascript:void(0)" class="btn-edit">
+                <i class="fas fa-edit"></i> {{'label.edit'|translate}}
+                <input type="file" (change)="updateAvatar($event)" />
+            </a>
+        </div>
+    </div>
+</div>
+<div [matMenuTriggerFor]="menu" class="mb-3 menu-profile d-flex justify-content-between align-items-center">
+    <span>{{activeText}}</span>
+    <i class="material-icons">
+        arrow_drop_down
+    </i>
+</div>
+<mat-menu #menu="matMenu" id="menu-profile" [ngStyle]="{'width': '100%'}">
+    <a mat-menu-item routerLink="/tai-khoan/thong-tin" routerLinkActive="color-blue">
+        {{'label.personalInfo'|translate}}
+    </a>
+    <a mat-menu-item routerLink="/tai-khoan/cai-dat" routerLinkActive="color-blue">
+        {{'label.setting'|translate}}
+    </a>
+    <a mat-menu-item routerLink="/tai-khoan/doi-mat-khau" active="true" routerLinkActive="color-blue">
+        {{'label.changePassword'|translate}}
+    </a>
+</mat-menu>

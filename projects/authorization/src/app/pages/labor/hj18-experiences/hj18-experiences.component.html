@@ -1,0 +1,46 @@
+<div class="hj-page">
+    <div class="page-wrapper">
+        <mat-card>
+            <mat-card-title>
+                <button mat-icon-button class="card-button">
+                    <mat-icon class="material-icons" (click)="goBack()">keyboard_arrow_left</mat-icon>
+                </button>
+                <mat-progress-bar mode="determinate" [value]="processPercent" color="accent"></mat-progress-bar>
+            </mat-card-title>
+
+            <mat-card-content>
+                <div class="page-form">
+                    <div class="top-panel">
+                        <div class="logo">
+                        </div>
+                        <div class="title">
+                            <span>Nghề nghiệp, kinh nghiệm</span>
+                        </div>
+                        <div class="description" style="text-align: center;">
+                            <span>Hãy cho nhà tuyển dụng biết nghề nghiệp bạn đã làm (nếu có) bằng cách chọn thông tin
+                                bên dưới</span>
+                        </div>
+                        <div class="content">
+                            <form class="data-form">
+                                <div class="flex-items">
+                                    <div class="item-group">
+                                        <mat-button-toggle [value]="item.id" (click)="choose(item)" *ngFor="let item of experiences"
+                                            [checked]="isChecked(item.id)">{{item.name}}</mat-button-toggle>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="commands">
+                        <div class="feature-buttons">
+                            <button mat-stroked-button (click)="moveNext($event)" class="r-button"
+                                [disabled]="!validate()">Tiếp tục</button>
+                        </div>
+                        <div class="others">
+                        </div>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

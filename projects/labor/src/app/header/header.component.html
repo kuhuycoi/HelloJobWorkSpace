@@ -1,0 +1,65 @@
+<header [ngClass]="{'fixed': fixed}">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-end">
+            <div style="width: 41px;">
+                <mat-icon-button [matBadge]="totalNotification > 0?totalNotification:''" matBadgeColor="warn"
+                    class="notice" *ngIf="isLoggedIn" (click)="openNotify()">
+                    <i class="far fa-bell"></i>
+                </mat-icon-button>
+            </div>
+            <a routerLink="/" title="Trang chủ" class="logo">
+                <img src="/assets/img/logo.svg" />
+            </a>
+            <div class="pb-2">
+                <a href="javascript:void(0)" class="btn-menu p-2" (click)="openMenu()">
+                    <img src="/assets/img/btn-menu.svg" alt="" width="25">
+                </a>
+                <!-- <a (click)="useLanguage(item.code)" *ngFor="let item of websiteLanguages" class="ml-2 btn-change-lang"
+                    [ngClass]="{'active': item.code===currentLang}">
+                    <img [src]="item.uRLImage" [alt]="item.name" width="27" height="17">
+                </a> -->
+            </div>
+
+            <!-- <div class="d-flex align-items-center">
+                <a href="javascript:void(0)" class="avatar img-cover" [matMenuTriggerFor]="appMenu"
+                    [ngSwitch]="isEmpty(currentCustomer?.urlAvatar)">
+                    <img src="/assets/img/noimg.jpg" *ngSwitchCase="true" />
+                    <img [src]="localStorage.getItem('ServerUrl')+currentCustomer.urlAvatar" *ngSwitchCase="false" />
+                </a>
+                <mat-menu #appMenu="matMenu">
+                    <ng-container [ngSwitch]="!isLoggedIn">
+                        <ng-container *ngSwitchCase="true">
+                            <button mat-menu-item routerLink="/tai-khoan/dang-nhap">
+                                <mat-icon>person</mat-icon> <span [translate]="'label.login'">Đăng nhập</span>
+                            </button>
+                            <button mat-menu-item routerLink="/tai-khoan/dang-ky">
+                                <mat-icon>person_add</mat-icon> <span [translate]="'label.signup'">Đăng ký</span>
+                            </button>
+                        </ng-container>
+                        <ng-container *ngSwitchDefault>
+                            <button mat-menu-item routerLink="/tai-khoan/thong-tin">
+                                <mat-icon>info</mat-icon> <span [translate]="'label.personalInfo'">Thông tin cá
+                                    nhân</span>
+                            </button>
+                            <button mat-menu-item routerLink="/tai-khoan/doi-mat-khau">
+                                <mat-icon>security</mat-icon> <span [translate]="'label.changePassword'">Đổi mật
+                                    khẩu</span>
+                            </button>
+                            <mat-divider></mat-divider>
+                            <button mat-menu-item (click)="signOut()">
+                                <mat-icon>exit_to_app</mat-icon> <span [translate]="'label.logout'">Đăng xuất</span>
+                            </button>
+                        </ng-container>
+                    </ng-container>
+                </mat-menu>
+            </div> -->
+        </div>
+    </div>
+</header>
+
+<!-- <mat-menu #langMenu="matMenu" class="menu-lang">
+    <button mat-menu-item (click)="useLanguage(item.code)" class="select-lang justify-content-center"
+        *ngFor="let item of websiteLanguages">
+        {{item.name}}
+    </button>
+</mat-menu> -->

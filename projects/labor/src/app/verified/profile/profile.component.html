@@ -1,0 +1,83 @@
+<div class="container mb-3">
+    <div class="auth-wrapper">
+        <app-profile-nav [currentCustomer]="currentCustomer" [activeText]="'label.personalInfo'|translate"></app-profile-nav>
+        <form (submit)="onSubmit()" [formGroup]="form">
+            <div>
+                <mat-form-field class="d-block mb-2" appearance="outline" color="primary" floatLabel="always">
+                    <mat-label>{{'label.fullname'|translate}}</mat-label>
+                    <input type="text" [formControl]="fullName" matInput required />
+                    <mat-icon matSuffix>account_circle</mat-icon>
+                    <mat-error *ngIf="fullName.hasError('required')">
+                        {{'label.pleaseProvide'|translate}}<strong>{{'label.fullname'|translate}}</strong>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="d-block mb-2" appearance="outline" color="primary" floatLabel="always">
+                    <mat-label>{{'label.phoneNumber'|translate}}</mat-label>
+                    <input type="text" [formControl]="phonenumber" matInput required />
+                    <mat-icon matSuffix>phone</mat-icon>
+                    <mat-error *ngIf="phonenumber.hasError('required')">
+                        {{'label.pleaseProvide'|translate}}<strong>{{'label.phoneNumber'|translate}}</strong>
+                    </mat-error>
+                </mat-form-field>
+                <!-- <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                <mat-checkbox [formControl]="isPublicPhonenumber" color="primary" class="mb-1"> {{'label.arePartner'|translate}}
+                </mat-checkbox>
+                <p class="form-text mb-0 text-danger" *ngSwitchCase="false">
+                    <small><i> {{'label.arePartnerIsPartner'|translate}}</i></small>
+                </p>
+            </mat-form-field> -->
+                <label class="mb-2">{{'label.gender'|translate}}</label>
+                <div class="form-item">
+                    <mat-radio-group [formControl]="gender">
+                        <mat-radio-button value="{{'label.male'|translate}}" color="primary">
+                            {{'label.male'|translate}}</mat-radio-button>
+                        &nbsp;
+                        <mat-radio-button value="{{'label.female'|translate}}" color="primary">
+                            {{'label.female'|translate}}</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+                <mat-form-field class="d-block mb-2" appearance="outline" color="primary" floatLabel="always">
+                    <mat-label>{{'label.email'|translate}}</mat-label>
+                    <input type="text" [formControl]="email" matInput />
+                    <mat-icon matSuffix>email</mat-icon>
+                    <mat-error *ngIf="email.hasError('pattern')">
+                        {{'label.emailFormatWrong'|translate}}
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="d-block mb-2" appearance="outline" color="primary" floatLabel="always">
+                    <mat-label>{{'label.dateOfBirth'|translate}}</mat-label>
+                    <input matInput [matDatepicker]="datePicker" formControlName="dateOfBirth"
+                        (click)="datePicker.open()" readonly>
+                    <mat-icon matSuffix matSuffix (click)="datePicker.open()">cake</mat-icon>
+                    <mat-datepicker #datePicker touchUi></mat-datepicker>
+                    <mat-error>{{dateOfBirth.hasError('required')}</mat-error>
+                </mat-form-field>
+                <mat-form-field class="d-block" appearance="outline" color="primary" floatLabel="always">
+                    <mat-label>{{'label.address'|translate}}</mat-label>
+                        <textarea rows="3" [formControl]="address" matInput></textarea>
+                </mat-form-field>
+            </div>
+            <div class="d-flex justify-content-between">
+                <button mat-raised-button color="primary">{{'label.update'|translate}}</button>
+                <button mat-raised-button (click)="cancel()" type="button"
+                    color="warn">{{'label.cancel'|translate}}</button>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="rules">
+    <div class="container">
+        {{'label.infoPolicy'|translate}}
+        <a routerLink="/thoa-thuan-su-dung" class="color-blue">{{'label.termAndService'|translate}}</a>
+        {{'label.accept'|translate}}
+        <!-- <a href="#" class="color-blue">{{'label.cookiePolicy'|translate}}</a>
+        {{'label.also'|translate}} -->
+        <a routerLink="/quy-dinh-bao-mat" class="color-blue">{{'label.securePolicy'|translate}}</a>
+        {{'label.ofHelloJob'|translate}}<br />
+        <!-- {{'label.captchaProtect'|translate}}
+        <a href="#" class="color-blue">{{'label.privatePolicy'|translate}}</a>
+        {{'label.and'|translate}}
+        <a href="#" class="color-blue">{{'label.serviceRule'|translate}}</a>
+        {{'label.ofGoogleApply'|translate}} -->
+    </div>
+</div>

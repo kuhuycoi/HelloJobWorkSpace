@@ -1,0 +1,125 @@
+<div class="contract-detail" *ngIf="orderContract">
+    <div class="container">
+        <h1 class="title">{{'label.apply'|translate}}: {{orderContract.name}}</h1>
+        <div class="short-info">            
+            <div class="info phone d-inline-flex align-items-end">
+                <app-icon-phone-animate class="mr-1"></app-icon-phone-animate> 
+                <a class="text-danger" href="tel:0902045222">0902045222</a>&nbsp; - &nbsp;<a class="text-danger" href="tel:0397633633">0397633633</a>
+        </div>
+            <div class="info salary" *ngIf="orderContract.contractSalary"><i class="fas fa-yen-sign"></i>
+                {{orderContract.contractSalary}}</div>
+            <div class="info location" *ngIf="orderContract.contractAddress"><i class="fas fa-map-marker-alt"></i>
+                {{orderContract.contractAddress}}</div>
+        </div>
+        <div class="robot text-center">
+            <img src="/assets/img/robot.svg" alt="">
+        </div>
+    </div>
+
+    <div class="auth-wrapper">
+        <form (submit)="onSubmit()" [formGroup]="form" novalidate>
+            <div class="container">
+                <div class="form-item">
+                    <input type="text" [formControl]="fullname" placeholder="{{'placeholder.fullname'|translate}}*"
+                        required />
+                    <i class="fas fa-fingerprint"></i>
+                    <div *ngIf="haveSubmited&&fullname.invalid" class="form-error">{{getError(fullname)}}</div>
+                </div>
+                <div class="form-item">
+                    <input type="text" [formControl]="mobile" placeholder="{{'placeholder.phoneNumber'|translate}}*"
+                        required />
+                    <i class="fas fa-phone-square-alt"></i>
+                    <div *ngIf="haveSubmited&&mobile.invalid" class="form-error">{{getError(mobile)}}</div>
+                </div>
+                <div class="form-item">
+                    <input type="text" [formControl]="email" placeholder="{{'placeholder.email'|translate}}" />
+                    <i class="fas fa-envelope"></i>
+                    <div *ngIf="haveSubmited&&email.invalid" class="form-error">{{getError(email)}}</div>
+                </div>
+                <div class="form-item">
+                    <input type="text" [formControl]="address" placeholder="{{'placeholder.address'|translate}}" />
+                    <i class="fas fa-map-marked-alt"></i>
+                </div>
+                <div class="form-item">
+                    <textarea type="text" [formControl]="content" rows="4"
+                        placeholder=" {{'placeholder.content'|translate}}*" required></textarea>
+                    <div *ngIf="haveSubmited&&content.invalid" class="form-error">{{getError(content)}}</div>
+                </div>
+                <ng-container *ngIf="isLoggedIn">
+                    <div class="help text-center">{{'label.applyAlsoAttachCV'|translate}}<br />
+                        <a routerLink="/tai-khoan/cv" target="_blank" class="color-blue text-uppercase"><b>
+                                {{'label.seeNow'|translate}}</b></a> {{'label.or'|translate}} <a
+                            routerLink="/khai-phom/thong-tin" class="color-blue text-uppercase"><b>
+                                {{'label.clickToUpdate'|translate}}
+                            </b></a>
+                    </div>
+                    <div class="or">
+                        <span>{{'label.orAttackYourCV'|translate}}</span>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="isLoggedIn&&listCvApply.length">
+                    <mat-radio-group class="d-flex flex-column" (change)="onSelectionChange($event.value)">
+                        <div class="d-block" *ngFor="let item of listCvApply">
+                            <mat-radio-button class="mb-3" [value]="item" color="primary">
+                                {{item.originalFileName}}
+                            </mat-radio-button>
+                            <a [href]="localStorage.getItem('ServerUrl')+item.urlCV" target="_blank"
+                                class="text-primary ml-2" download="{{item.originalFileName}}">
+                                <i class="fas fa-download"></i>
+                            </a>
+                        </div>
+                        <div class="d-block">
+                            <mat-radio-button class="mb-3" [value]="null" color="primary" [checked]="isChooseCV">
+                                {{'label.uploadCV'|translate}}
+                            </mat-radio-button>
+                        </div>
+                    </mat-radio-group>
+                </ng-container>
+                <div class="d-flex flex-column attach" *ngIf="isChooseCV">
+                    <button mat-raised-button color="primary" class="mb-1"><i
+                            class="fas fa-paperclip"></i>{{'label.attachCV'|translate}}
+                        <span *ngIf="!isLoggedIn">*</span></button>
+                    <ng-container [ngSwitch]="file.value">
+                        <ng-container *ngSwitchCase="null">
+                            <span>{{'label.noAttachCV'|translate}}</span>
+                        </ng-container>
+                        <ng-container *ngSwitchDefault>
+                            <div class="d-flex align-items-center">
+                                <span
+                                    style="max-width: 200px;overflow: hidden;text-overflow: ellipsis;display: inline-block;">{{originalFileName.value}}</span><span
+                                    class="text-success"> - {{fileSize}}KB</span>
+                            </div>
+                            <div *ngIf="!fileExtensionAccept" class="form-error">{{'label.wrongFileFormat'|translate}}
+                                (png, jpg,
+                                jpeg, doc, docx, pdf)</div>
+                        </ng-container>
+                    </ng-container>
+                    <input type="file" name="file" (change)="onFileChange($event,file)">
+                </div>
+            </div>
+            <div class="container">
+                <button type="submit">{{'label.continue'|translate}}</button>
+            </div>
+            <div class="rules">
+                <div class="container">
+                    {{'label.joinOrderContractPolicy'|translate}}
+                    <a href="#" class="color-blue">{{'label.termAndService'|translate}}</a>
+                    {{'label.accept'|translate}}
+                    <a href="#" class="color-blue">{{'label.cookiePolicy'|translate}}</a>
+                    {{'label.also'|translate}}
+                    <a href="#" class="color-blue">{{'label.securePolicy'|translate}}</a>
+                    {{'label.ofHelloJob'|translate}}<br />
+                    {{'label.captchaProtect'|translate}}
+                    <a href="#" class="color-blue">{{'label.privatePolicy'|translate}}</a>
+                    {{'label.and'|translate}}
+                    <a href="#" class="color-blue">{{'label.serviceRule'|translate}}</a>
+                    {{'label.ofGoogleApply'|translate}}
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="text-center back">
+        <a [routerLink]="['/don-hang']" class="color-blue">{{'label.findOtherOrder'|translate}}</a><br />
+        <a [routerLink]="['/']" class="color-blue">{{'label.home'|translate}}</a>
+    </div>
+</div>

@@ -1,0 +1,84 @@
+<div class="text-right">
+    <a href="javascript:void(0)" (click)="dialogRef.close()"><b>{{'label.exit'|translate}}</b></a>
+</div>
+<section id="search-form">
+    <form (submit)="onSubmit()" [formGroup]="form">
+        <fieldset> 
+            <legend>{{'label.laborInfo'|translate}}</legend>
+            <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                <mat-label>{{'label.search'|translate}}</mat-label>
+                <input matInput type="text" [formControl]="keyword" min="0"
+                    placeholder="{{'placeholder.labelName'|translate}}" />
+            </mat-form-field>
+            <mat-label class="mb-1 d-block">{{'label.ageRange'|translate}}</mat-label>
+            <div class="row">
+                <div class="col-6">
+                    <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                        <mat-label>{{'label.from'|translate}}</mat-label>
+                        <input matInput type="number" [formControl]="ageFrom" min="0" />
+                    </mat-form-field>
+                </div>
+                <div class="col-6">
+                    <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                        <mat-label>{{'label.to'|translate}}</mat-label>
+                        <input matInput type="number" [formControl]="ageTo" min="0" />
+                    </mat-form-field>
+                </div>
+            </div>
+            <mat-label>{{'label.gender'|translate}}</mat-label>
+            <mat-radio-group [formControl]="gender" class="d-flex flex-column">
+                <mat-radio-button [value]="null" class="mb-2" color="primary">{{'label.all'|translate}}
+                </mat-radio-button>
+                <mat-radio-button value="Nam" class="mb-2" color="primary">{{'label.male'|translate}}</mat-radio-button>
+                <mat-radio-button value="Nữ" color="primary">{{'label.female'|translate}}</mat-radio-button>
+            </mat-radio-group>
+        </fieldset>
+        <fieldset>
+            <legend><a routerLink="/tai-khoan/nhu-cau-tim-viec"
+                    (click)="dialogRef.close()">{{'label.needsToFindJob'|translate}}</a></legend>
+            <mat-form-field class="d-block mb-3" appearance="outline" floatLabel="always">
+                <mat-label [translate]="'label.place'">{{'label.place'|translate}}</mat-label>
+                <input type="text" [formControl]="place" placeholder="{{'placeholder.hiroshimaTokyo'|translate}}"
+                    matInput />
+                <mat-icon matSuffix>location_on</mat-icon>
+                <mat-hint>{{'label.placeForFindJob'|translate}}</mat-hint>
+            </mat-form-field>
+            <mat-label class="mb-1 d-block">{{'label.wishSalaryRange'|translate}}</mat-label>
+            <div class="row">
+                <div class="col-6">
+                    <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                        <mat-label>{{'label.from'|translate}}</mat-label>
+                        <input matInput type="number" [formControl]="salaryFrom" min="0" />
+                        <small matSuffix>{{'label.yen'|translate}}</small>
+                    </mat-form-field>
+                </div>
+                <div class="col-6">
+                    <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                        <mat-label>{{'label.to'|translate}}</mat-label>
+                        <input matInput type="number" [formControl]="salaryTo" min="0" />
+                        <small matSuffix>{{'label.yen'|translate}}</small>
+                    </mat-form-field>
+                </div>
+            </div>
+            <mat-form-field style="width: 100%" multiple appearance="outline" color="primary" floatLabel="always">
+                <mat-label>{{'label.careerGroup'|translate}}</mat-label>
+                <mat-select [formControl]="moduleID">
+                    <mat-option [value]="null">{{'label.all'|translate}}</mat-option>
+                    <mat-option *ngFor="let item of groupContracts" [value]="item.id">
+                        {{item.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </fieldset>
+        <div class="robot text-center">
+            <img src="/assets/img/robot.svg" alt="">
+        </div>
+        <mat-form-field style="width: 100%" multiple appearance="outline" color="primary" floatLabel="always">
+            <mat-label>{{'label.orderBy'|translate}}</mat-label>
+            <mat-select (selectionChange)="changeOrder($event.value)" [value]="selectedOrder">
+                <mat-option *ngFor="let item of orders" [value]="item">{{item.text|translate}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <button type="submit" mat-raised-button>{{'label.update'|translate}}</button>
+    </form>
+</section>

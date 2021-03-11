@@ -1,0 +1,29 @@
+<div id="hot-order">
+    <div class="container">
+        <owl-carousel-o [options]="customOptions">
+            <ng-template carouselSlide *ngFor="let item of hotOrders">
+                <div class="item order" [routerLink]="['/don-hang',item.id]">
+                    <a class="order-avatar img-cover" *ngIf="!isEmpty(item.urlAvatar);else bgCover">
+                        <img [src]="localStorage.getItem('ServerUrl')+item.urlAvatar" />
+                    </a>
+                    <ng-template #bgCover>
+                        <div class="bg-cover" [ngStyle]="{'background-image': 'url('+localStorage.getItem('ServerUrl')+item.websiteOrderBackgroundID.backgroundUrl+')',
+                        'color':item.websiteOrderBackgroundID.color}">
+                            <span>{{item.isHot}}</span>
+                            <span class="inner-text">{{item.richTextWithBG}}</span>
+                        </div>
+                    </ng-template>
+                    <div class="company-avatar img-cover" [ngSwitch]="isEmpty(item.partnerCompanyID?.urlAvartar)">
+                        <img [src]="localStorage.getItem('ServerUrl')+item.partnerCompanyID.urlAvartar"
+                            *ngSwitchCase="false" />
+                        <img src="/assets/img/noimg.jpg" *ngSwitchDefault />
+                    </div>
+                    <h3><img src="/assets/img/star-blue.png" *ngIf="item.isHot"> {{item.name}}</h3>
+                </div>
+            </ng-template>
+        </owl-carousel-o>
+        <!-- <div class="wrapper">
+                <label>NEW - </label>
+              </div> -->
+    </div>
+</div>

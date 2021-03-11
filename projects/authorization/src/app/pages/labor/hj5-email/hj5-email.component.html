@@ -1,0 +1,60 @@
+<div class="hj-page">
+    <div class="page-wrapper">
+        <mat-card>
+            <mat-card-title>
+                <div class="nav">
+                    <ul>
+                        <li class="nav-control">
+                            <button mat-icon-button class="card-button">
+                                <mat-icon class="material-icons" (click)="goBack()">keyboard_arrow_left</mat-icon>                                                        
+                            </button>                       
+                        </li>                        
+                        <!-- <li class="nav-control right">
+                            <button mat-icon-button class="card-button" (click)="moveNext($event)">
+                                Bỏ qua
+                            </button>     
+                        </li>  -->
+                    </ul>
+                </div>
+                <div>
+                    <mat-progress-bar mode="determinate" [value]="processPercent" color="accent"></mat-progress-bar>      
+                </div>                     
+            </mat-card-title>
+
+            <mat-card-content>
+                <div class="page-form">
+                    <div class="top-panel">
+                        <div class="logo">                        
+                        </div>
+                        <div class="title">
+                            <span>Email của bạn là?</span>                        
+                        </div>                  
+                        <div class="description">
+                            <span>Hãy xác minh email của bạn để không bị mất quyền truy cập vào tài khoản của mình</span>                        
+                        </div>   
+                        <div class="content">
+                            <form class="data-form">
+                                <div class="h-input-group">                                
+                                    <mat-form-field class="email" appearance="fill">
+                                        <mat-label>Email</mat-label>
+                                        <input [formControl]="formFields.email.control" type="email" matInput placeholder="Email" [(ngModel)]="email">
+                                        <mat-hint></mat-hint>
+                                        <mat-error *ngIf="formFields.email.control.hasError('required')">{{formFields.email.errorMessages.required}}</mat-error>
+                                        <mat-error *ngIf="formFields.email.control.hasError('email')">{{formFields.email.errorMessages.email}}</mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="commands">
+                        <div class="feature-buttons"> 
+                            <button mat-stroked-button (click)="moveNext($event)" class="r-button" [disabled]="!validate()">Tiếp tục</button>                                        
+                        </div>
+                        <div class="others">                        
+                        </div>
+                    </div>       
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div> 

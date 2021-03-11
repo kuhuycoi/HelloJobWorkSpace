@@ -1,0 +1,79 @@
+<div class="hj-page">
+    <div class="page-wrapper">
+        <mat-card>
+            <mat-card-title>
+                <div class="nav">
+                    <ul>
+                        <li class="nav-control">
+                            <button mat-icon-button class="card-button">
+                                <mat-icon class="material-icons" (click)="goBack()">keyboard_arrow_left</mat-icon>                                                        
+                            </button>                       
+                        </li>                       
+                    </ul>
+                </div>
+                <div>
+                    <mat-progress-bar mode="determinate" [value]="processPercent" color="accent"></mat-progress-bar>      
+                </div>     
+            </mat-card-title>
+
+            <mat-card-content>
+                <div class="page-form">
+                    <div class="top-panel">
+                        <div class="logo">
+                            <img src="assets/icons/logo.svg">
+                        </div>
+                        <div class="title">
+                            <span>Chào mừng bạn đến với HelloJob</span>                        
+                        </div>                    
+                        <div class="subtitle">
+                            <span>Vui lòng tuân thủ các Quy tắc chung này</span>
+                        </div>
+                        <div class="description">                            
+                        </div>          
+                        <div class="content">                            
+                            <ul class="lst-items-1">
+                                <li>
+                                    <div class="caption">   
+                                        <mat-icon color="highlight">check</mat-icon>
+                                        <span>Thông tin chính xác</span>
+                                    </div>
+                                    <div class="detail">Đảm bảo thông tin <span class="mat-secondary">việc làm, ứng viên</span>, <span class="highlight">nội dung</span> bạn cung cấp là chính xác</div>
+                                </li>
+                                <li>
+                                    <div class="caption">       
+                                        <mat-icon color="highlight">check</mat-icon>                                 
+                                        <span>Hãy là chính bạn</span>
+                                    </div>
+                                    <div class="detail">Hãy cung cấp những thông tin của bạn một cách chính xác để đảm bảo một hệ sinh thái lành mạnh</div>
+                                </li>
+                                <li>
+                                    <div class="caption">   
+                                        <mat-icon color="highlight">check</mat-icon>                                     
+                                        <span>Hết mình vì ứng viên và công việc</span>
+                                    </div>
+                                    <div class="detail">Đảm bảo rằng bạn cung cấp những thông tin <span class="secondary">việc làm, ứng viên</span>, <span class="highlight">nội dung</span>... tốt nhất, chúng tôi sẽ giúp bạn thỏa mãn đam mê giúp đõ mọi người</div>
+                                </li>
+                                <li>
+                                    <div class="caption">     
+                                        <mat-icon color="highlight">check</mat-icon>                                   
+                                        <span>Luôn tiến lên</span>
+                                    </div>
+                                    <div class="detail">Hãy lựa chọn những <span class="highlight">khóa học</span>, kiến thức chúng tôi cung cấp để luôn phát triển khả năng, kỹ năng quản lý người lao động, sẵn sàng tiếp nhận <span class="secondary">ứng viên</span> tuyệt vời mà chúng tôi sẽ cung cấp</div>
+                                </li>
+                            </ul>
+                        </div>                        
+                    </div>        
+                    <div class="commands">
+                        <div class="feature-buttons"> 
+                            <button mat-stroked-button (click)="moveNext($event)" class="r-button">
+                                Tôi đồng ý                                
+                            </button>                            
+                        </div>
+                        <div class="others">                        
+                        </div>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div> 

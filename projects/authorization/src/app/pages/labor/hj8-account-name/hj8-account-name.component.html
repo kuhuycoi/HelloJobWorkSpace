@@ -1,0 +1,56 @@
+<div class="hj-page">
+    <div class="page-wrapper">
+        <mat-card>
+            <mat-card-title>
+                <div class="nav">
+                    <ul>
+                        <li class="nav-control">
+                            <button mat-icon-button class="card-button">
+                                <mat-icon class="material-icons" (click)="goBack()">keyboard_arrow_left</mat-icon>                                                        
+                            </button>                       
+                        </li>       
+                    </ul>
+                </div>
+                <div>
+                    <mat-progress-bar mode="determinate" [value]="processPercent" color="accent"></mat-progress-bar>      
+                </div>                     
+            </mat-card-title>
+
+            <mat-card-content>
+                <div class="page-form">
+                    <div class="top-panel">
+                        <div class="logo">                        
+                        </div>
+                        <div class="title">
+                            <span>Tên tôi là?</span>                        
+                        </div>                                          
+                        <div class="content">
+                            <form class="data-form">
+                                <div class="h-input-group">                                
+                                    <mat-form-field class="email" appearance="fill">
+                                        <mat-label>Họ và tên</mat-label>
+                                        <input type="text" matInput placeholder="Họ và tên" [formControl]="formFields.name.control" (focusout)="lostFocus($event)">
+                                        <mat-hint></mat-hint>
+                                        <mat-error *ngIf="formFields.name.control.hasError('required')">{{ formFields.name.errorMessages.required }}</mat-error>
+                                        <mat-error *ngIf="formFields.name.control.hasError('minlength')">{{ formFields.name.errorMessages.minLength }}</mat-error>
+                                        <mat-error *ngIf="formFields.name.control.hasError('maxlength')">{{ formFields.name.errorMessages.maxLength }}</mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="description">                            
+                            <span>Đây là cách tên hiển thị trên HelloJob và bạn sẽ không thể đổi tên được</span>
+                        </div>   
+                    </div>
+                    <div class="commands">
+                        <div class="feature-buttons"> 
+                            <button mat-stroked-button (click)="moveNext($event)" class="r-button" [disabled]="!validate()">Tiếp tục</button>                                        
+                        </div>
+                        <div class="others">                        
+                        </div>
+                    </div>       
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div> 

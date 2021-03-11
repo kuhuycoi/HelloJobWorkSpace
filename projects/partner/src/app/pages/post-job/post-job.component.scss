@@ -1,0 +1,118 @@
+.mat-form-field {
+  width: 100%;
+}
+.attach {
+  position: relative;
+  .mat-form-field {
+    position: relative;
+    z-index: 0;
+  }
+  input[type="file"] {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+  }
+}
+
+.avatar {
+  .avatar-content {
+    display: block;
+    background-color: #fff;
+    -webkit-box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
+    box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
+    position: relative;
+    .preview-cover {
+      min-height: 270px;
+    }
+    .edit-content {
+      position: relative;
+      display: flex;
+      min-height: 270px;
+      padding: 25px 20px;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background-size: 100% 100%;
+      font-size: 23px;
+      .placeholder {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        z-index: 0;
+        font-weight: 700;
+        opacity: 0.7;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        display: flex;
+        line-height: 1.3;
+      }
+      .edit-area {
+        width: 100%;
+        outline: none;
+        font-weight: 600;
+        line-height: 1.3;
+        position: relative;
+        z-index: 1;
+        background-color: transparent;
+        border: none;
+        color: inherit;
+        text-align: center;
+        padding: 0;
+      }
+    }
+    .change-bg {
+      position: absolute;
+      background-color: #fff;
+      background-size: cover;
+      border: 3px solid #ced0d4;
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      z-index: 11;
+      bottom: 5px;
+      left: 5px;
+    }
+    .img-cover {
+      position: relative;
+    }
+    .btn-edit {
+      background-color: rgba(0, 144, 255, 0.8);
+      color: #fff;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      z-index: 1;
+      width: 100%;
+      padding: 5px;
+      text-align: center;
+      transition: ease-in-out 0.3s;
+    }
+    input[type="file"] {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      cursor: pointer;
+    }
+    .btn-edit:hover {
+      background-color: rgba(0, 144, 255, 1);
+    }
+  }
+}
+
+#attachGalleryFile {
+  position: fixed;
+  left: -999999px;
+}
+

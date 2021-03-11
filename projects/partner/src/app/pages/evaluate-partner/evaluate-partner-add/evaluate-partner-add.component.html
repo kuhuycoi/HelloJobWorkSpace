@@ -1,0 +1,33 @@
+<div class="text-right">
+    <a href="javascript:void(0)" (click)="dialogRef.close()"><b>{{'label.exit'|translate}}</b></a>
+</div>
+<div class="auth-wrapper">
+    <div class="container">
+        <ng-container [ngSwitch]="partner?.isVerify">
+            <h3 class="text-primary" *ngSwitchCase="true">Đánh giá nhà môi giới <i
+                    class="fas fa-check-circle text-primary"></i></h3>
+            <h3 class="text-primary" *ngSwitchDefault>Thông tin nhà môi giới</h3>
+        </ng-container>
+        <form (submit)="onSubmit()" [formGroup]="form" novalidate>
+            <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                <mat-label>Nội dung</mat-label>
+                <mat-icon matPrefix>find_in_page</mat-icon>
+                <textarea matInput rows="3" [formControl]="content"></textarea>
+            </mat-form-field>
+            <button type="submit">Lưu thông tin</button>
+        </form>
+    </div>
+    <div class="rules">
+        <div class="container">
+            Đánh giá nhà môi giới, bạn đồng ý với <a href="#" class="color-blue">Điều khoản Dịch
+                vụ</a>
+            và chấp thuận <a href="#" class="color-blue">Chính sách Cookie</a> cũng như
+            <a href="#" class="color-blue">Chính sách Bảo mật</a> của Hello Job.<br />
+            Trang này được bảo vệ bằng reCAPTCHA. <a href="#" class="color-blue">Chính sách quyền riêng tư</a> và <a
+                href="#" class="color-blue">Điều khoản dịch vụ</a> của Google được áp dụng.
+        </div>
+    </div>
+</div> 
+<div id="copyright" class="text-center d-print-none">
+    © 2020 Hello Job. All rights reserved
+</div>

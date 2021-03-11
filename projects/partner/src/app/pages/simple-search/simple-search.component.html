@@ -1,0 +1,4 @@
+<form [action]="formAction" method="GET" class="search-form" #form>
+    <input type="text" [name]="keyword" [value]="value" [placeholder]="placeholder" />
+    <button type="submit" (click)="form.submit()"></button>
+</form>

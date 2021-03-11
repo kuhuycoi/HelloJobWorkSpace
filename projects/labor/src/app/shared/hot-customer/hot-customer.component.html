@@ -1,0 +1,24 @@
+<div id="hot-customer">
+    <div class="container">
+        <owl-carousel-o [options]="customOptions">
+            <ng-template carouselSlide *ngFor="let item of hotCustomers">
+                <div class="item customer" [routerLink]="['/cv',item.id]">
+                    <div class="avatar-wrapper">
+                        <div class="avatar">
+                            <ng-container [ngSwitch]="isEmpty(item.urlAvatar)">
+                                <div *ngSwitchCase="true" class="bg"
+                                    [ngStyle]="{'background-image': 'url(\'/assets/img/noimg.jpg\')'}"></div>
+                                <div *ngSwitchDefault class="bg"
+                                    [ngStyle]="{'background-image': 'url(\''+localStorage.getItem('ServerUrl')+item.urlAvatar+'\')'}">
+                                </div>
+                            </ng-container>
+                        </div>
+                    </div>
+                    <h3>
+                        <img src="/assets/img/star-gold.png" *ngIf="item.isHot"> {{item|nameI18n:lang}}
+                    </h3>
+                </div>
+            </ng-template>
+        </owl-carousel-o>
+    </div>
+</div>

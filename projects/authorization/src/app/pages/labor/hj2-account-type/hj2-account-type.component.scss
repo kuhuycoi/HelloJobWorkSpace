@@ -1,0 +1,44 @@
+:host {           
+    .top-panel{
+        place-content: center;
+    }
+
+    .commands{
+        bottom: 100px;
+    }
+
+    .description{        
+        margin-top: 5px;
+    }
+
+    .logo{
+        margin-top: 50px;
+        img{
+            display: block;
+            width: 150px;    
+        }
+    }
+
+    .feature-buttons {
+        bottom: 100px;
+        margin-top: 5px;
+    }
+
+    .others{
+        margin-top: 10px;
+    }
+
+
+    @media screen and (min-width: 768px) {    
+        .description{        
+            width: 70%;
+        }
+    }
+    
+    
+    @media screen and (max-width: 768px) {     
+        .description{        
+            width: 350px;
+        }  
+    }
+}

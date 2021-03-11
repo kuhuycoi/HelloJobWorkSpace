@@ -1,0 +1,28 @@
+<div id="smart-form">
+    <div id="step-start" class="d-flex flex-column step-wrapper">
+        <div class="question text-justify d-flex align-items-end justify-content-center">
+            <div class="question-wrapper">
+                <div class="question-content" style="font-size: 13px;">
+                    {{'label.startToEasyFind'|translate}}
+                    <span class="text-uppercase"
+                        style="white-space: nowrap;color:#1976DF">{{'label.fitJob'|translate}}</span>
+                    {{'label.alsoAllowBussinessCompanyFindOutYou'|translate}}
+                </div>
+                <span class="robot"></span>
+            </div>
+        </div>
+        <div class="answer flex-fill d-flex flex-column align-items-center justify-content-start">
+            <button mat-raised-button color="primary" routerLink="/khai-phom/thong-tin" class="btn-start">
+                {{'label.start'|translate}}</button>
+            <div class="help text-center" *ngIf="!isLoggedIn">
+                <a routerLink="/tai-khoan/dang-nhap" [queryParams]="{returnUrl:'/khai-phom'}">
+                    {{'label.isMember'|translate}}</a>
+            </div>
+        </div>
+        <div class="action d-flex flex-column align-items-center first-action text-center">
+            <a href="javascript:void(0)">{{'label.researchAboutHelloJob'|translate}}</a>
+            <a routerLink='/don-hang'>{{'label.hotOrderContract'|translate}}</a>
+            <a href="javascript:void(0)">{{'label.termsOfUse'|translate}}</a>
+        </div>
+    </div>
+</div>

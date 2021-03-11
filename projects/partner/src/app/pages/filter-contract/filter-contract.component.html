@@ -1,0 +1,100 @@
+<div class="text-right">
+    <a href="javascript:void(0)" (click)="dialogRef.close()"><b [translate]="'label.exit'">{{'label.exit'|translate}}</b></a>
+</div>
+<section id="search-form">
+    <form (submit)="onSubmit()">
+        <mat-form-field class="d-block mb-3" appearance="outline" floatLabel="always">
+            <mat-label [translate]="'label.search'">Tìm kiếm</mat-label>
+            <input type="text" [formControl]="keyword"
+                placeholder="{{'placeholder.jobCompany'|translate}}" matInput />
+            <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+        <mat-form-field class="d-block mb-3" appearance="outline" floatLabel="always">
+            <mat-label [translate]="'label.place'">Địa điểm</mat-label>
+            <input type="text" [formControl]="place"
+                placeholder="{{'placeholder.hiroshimaTokyo'|translate}}" matInput />
+                <mat-icon matSuffix>location_on</mat-icon>
+        </mat-form-field>
+        <mat-label class="mb-1 d-block">{{'label.exampDate'|translate}}</mat-label>
+        <div class="row">
+            <div class="col-6">
+                <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                    <mat-label>{{'label.from'|translate}}</mat-label>
+                    <input matInput [matDatepicker]="fromDatePicker" [formControl]="examDateFrom">
+                    <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #fromDatePicker touchUi></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-6">
+                <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                    <mat-label>{{'label.to'|translate}}</mat-label>
+                    <input matInput [matDatepicker]="toDatePicker" [formControl]="examDateTo">
+                    <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #toDatePicker touchUi></mat-datepicker>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="robot text-center">
+            <img src="/assets/img/robot.svg" alt="">
+        </div>
+        <div class="form-group">
+            <ul class="filter-options list-unstyled">
+                <li><a [ngClass]="{'active': !pager?.moduleId}" (click)="changeModuleID(null)">{{'label.allCareer'|translate}}</a></li>
+                <li *ngFor="let item of groupContracts"><a [ngClass]="{'active': pager?.moduleId===item.id}"
+                        (click)="changeModuleID(item.id)">{{item.name}}</a></li>
+            </ul>
+        </div>
+
+        <div class="robot text-center">
+            <img src="/assets/img/robot.svg" alt="">
+        </div>
+        <div class="form-group">
+            <ul class="filter-options list-unstyled">
+                <li><a [ngClass]="{'active': !pager?.gender}" (click)="changeGender(0)">{{'label.all'|translate}}</a></li>
+                <li><a [ngClass]="{'active': pager?.gender===1}" (click)="changeGender(1)">{{'label.male'|translate}}</a></li>
+                <li><a [ngClass]="{'active': pager?.gender===2}" (click)="changeGender(2)">{{'label.female'|translate}}</a></li>
+            </ul>
+        </div>
+        <div class="robot text-center">
+            <img src="/assets/img/robot.svg" alt="">
+        </div>
+        <div class="form-group">
+            <ul class="filter-options list-unstyled">
+                <li><a [ngClass]="{'active': !pager?.time}" (click)="changeTime(null)">Mọi thời điểm</a></li>
+                <li><a [ngClass]="{'active': pager?.time===1}" (click)="changeTime(1)">24
+                        {{'label.hoursBefore'|translate}}</a></li>
+                <li><a [ngClass]="{'active': pager?.time===3}" (click)="changeTime(3)">3
+                        {{'label.daysBefore'|translate}}</a></li>
+                <li><a [ngClass]="{'active': pager?.time===7}" (click)="changeTime(7)">7
+                        {{'label.daysBefore'|translate}}</a></li>
+                <li><a [ngClass]="{'active': pager?.time===14}" (click)="changeTime(14)">14
+                        {{'label.daysBefore'|translate}}</a></li>
+            </ul>
+        </div>
+        <div class="robot text-center">
+            <img src="/assets/img/robot.svg" alt="">
+        </div>
+        <div class="form-group">
+            <ul class="filter-options list-unstyled">
+                <li><a [ngClass]="{'active': pager?.orderColumn==='createdDate'}"
+                        (click)="changeOrderColumn('createdDate')">{{'label.orderByTime'|translate}}</a></li>
+                <li><a [ngClass]="{'active': pager?.orderColumn==='name'}"
+                        (click)="changeOrderColumn('name')">{{'label.orderByName'|translate}}</a></li>
+                <li><a [ngClass]="{'active': pager?.orderColumn==='contractAddress'}"
+                        (click)="changeOrderColumn('contractAddress')">{{'label.orderByPlace'|translate}}</a></li>
+            </ul>
+        </div>
+        <div class="robot text-center">
+            <img src="/assets/img/robot.svg" alt="">
+        </div>
+        <div class="form-group mb-3">
+            <ul class="filter-options list-unstyled">
+                <li><a [ngClass]="{'active': pager.asc}" (click)="changeAsc(true)"> {{'label.orderAsc'|translate}}</a>
+                </li>
+                <li><a [ngClass]="{'active': !pager.asc}" (click)="changeAsc(false)">{{'label.orderDesc'|translate}}</a>
+                </li>
+            </ul>
+        </div>
+        <button type="submit" mat-raised-button>{{'label.update'|translate}}</button>
+    </form>
+</section>

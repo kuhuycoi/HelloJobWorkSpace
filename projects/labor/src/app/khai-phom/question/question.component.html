@@ -1,0 +1,8 @@
+<ng-container [ngSwitch]="formType">
+    <div *ngSwitchCase="'B'">
+        <app-basic-form></app-basic-form>
+    </div>
+    <div *ngSwitchCase="'A'">
+        <app-step-by-step-form></app-step-by-step-form>
+    </div>
+</ng-container>

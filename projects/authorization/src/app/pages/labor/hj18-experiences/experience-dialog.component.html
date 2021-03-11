@@ -1,0 +1,15 @@
+<h1 mat-dialog-title>Kinh nghiệm</h1>
+<div mat-dialog-content>
+  <p>Số năm kinh nghiệm của bạn</p>
+  <mat-form-field *ngIf="formFields">
+    <mat-label>Năm</mat-label>
+    <input type="number" min="{{data.min}}}" max="{{data.max}}" matInput [(ngModel)]="data.year" [formControl]="formFields.year.control">
+    <mat-error *ngIf="formFields.year.control.hasError('required')">{{formFields.year.errorMessages.required}}</mat-error>
+    <mat-error *ngIf="formFields.year.control.hasError('min')">{{formFields.year.errorMessages.min}}</mat-error>
+    <mat-error *ngIf="formFields.year.control.hasError('max')">{{formFields.year.errorMessages.max}}</mat-error>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Đóng</button>
+  <button mat-button [mat-dialog-close]="data" [disabled]="!validate()">Xác nhận</button>
+</div>

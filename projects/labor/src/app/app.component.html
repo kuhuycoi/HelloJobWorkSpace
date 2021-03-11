@@ -1,0 +1,29 @@
+<div id="wrapper">
+  <div class="spinner-wrapper" [ngClass]="{'d-none': !isLoading}">
+    <mat-spinner></mat-spinner>
+  </div>
+  <mat-sidenav-container (backdropClick)="openSidenav()">
+    <mat-sidenav mode="over" position="start" id="side-nav" [fixedInViewport]="true" [fixedTopGap]="0"
+      [fixedBottomGap]="0" [opened]="isOpenedSidenav" (openedChange)="sideNavOpenedChange($event)">
+      <app-sidebar *ngIf="loaded"></app-sidebar>
+    </mat-sidenav>
+    <mat-sidenav mode="over" position="end" [opened]="isOpenedNotify" id="notify-nav" [fixedInViewport]="true"
+      [fixedTopGap]="0" [fixedBottomGap]="0">
+      <app-notify></app-notify>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <div class="d-flex flex-column" id="content">
+        <div id="overlay"></div>
+        <div class="scroll flex-fill" id="content-scroll" (scroll)="onContentScroll($event)">
+          <ng-container *ngIf="loaded">
+            <app-header class="d-print-none"></app-header>
+            <div class="router-content">
+              <router-outlet></router-outlet>
+            </div>
+          </ng-container>
+        </div>
+        <app-bottom-nav></app-bottom-nav>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

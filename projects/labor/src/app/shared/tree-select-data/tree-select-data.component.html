@@ -1,0 +1,8 @@
+<mat-form-field class="d-block mb-2" appearance="outline" floatLabel="always">
+    <mat-label [translate]="label"></mat-label>
+    <input readonly  (click)="changeCareer()" type="text" [value]="buildText()" [autofocus]="true" matInput required />
+    <!-- <mat-icon matSuffix color="primary">account_circle</mat-icon> -->
+    <!-- <mat-error *ngIf="fullName.invalid">{{getError(text)}}</mat-error> -->
+</mat-form-field>
+<ng-container *ngFor="let item of data">
+</ng-container>

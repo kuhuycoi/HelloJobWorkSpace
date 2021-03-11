@@ -1,0 +1,53 @@
+:host {
+  display: block;
+  background-color: #fff;
+  height: 100%;
+  padding: 0 0 15px;
+}
+.title {
+  color: #27173e;
+  border-bottom: 1px solid #dcdce9;
+  padding: 10px 0;
+  h2{
+    font-size: 15px;
+    text-transform: uppercase;
+  }
+}
+
+.notice {
+  padding: 7px 15px;
+  border-bottom: 1px solid #dcdce9;
+  i {
+    width: 36px;
+    height: 36px;
+    display: inline-block;
+    line-height: 36px;
+    font-size: 18px;
+    border-radius: 50%;
+    margin-right: 16px;
+    color: #fff;
+    text-align: center;
+    margin-top: 10px;
+  }
+  h4 {
+    font-weight: 600;
+    color: #000;
+    margin-bottom: 0;
+  }
+  p {
+    font-size: 13px;
+    margin-bottom: 3px;
+    line-height: 16px;
+    color: #666;
+    b {
+      font-weight: 600;
+    }
+  }
+  .time {
+    color: gray;
+    font-size: 12px;
+  }
+}
+.notice.new {
+  background-color: rgba(220, 220, 233, 0.3);
+}

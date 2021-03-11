@@ -1,0 +1,14 @@
+:host{   
+    .commands{
+        button.mat-warn{
+            border-color: var(--warn-color);
+        }
+    }
+
+    mat-form-field{
+        mat-icon {
+            font-size: var(--font-size-h2);
+        }
+    }
+}
+

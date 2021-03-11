@@ -1,0 +1,27 @@
+<div class="owl-gallery" id="zoomed-gallery">
+    <a href="javascript:void(0)" class="close" (click)="close()"><span class="material-icons">clear</span></a>
+    <div class="content">
+        <ng-container [ngSwitch]="currentSlide.type">
+            <ng-container *ngSwitchCase="'img'">
+                <img [src]="localStorage.getItem('ServerUrl')+currentSlide.url">
+            </ng-container>
+            <ng-container *ngSwitchCase="'video'">
+                <video width="100%" controls #videoPlayer playsinline>
+                    <source [src]="localStorage.getItem('ServerUrl')+currentSlide.url" />
+                </video>
+            </ng-container>
+            <ng-container *ngSwitchCase="'iframe'">
+                <div class="iframe-wrapper" [innerHTML]="currentSlide.url|trustHTML"></div>
+                <!-- <div class="iframe-wrapper">
+                    {{sanitizer.bypassSecurityTrustHtml(currentSlide.url)}}
+                </div> -->
+            </ng-container>
+        </ng-container>
+    </div>
+    <a href="javascript:void(0)" class="prev control" (click)="prevSlide()">
+        <span class="material-icons">arrow_back</span>
+    </a>
+    <a href="javascript:void(0)" class="next control" (click)="nextSlide()">
+        <span class="material-icons">arrow_forward</span>
+    </a>
+</div>

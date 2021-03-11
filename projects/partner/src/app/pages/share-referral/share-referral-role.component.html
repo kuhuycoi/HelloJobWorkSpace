@@ -1,0 +1,57 @@
+<h4 class="title">Kiểu chia sẻ</h4>
+<form [formGroup]="form" (submit)="onSubmit()">
+    <mat-radio-group [formControl]="roleType">
+        <mat-radio-button value="PUBLIC" mat-list-item color="primary">
+            <div class="d-flex align-items-center role">
+                <div class="icon">
+                    <i class="fas fa-globe-asia"></i>
+                </div>
+                <div class="flex-fill">
+                    <div><b>Bật</b> - Công khai trên web</div>
+                    <div class="desc">
+                        <small>Bất kỳ ai truy cập vào Hello Job đều có thể tìm kiếm và xem CV lao động này</small>
+                    </div>
+                </div>
+            </div>
+        </mat-radio-button>
+        <mat-radio-button value="PUBLIC_SIMPLE" mat-list-item color="primary">
+            <div class="d-flex align-items-center role">
+                <div class="icon">
+                    <i class="fas fa-info"></i>
+                </div>
+                <div class="flex-fill">
+                    <div><b>Bật</b> - Công khai một phần thông tin</div>
+                    <div class="desc">
+                        <small>Hiển thị trên trang lao động nhưng chỉ những người được chia sẻ mới có thể xem CV lao động này</small>
+                    </div>
+                </div>
+            </div>
+        </mat-radio-button>
+        <mat-radio-button value="WITH_LINK" mat-list-item color="primary">
+            <div class="d-flex align-items-center role">
+                <div class="icon">
+                    <i class="fas fa-link"></i>
+                </div>
+                <div class="flex-fill">
+                    <div><b>Bật</b> - Bất cứ ai có liên kết</div>
+                    <div class="desc"><small>Không công khai trên web. Chỉ những ai có liên kết mới có thể xem lao động này</small></div>
+                </div>
+            </div>
+        </mat-radio-button>
+        <mat-radio-button value="PRIVATE" mat-list-item color="primary">
+            <div class="d-flex align-items-center role">
+                <div class="icon">
+                    <i class="fas fa-user-shield"></i>
+                </div>
+                <div class="flex-fill">
+                    <div><b>Tắt</b> - Những người được chia sẻ</div>
+                    <div class="desc"><small>Chỉ chia sẻ lao động này với những người cụ thể</small></div>
+                </div>
+            </div>
+        </mat-radio-button>
+    </mat-radio-group>
+    <div class="d-flex action">
+        <button type="submit" class="mr-1">Lưu</button>
+        <button type="reset">Hủy</button>
+    </div>
+</form>

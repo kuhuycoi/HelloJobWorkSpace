@@ -1,0 +1,66 @@
+<div class="hj-page">
+    <div class="page-wrapper">
+        <mat-card>
+            <mat-card-title>
+                <div class="nav">
+                    <ul>
+                        <li class="nav-control">
+                            <button mat-icon-button class="card-button">
+                                <mat-icon class="material-icons" (click)="goBack()">keyboard_arrow_left</mat-icon>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <mat-progress-bar mode="determinate" [value]="processPercent" color="accent"></mat-progress-bar>
+                </div>
+            </mat-card-title>
+
+            <mat-card-content>
+                <div class="page-form">
+                    <div class="top-panel">
+                        <div class="logo">
+                        </div>
+                        <div class="title">
+                            <span>Trường của tôi là</span>
+                        </div>
+                        <div class="content">
+                            <form class="data-form">
+                                <div class="h-input-group" *ngIf="loaded">
+                                    <mat-form-field apperance="fill">
+                                        <mat-label>Tên trường</mat-label>
+                                        <input matInput type="text" [matAutocomplete]="auto"
+                                            [formControl]="highSchool" placeholder="Nhập tên trường">
+                                        <mat-autocomplete #auto="matAutocomplete">
+                                            <mat-option *ngFor="let item of filteredHighSchools | async" [value]="item" (click)="dataChanged(item)">
+                                                <b>{{item.provinceTemp}}</b> - {{item.name}}
+                                            </mat-option>
+                                        </mat-autocomplete>
+                                        <span matPrefix>
+                                            <mat-icon>search</mat-icon>
+                                        </span>
+                                        <button mat-icon-button matSuffix attr.aria-label="'Đặt lại'"
+                                            (click)="clearCondition($event)">
+                                            <mat-icon>close</mat-icon>
+                                        </button>
+                                        <mat-error *ngIf="highSchool.hasError('required')">Cần phải nhập bằng cấp</mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="description">
+                        </div>
+                    </div>
+                    <div class="commands">
+                        <div class="feature-buttons">
+                            <button mat-stroked-button (click)="moveNext($event)" class="r-button"
+                                [disabled]="!validate()">Tiếp tục</button>
+                        </div>
+                        <div class="others">
+                        </div>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

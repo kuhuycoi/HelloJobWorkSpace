@@ -1,0 +1,15 @@
+.form-group.position-relative {
+    position: relative;
+    .form-control {
+        border-radius: 25px;
+        font-size: 15px;
+        font-weight: 500;
+    }
+    .form-control-position {
+        position: absolute;
+        right: 12px;
+        top: 7px;
+        font-size: 19px;
+        cursor: pointer;
+    }
+}

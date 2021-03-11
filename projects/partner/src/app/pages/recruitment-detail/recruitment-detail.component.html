@@ -1,0 +1,71 @@
+<div class="avatar">
+    <div class="avatar-content">
+        <div class="img-cover">
+            <ng-container [ngSwitch]="isEmpty(recruitment.customerID?.urlAvatar)">
+                <ng-container *ngSwitchCase="true">
+                    <img src="/assets/img/noimg.jpg">
+                </ng-container>
+                <ng-container *ngSwitchDefault>
+                    <img [src]="localStorage.getItem('ServerUrl')+recruitment.customerID?.urlAvatar">
+                </ng-container>
+            </ng-container>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <mat-card-content>
+        <h3 class="text-center">Bùi Quang Huy</h3>
+        <h4 class="text-center">Đơn hàng: <span class="color-blue">{{recruitment.website_OrderContractID.name}}</span>
+        </h4>
+        <p class="text-center">
+            <ng-container [ngSwitch]="recruitment.status">
+                <ng-container *ngSwitchCase="1">
+                    <span class="text-success">
+                        <i class="fas fa-check-square"></i> Đã duyệt
+                    </span>
+                </ng-container>
+                <ng-container *ngSwitchCase="2">
+                    <span class="text-danger">
+                        <i class="fas fa-exclamation-circle"></i> Đã từ chối
+                    </span>
+                </ng-container>
+                <ng-container *ngSwitchDefault>
+                    <span class="text-warning">
+                        <i class="fas fa-spinner"></i> Chờ duyệt
+                    </span>
+                </ng-container>
+            </ng-container>
+        </p>
+        <label class="mb-2">CV ứng tuyển</label>
+        <small class="d-flex justify-content-between align-items-center">
+            <a routerLink="/cv/{{recruitment.customerID.id}}" class="color-blue" *ngIf="recruitment.customerID"
+                target="_blank"><i class="fas fa-external-link-alt"></i> CV Hello
+                Job</a>
+            <a *ngIf="recruitment.urlCV" [href]="localStorage.getItem('ServerUrl')+recruitment.urlCV" target="_blank"
+                class="color-blue">
+                <i class="fas fa-file-download"></i> CV đính kèm
+            </a>
+        </small>
+        <hr />
+        <mat-form-field class="d-block">
+            <mat-label>Số điện thoại</mat-label>
+            <input type="text" [value]="recruitment.mobile" matInput readonly />
+        </mat-form-field>
+        <mat-form-field class="d-block">
+            <mat-label>Email</mat-label>
+            <input type="text" [value]="recruitment.email" matInput readonly />
+        </mat-form-field>
+        <mat-form-field class="d-block">
+            <mat-label>Địa chỉ</mat-label>
+            <input type="text" [value]="recruitment.address" matInput readonly />
+        </mat-form-field>
+        <mat-form-field class="d-block">
+            <mat-label>Ghi chú</mat-label>
+            <textarea rows="3" [value]="recruitment.content" matInput readonly></textarea>
+        </mat-form-field>
+    </mat-card-content>
+    <mat-card-actions class="d-flex justify-content-between mb-3" *ngIf="!recruitment?.status">
+        <button mat-raised-button color="primary" (click)="accept()">Duyệt</button>
+        <button mat-raised-button color="warn" (click)="deny()">Từ chối</button>
+    </mat-card-actions>
+</div>

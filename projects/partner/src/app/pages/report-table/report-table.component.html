@@ -1,0 +1,24 @@
+<div class="text-right">
+    <a href="javascript:void(0)" (click)="dialogRef.close()">
+        <b [translate]="'label.exit'">{{'label.exit'|translate}}</b></a>
+</div>
+<form [formGroup]="form">
+    <mat-form-field class="d-block" appearance="outline" color="primary" floatLabel="always">
+        <mat-label>{{'label.reportReason'|translate}}</mat-label>
+        <mat-select formControlName="reportReasonID" required>
+            <mat-option *ngFor="let item of reasonList" [value]="item.id">{{item.name}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field *ngIf="otherReason" class="d-block mb-2" appearance="outline" floatLabel="always">
+        <mat-label [translate]="'placeholder.otherReason'">Nội dung lý do khác</mat-label>
+        <input formControlName="content" [autofocus]="true" matInput required />
+        <!-- <i class="fab fa-youtube text-danger" matSuffix></i> -->
+        <mat-error *ngIf="content.invalid">{{getError(content)}}</mat-error>
+        <!-- <mat-hint><a href="/assets/img/hướng dẫn lấy iframe youtube.jpg" target="_blank" class="color-blue">Hướng dẫn lấy Iframe Youtube</a></mat-hint> -->
+    </mat-form-field>
+    <div class="text-right">
+        <button type="submit" (click)="onSubmit()" mat-raised-button
+            color="primary">{{'label.selectLink'|translate}}</button>
+    </div>
+</form>

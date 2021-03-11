@@ -1,0 +1,33 @@
+<div class="gallery">
+    <div class="order-gallery">
+        <div class="wrapper clearfix">            
+            <owl-carousel-o [options]="customOptions" #owl>
+                <ng-container *ngFor="let item of gallery; let i = index">
+                    <ng-template carouselSlide [id]="i" [width]="170">
+                        <div class="item" [appZoomGallery]="gallery" [appZoomIndex]="i">
+                            <div class="item-wrapper">
+                                <ng-container [ngSwitch]="item.type">
+                                    <ng-container *ngSwitchCase="'img'">
+                                        <div class="img">
+                                            <img [src]="localStorage.getItem('ServerUrl')+item.url" />
+                                        </div>
+                                    </ng-container>
+                                    <ng-container *ngSwitchCase="'video'">
+                                        <div class="img video">
+                                            <i class="fas fa-play"></i>
+                                        </div>
+                                    </ng-container>
+                                    <ng-container *ngSwitchCase="'iframe'">
+                                        <div class="img iframe">
+                                            <i class="fab fa-youtube"></i>
+                                        </div>
+                                    </ng-container>
+                                </ng-container>
+                            </div>
+                        </div>
+                    </ng-template>
+                </ng-container>
+            </owl-carousel-o>
+        </div>
+    </div>
+</div>

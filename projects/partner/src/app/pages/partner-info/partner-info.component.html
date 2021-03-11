@@ -1,0 +1,111 @@
+<div class="container">
+    <div class="auth-wrapper">
+        <ng-container [ngSwitch]="partner?.isVerify">
+            <h3 class="color-blue" *ngSwitchCase="true">{{'label.partnerInfo'|translate}} <i
+                    class="fas fa-check-circle text-primary"></i></h3>
+            <h3 *ngSwitchDefault>{{'label.partnerInfo'|translate}} </h3>
+        </ng-container>
+        <form (submit)="onSubmit()" [formGroup]="form" novalidate>
+            <div class="d-flex align-items-center mb-3">
+                <div class="avatar mr-2">
+                    <div class="img-cover">
+                        <ng-container *ngIf="partner&&partner?.urlAvartar; else elseTemplate">
+                            <img [src]="localStorage.getItem('ServerUrl')+partner?.urlAvartar" #avatar>
+                        </ng-container>
+                        <ng-template #elseTemplate>
+                            <img src="/assets/img/noimg.png" #avatar>
+                        </ng-template>
+                    </div>
+                    <input type="file" name="attachFile" (change)="onFileChange($event)" accept=".png,.jpg,.jpeg" />
+                </div>
+                <mat-form-field class="flex-fill" appearance="outline" color="primary" floatLabel="always">
+                    <mat-label>{{'label.companyName'|translate}}</mat-label>
+                    <input matInput formControlName="name" required>
+                    <mat-error *ngIf="name.hasError('required')">
+                        {{'label.pleaseEnterYourCompanyName'|translate}}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <mat-form-field class="flex-fill" appearance="outline" color="primary" floatLabel="always">
+                <mat-label>{{'label.companyCode'|translate}}</mat-label>
+                <input matInput formControlName="code">
+            </mat-form-field>
+            <!-- <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                <mat-label>{{'label.japaneseName'|translate}}</mat-label>
+                <mat-icon matSuffix>translate</mat-icon>
+                <input matInput formControlName="nameJapan">
+            </mat-form-field> -->
+            <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                <mat-label>{{'label.phoneNumber'|translate}}</mat-label>
+                <input matInput formControlName="mobile">
+                <mat-icon matSuffix>phone</mat-icon>
+                <mat-error *ngIf="mobile.hasError('required')">
+                    {{'label.pleaseEnterPhoneNumber'|translate}}
+                </mat-error>
+            </mat-form-field>
+            <!-- <div class="or">
+                <span>{{'label.infoAddition'|translate}}</span>
+            </div> -->
+            <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                <mat-label>{{'label.email'|translate}}</mat-label>
+                <input matInput formControlName="email">
+                <mat-icon matSuffix>email</mat-icon>
+                <mat-error *ngIf="email.hasError('pattern')">
+                    {{'label.pleaseEnterEmail'|translate}}
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                <mat-icon matSuffix>message</mat-icon>
+                <mat-label>{{'label.linkZalo'|translate}}</mat-label>
+                <div class="d-flex">
+                    <b>https://zalo.me/</b>
+                    <input type="tel" formControlName="zaloContact" matInput>
+                </div>
+            </mat-form-field>
+            <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                <mat-label>{{'label.website'|translate}}</mat-label>
+                <mat-icon matSuffix>open_in_new</mat-icon>
+                <div class="d-flex">
+                    <b>http(s)://</b>
+                    <input matInput formControlName="websiteLink">
+                </div>
+            </mat-form-field>
+            <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                <mat-label>{{'label.address'|translate}}</mat-label>
+                <mat-icon matSuffix>location_on</mat-icon>
+                <textarea matInput rows="3" [formControl]="address"></textarea>
+            </mat-form-field>
+            <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                <mat-label>{{'label.description'|translate}}</mat-label>
+                <mat-icon matSuffix>find_in_page</mat-icon>
+                <textarea matInput rows="3" [formControl]="description"></textarea>
+            </mat-form-field>
+            <div class="form-item">
+                <!-- <ckeditor [editor]="editor" [formControl]="content"
+                    [config]="{placeholder:'Nội dung chi tiết về công ty'}"></ckeditor> -->
+            </div>
+            <!-- <div class="form-item">
+                <re-captcha [formControl]="captcha" required siteKey="6LfNH9cUAAAAAKYYoC8dW4CK9RdpuJqgrtNmznXZ">
+                </re-captcha>
+            </div> -->
+            <button type="submit">{{'label.save'|translate}}</button>
+        </form>
+    </div>
+</div>
+<div class="rules">
+    <div class="container">
+        {{'label.registerPartnerPolicy'|translate}}
+        <a routerLink="/thoa-thuan-su-dung" class="color-blue">{{'label.termAndService'|translate}}</a>
+        {{'label.accept'|translate}}
+        <!-- <a href="#" class="color-blue">{{'label.cookiePolicy'|translate}}</a>
+        {{'label.also'|translate}} -->
+        <a routerLink="/quy-dinh-bao-mat" class="color-blue">{{'label.securePolicy'|translate}}</a>
+        {{'label.ofHelloJob'|translate}}<br />
+        <!-- {{'label.captchaProtect'|translate}}
+        <a href="#" class="color-blue">{{'label.privatePolicy'|translate}}</a>
+        {{'label.and'|translate}}
+        <a href="#" class="color-blue">{{'label.serviceRule'|translate}}</a>
+        {{'label.ofGoogleApply'|translate}} -->
+    </div>
+</div>
+<app-footer class="d-print-none"></app-footer>

@@ -1,0 +1,736 @@
+<!-- <app-hot-order></app-hot-order> -->
+<ng-container *ngIf="orderContract">
+    <div class="container">
+        <div class="contracts-list">
+            <div class="contract-item">
+                <div class="contract-main" [routerLink]="['/don-hang',orderContract.id]">
+                    <div class="contract-name"><span class="flex-fill">{{orderContract.name}}</span><span
+                            class="discount-percent"
+                            *ngIf="orderContract.discount<orderContract.preDeposit">-{{(orderContract.preDeposit-orderContract.discount)*100/orderContract.preDeposit|number:'1.0-0'}}%</span>
+                    </div>
+                    <div class="contract-price-code d-flex justify-content-between align-items-start">
+                        <span class="contract-code">{{orderContract.code}}</span>
+                        <!-- <span class="contract-need-deposit mr-auto">
+                        <ng-container *ngIf="orderContract.preDeposit;else elseNotDeposit">
+                            Cọc {{orderContract.preDeposit}}
+                        </ng-container>
+                    </span> -->
+                        <div class="contract-price" *ngIf="orderContract.discount;else notDiscount">
+                            <div class="after-discount">{{orderContract.discount}}</div>
+                            <div class="discount d-flex justify-content-end align-items-center"
+                                *ngIf="orderContract.discount<orderContract.preDeposit">
+                                <span class="before-discount">{{orderContract.preDeposit}}</span>
+                            </div>
+                        </div>
+                        <ng-template #notDiscount>
+                            <div class="contract-price" *ngIf="orderContract.discount;else notDiscount">
+                                <div class="after-discount">{{orderContract.totalPrice}}</div>
+                            </div>
+                        </ng-template>
+                    </div>
+                    <div class="contract-infos">
+                        <table width="100%">
+                            <tr>
+                                <th>
+                                    <img src="/assets/img/icon-contract/icon1.svg" alt="" />
+                                </th>
+                                <td *ngIf="orderContract.jobProvinceID;else elseContact">
+                                    {{orderContract.jobProvinceID.name}}</td>
+                                <th>
+                                    <img src="/assets/img/icon-contract/icon2.svg" alt="" />
+                                </th>
+                                <td *ngIf="orderContract.contractSalaryFrom||orderContract.contractSalaryTo;else elseContact"
+                                    class="text-danger">
+                                    <b *ngIf="orderContract.contractSalaryFrom">{{orderContract.contractSalaryFrom}}
+                                        {{'label.yen'|translate}}</b>
+                                    <span *ngIf="orderContract.contractSalaryFrom&&orderContract.contractSalaryTo"
+                                        style="padding: 0 5px">-</span>
+                                    <b *ngIf="orderContract.contractSalaryTo">
+                                        <!-- <ng-container *ngIf="orderContract.contractSalaryFrom">
+                                            {{'label.upTo'|translate}}
+                                        </ng-container> -->
+                                        {{orderContract.contractSalaryTo}} {{'label.yen'|translate}}
+                                    </b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <img src="/assets/img/icon-contract/icon3.svg" alt="" />
+                                </th>
+                                <td
+                                    *ngIf="orderContract.contractQuantityMale||orderContract.contractQuantityFemale;else elseGender">
+                                    <ng-container *ngIf="orderContract.contractQuantityMale">
+                                        {{orderContract.contractQuantityMale}} {{'label.male'|translate}}
+                                    </ng-container>
+                                    <ng-container
+                                        *ngIf="orderContract.contractQuantityMale&&orderContract.contractQuantityFemale"
+                                        style="padding: 0 5px"> - </ng-container>
+                                    <ng-container *ngIf="orderContract.contractQuantityFemale">
+                                        {{orderContract.contractQuantityFemale}} {{'label.female'|translate}}
+                                    </ng-container>
+                                </td>
+                                <th>
+                                    <img src="/assets/img/icon-contract/icon4.svg" alt="" />
+                                </th>
+                                <td
+                                    *ngIf="orderContract.contractQuantityJoinMale||orderContract.contractQuantityJoinFemale;else elseGenderJoinShort">
+                                    <ng-container *ngIf="orderContract.contractQuantityJoinMale">
+                                        {{orderContract.contractQuantityJoinMale}} {{'label.male'|translate}}
+                                    </ng-container>
+                                    <ng-container
+                                        *ngIf="orderContract.contractQuantityJoinMale&&orderContract.contractQuantityJoinFemale"
+                                        style="padding: 0 5px"> - </ng-container>
+                                    <ng-container *ngIf="orderContract.contractQuantityJoinFemale">
+                                        {{orderContract.contractQuantityJoinFemale}} {{'label.female'|translate}}
+                                    </ng-container>
+                                </td>
+                                <ng-template #elseGenderJoinShort>
+                                    <td [ngSwitch]="isEmpty(orderContract.contractQuantityJoin)" class="text-danger">
+                                        <ng-container *ngSwitchCase="true"><b><i>{{'label.contact'|translate}}</i></b>
+                                        </ng-container>
+                                        <ng-container *ngSwitchDefault>{{orderContract.contractQuantityJoin}} form</ng-container>
+                                    </td>
+                                </ng-template>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <img src="/assets/img/icon-contract/icon5.svg" alt="" />
+                                </th>
+                                <td *ngIf="orderContract.moduleIDs;else elseContact">
+                                    {{getModuleName(orderContract)}}
+                                </td>
+                                <th>
+                                    <img src="/assets/img/icon-contract/icon6.svg" alt="" />
+                                </th>
+                                <td *ngIf="orderContract.trainingRequired;else elseContact" class="text-danger">
+                                    <ng-container [ngSwitch]="orderContract.trainingRequired">
+                                        <div *ngSwitchCase="'ONLINE_WITH_FEE'">
+                                            {{'label.onlineWithFee'|translate}}
+                                        </div>
+                                        <div *ngSwitchCase="'ONLINE_WITHOUT_FEE'">
+                                            {{'label.onlineWithoutFee'|translate}}
+                                        </div>
+                                        <div *ngSwitchCase="'STUDY_AT_CENTER'">
+                                            {{'label.studyAtCenter'|translate}}
+                                        </div>
+                                    </ng-container>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="contract-action">
+                    <div class="contract-action-wrapper d-flex align-items-center justify-content-between">
+                        <a mat-button [routerLink]="['/dang-ky-ung-tuyen',orderContract.id]"
+                            class="d-flex align-items-center justify-content-center">
+                            <i class="fab fa-telegram"></i>{{'label.apply'| translate}}
+                        </a>
+                        <div ngbDropdown class="flex-fill">
+                            <a mat-button ngbDropdownToggle class="d-flex align-items-center justify-content-center">
+                                <i class="fas fa-share-alt"></i>{{'label.share'| translate}}
+                            </a>
+                            <div class="dropdown-menu" ngbDropdownMenu>
+                                <app-socials-shared [vertical]="true" [urlSharing]="getUrlShare(orderContract.id)">
+                                </app-socials-shared>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <ng-template #elseGender>
+                    <td [ngSwitch]="!orderContract.contractQuantity">
+                        <ng-container *ngSwitchCase="true"><b><i>{{'label.contact'|translate}}</i></b>
+                        </ng-container>
+                        <ng-container *ngSwitchDefault>{{orderContract.contractQuantity}}
+                            {{'label.person'|translate}}</ng-container>
+                    </td>
+                </ng-template>
+            </div>
+        </div>
+        <ng-template #elseNotDeposit>
+            <span class="text-uppercase">Không cọc</span>
+        </ng-template>
+        <div class="contract-detail">
+            <table class="table mb-0">
+                <thead class="thead-dark">
+                    <tr>
+                        <th colspan="3">{{'label.orderContractInfo'|translate}}</th>
+                    </tr>
+                </thead>
+                <tr>
+                    <td><i class="fas fa-file-signature"></i></td>
+                    <td>{{'label.orderContractName'|translate}}</td>
+                    <td *ngIf="orderContract.name;else elseContact">
+                        <b class="text-uppercase">{{orderContract.name}}</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td><i class="fas fa-qrcode"></i></td>
+                    <td>{{'label.orderContractCode'|translate}}</td>
+                    <td *ngIf="orderContract.name;else elseContact">{{orderContract.code}}</td>
+                </tr>
+                <tr *ngIf="isEmpty(orderContract.urlApply)">
+                    <td><i class="fab fa-telegram"></i></td>
+                    <td colspan="2">{{'label.applyWithHelloJobCV'|translate}}</td>
+                </tr>
+                <tr>
+                    <td><i class="fas fa-building"></i></td>
+                    <td>{{'label.syndicationName'|translate}}</td>
+                    <td *ngIf="orderContract.syndicationName;else elseContact">
+                        {{orderContract.syndicationName}}
+                    </td>
+                </tr>
+                <tr>
+                    <td><i class="fas fa-industry"></i></td>
+                    <td>{{'label.factoryName'|translate}}</td>
+                    <td *ngIf="orderContract.factoryName;else elseContact">
+                        {{orderContract.factoryName}}
+                    </td>
+                </tr>
+                <tr>
+                    <td><i class="fas fa-school"></i></td>
+                    <td>{{'label.trainingRequired'|translate}}</td>
+                    <td *ngIf="orderContract.trainingRequired;else elseContact">
+                        <ng-container [ngSwitch]="orderContract.trainingRequired">
+                            <div *ngSwitchCase="'ONLINE_WITH_FEE'">
+                                {{'label.onlineWithFee'|translate}}
+                            </div>
+                            <div *ngSwitchCase="'ONLINE_WITHOUT_FEE'">
+                                {{'label.onlineWithoutFee'|translate}}
+                            </div>
+                            <div *ngSwitchCase="'STUDY_AT_CENTER'">
+                                {{'label.studyAtCenter'|translate}}
+                            </div>
+                        </ng-container>
+                    </td>
+                </tr>
+                <thead class="thead-dark">
+                    <tr>
+                        <th colspan="3">{{'label.orderRoadmap'|translate}}</th>
+                    </tr>
+                </thead>
+                <tr>
+                    <td><i class="fas fa-road"></i></td>
+                    <td *ngIf="orderContract.orderRoadmap;else elseContact" colspan="2">
+                        <ng-container [ngSwitch]="orderContract.orderRoadmap">
+                            <h3 *ngSwitchCase="'RECEIVE_FORM'" class="mb-0 text-uppercase text-success"
+                                style="font-weight: bold;">
+                                {{'label.receiveForm'|translate}}
+                            </h3>
+                            <h3 *ngSwitchCase="'EXAMINATION'" class="mb-0 text-uppercase text-success"
+                                style="font-weight: bold;">
+                                {{'label.examination'|translate}}
+                            </h3>
+                            <h3 *ngSwitchCase="'RECEIVE_RECORD'" class="mb-0 text-uppercase text-success"
+                                style="font-weight: bold;">
+                                {{'label.receiveRecord'|translate}}
+                            </h3>
+                            <h3 *ngSwitchCase="'EDUCATE'" class="mb-0 text-uppercase text-success"
+                                style="font-weight: bold;">
+                                {{'label.educate'|translate}}
+                            </h3>
+                            <h3 *ngSwitchCase="'APPLY_VISA'" class="mb-0 text-uppercase text-success"
+                                style="font-weight: bold;">
+                                {{'label.applyVisa'|translate}}
+                            </h3>
+                        </ng-container>
+                    </td>
+                </tr>
+                <thead class="thead-dark">
+                    <tr>
+                        <th colspan="3">Chi phí</th>
+                    </tr>
+                </thead>
+                <tr>
+                    <td><i class="fas fa-money-bill"></i></td>
+                    <td><b>Phí thông thường</b> (tham khảo)</td>
+                    <td *ngIf="orderContract.preDeposit;else elseContact">
+                        <span class="text-muted"
+                            style="text-decoration: line-through;">{{orderContract.preDeposit|number:'1.0-3'}}</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td><i class="fas fa-hand-holding-usd"></i></td>
+                    <td><b class="text-primary">Phí qua HelloJob</b> (tham khảo)</td>
+                    <td *ngIf="orderContract.discount;else elseContact">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <strong class="text-primary">{{orderContract.discount|number:'1.0-3'}}</strong>
+                            <span *ngIf="orderContract.discount<orderContract.preDeposit"
+                                class="badge badge-danger ml-1 mr-auto"> -
+                                {{((orderContract.preDeposit-orderContract.discount)*100/orderContract.preDeposit)|number:'1.0-0'}}%</span>
+                            <div
+                                *ngIf="orderContract.moneyBackOrigin||orderContract.price||orderContract.moneyAfterFly">
+                                <i class="fas fa-angle-down"></i>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr *ngIf="orderContract.moneyBackOrigin">
+                    <td>+</td>
+                    <td>Trúng tuyển</td>
+                    <td class="text-info">
+                        {{orderContract.moneyBackOrigin|number:'1.0-3'}}
+                    </td>
+                </tr>
+                <tr *ngIf="orderContract.price">
+                    <td>+</td>
+                    <td>Học phí đào tạo</td>
+                    <td class="text-info">
+                        {{orderContract.price|number:'1.0-3'}}
+                    </td>
+                </tr>
+                <tr *ngIf="orderContract.moneyAfterFly">
+                    <td>+</td>
+                    <td>Ra tư cách</td>
+                    <td class="text-info">
+                        {{orderContract.moneyAfterFly|number:'1.0-3'}}
+                    </td>
+                </tr>
+                <thead class="thead-dark">
+                    <tr>
+                        <th colspan="3">Thông tin tuyển dụng</th>
+                    </tr>
+                </thead>
+                <tr>
+                    <td><i class="fas fa-cogs"></i></td>
+                    <td>{{'label.careerGroup'|translate}}</td>
+                    <td *ngIf="!isEmpty(orderContract.careerGroup);else elseContact">
+                        {{getModuleName(orderContract)}}</td>
+                </tr>
+                <tr>
+                    <td><i class="fab fa-cc-visa"></i></td>
+                    <td>Diện visa</td>
+                    <td *ngIf="orderContract.visaType;else elseContact">                        
+                        <ng-container [ngSwitch]="orderContract.visaType">
+                            <div *ngSwitchCase="'TTS'" class="text-uppercase">
+                                {{'label.postJob.student'|translate}}
+                            </div>
+                            <div *ngSwitchCase="'KY_SU'" class="text-uppercase">
+                                {{'label.postJob.engineer'|translate}}
+                            </div>
+                            <div *ngSwitchCase="'KY_NANG_DAC_DINH'" class="text-uppercase">
+                                {{'label.postJob.skillSpecial'|translate}}
+                            </div>
+                            <div *ngSwitchCase="'HO_LY'" class="text-uppercase">
+                                {{'label.postJob.assistant'|translate}}
+                            </div>
+                        </ng-container>
+                    </td>
+                </tr>
+                <tr>
+                    <td><i class="fas fa-cogs"></i></td>
+                    <td>{{'label.careerGroupSelectForVISA'|translate}}</td>
+                    <td *ngIf="!isEmpty(orderContract.careerSelectVisaObj);else elseContact">
+                        {{orderContract.careerSelectVisaObj.name}}</td>
+                </tr>
+                <tr>
+                    <td><i class="fas fa-venus-mars"></i></td>
+                    <td>{{'label.numberLaborNeed'|translate}}</td>
+                    <td
+                        *ngIf="orderContract.contractQuantityMale||orderContract.contractQuantityFemale;else elseGender">
+                        <ng-container *ngIf="orderContract.contractQuantityMale">
+                            {{orderContract.contractQuantityMale}} {{'label.male'|translate}}
+                        </ng-container>
+                        <ng-container *ngIf="orderContract.contractQuantityMale&&orderContract.contractQuantityFemale"
+                            style="padding: 0 5px"> - </ng-container>
+                        <ng-container *ngIf="orderContract.contractQuantityFemale">
+                            {{orderContract.contractQuantityFemale}} {{'label.female'|translate}}
+                        </ng-container>
+                    </td>
+                    <ng-template #elseGender>
+                        <td [ngSwitch]="isEmpty(orderContract.contractQuantity)" class="text-danger">
+                            <ng-container *ngSwitchCase="true"><b><i>{{'label.contact'|translate}}</i></b>
+                            </ng-container>
+                            <ng-container *ngSwitchDefault>{{orderContract.contractQuantity}}
+                                {{'label.person'|translate}}</ng-container>
+                        </td>
+                    </ng-template>
+                </tr>
+                <tr>
+                    <td><i class="fas fa-stopwatch"></i></td>
+                    <td>{{'label.recruitmentDeadline'|translate}}</td>
+                    <td *ngIf="orderContract.contractDate;else elseContact">
+                        {{orderContract.contractDate|date:'dd/MM/yyyy'}}
+                    </td>
+                </tr>
+                <tr>
+                    <td><i class="fas fa-user-tie"></i></td>
+                    <td>{{'label.numberLaborNeedJoin'|translate}}</td>
+                    <td
+                        *ngIf="orderContract.contractQuantityJoinMale||orderContract.contractQuantityJoinFemale;else elseGenderJoin">
+                        <ng-container *ngIf="orderContract.contractQuantityJoinMale">
+                            {{orderContract.contractQuantityJoinMale}} {{'label.male'|translate}}
+                        </ng-container>
+                        <ng-container
+                            *ngIf="orderContract.contractQuantityJoinMale&&orderContract.contractQuantityJoinFemale"
+                            style="padding: 0 5px"> - </ng-container>
+                        <ng-container *ngIf="orderContract.contractQuantityJoinFemale">
+                            {{orderContract.contractQuantityJoinFemale}} {{'label.female'|translate}}
+                        </ng-container>
+                    </td>
+                    <ng-template #elseGenderJoin>
+                        <td [ngSwitch]="isEmpty(orderContract.contractQuantityJoin)" class="text-danger">
+                            <ng-container *ngSwitchCase="true"><b><i>{{'label.contact'|translate}}</i></b>
+                            </ng-container>
+                            <ng-container *ngSwitchDefault>{{orderContract.contractQuantityJoin}}
+                                {{'label.person'|translate}}</ng-container>
+                        </td>
+                    </ng-template>
+                </tr>
+                <tr *ngIf="orderContract.examinationForm">
+                    <td><i class="fas fa-clipboard-check"></i></td>
+                    <td>{{'label.examinationForm'|translate}}</td>
+                    <td [ngSwitch]="orderContract.examinationForm">
+                        <div *ngSwitchCase="'TIEN_CU'">
+                            {{'label.recommend'|translate}}
+                        </div>
+                        <div *ngSwitchCase="'CHON_FORM'">
+                            {{'label.selectForm'|translate}}
+                        </div>
+                        <div *ngSwitchCase="'PHONG_VAN_TRUC_TIEP'">
+                            {{'label.intervew'|translate}}
+                        </div>
+                        <div *ngSwitchCase="'PHONG_VAN_ONLINE'">
+                            {{'label.online'|translate}}
+                        </div>
+                        <div *ngSwitchDefault>
+                            {{'label.noRequirement'|translate}}
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><i class="fas fa-map-marker-alt"></i></td>
+                    <td>{{'label.workAddress'|translate}}</td>
+                    <td *ngIf="!isEmpty(orderContract.jobProvinceID);else elseContact">
+                        {{orderContract.jobProvinceID?.name}}</td>
+                </tr>
+                <tr *ngIf="orderContract.workInfo">
+                    <td><i class="fas fa-font"></i></td>
+                    <td>{{'label.workInfo'|translate}}</td>
+                    <td>{{orderContract.workInfo}}</td>
+                </tr>
+                <ng-container *ngIf="orderContract.gallery&&orderContract.gallery.length">
+                    <tr>
+                        <td><i class="fas fa-images"></i></td>
+                        <td colspan="2">
+                            <b class="text-dark">Hình ảnh công việc ({{orderContract.gallery?.length}})</b>
+                        </td>
+                    </tr>
+                </ng-container>
+            </table>
+            <app-order-contract-gallery [gallery]="orderContract.gallery"></app-order-contract-gallery>
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th colspan="3">{{'label.jobRequirement'|translate}}</th>
+                    </tr>
+                </thead>
+                <tr>
+                    <td><i class="fas fa-birthday-cake"></i></td>
+                    <td>{{'label.ageRange'|translate}}</td>
+                    <td *ngIf="orderContract.ageFrom||orderContract.ageTo;else elseContact">
+                        <ng-container *ngIf="orderContract.ageFrom">
+                            {{orderContract.ageFrom}} {{'label.age'|translate}}
+                        </ng-container>
+                        <ng-container *ngIf="orderContract.ageFrom&&orderContract.ageTo" style="padding: 0 5px"> -
+                        </ng-container>
+                        <ng-container *ngIf="orderContract.ageTo">
+                            {{orderContract.ageTo}} {{'label.age'|translate}}
+                        </ng-container>
+                    </td>
+                </tr>
+                <tr>
+                    <td><i class="fas fa-user-graduate"></i></td>
+                    <td>{{'label.educationLevel'|translate}}</td>
+                    <td *ngIf="orderContract.academicLevel;else elseContact">
+                        <ng-container [ngSwitch]="orderContract.academicLevel">
+                            <div *ngSwitchCase="'THCS'">
+                                {{'label.education.THCS'|translate}}
+                            </div>
+                            <div *ngSwitchCase="'THPT'">
+                                {{'label.education.THPT'|translate}}
+                            </div>
+                            <div *ngSwitchCase="'studyAtCenter'">
+                                {{'label.studyAtCenter'|translate}}
+                            </div>
+                            <div *ngSwitchCase="'TC'">
+                                {{'label.education.TC'|translate}}
+                            </div>
+                            <div *ngSwitchCase="'CD'">
+                                {{'label.education.CD'|translate}}
+                            </div>
+                            <div *ngSwitchCase="'DH'">
+                                {{'label.education.DH'|translate}}
+                            </div>
+                        </ng-container>
+                    </td>
+                </tr>
+                <tr>
+                    <td><i class="fas fa-history"></i></td>
+                    <td>{{'label.experience'|translate}}</td>
+                    <td *ngIf="orderContract.experience;else elseContact">{{orderContract.experience}}</td>
+                </tr>
+                <tr>
+                    <td><i class="fas fa-ruler-vertical"></i></td>
+                    <td>{{'label.height'|translate}}</td>
+                    <td *ngIf="orderContract.heightFrom||orderContract.heightTo;else elseContact">
+                        <ng-container *ngIf="orderContract.ageFrom">
+                            {{orderContract.heightFrom}} {{'label.cm'|translate}}
+                        </ng-container>
+                        <ng-container *ngIf="orderContract.heightFrom&&orderContract.heightTo" style="padding: 0 5px"> -
+                        </ng-container>
+                        <ng-container *ngIf="orderContract.heightTo">
+                            {{orderContract.heightTo}} {{'label.cm'|translate}}
+                        </ng-container>
+                    </td>
+                </tr>
+                <tr>
+                    <td><i class="fas fa-weight"></i></td>
+                    <td>{{'label.weight'|translate}}</td>
+                    <td *ngIf="orderContract.heightFrom||orderContract.heightTo;else elseContact">
+                        <ng-container *ngIf="orderContract.ageFrom">
+                            {{orderContract.weightFrom}} {{'label.kg'|translate}}
+                        </ng-container>
+                        <ng-container *ngIf="orderContract.heightFrom&&orderContract.heightTo" style="padding: 0 5px"> -
+                        </ng-container>
+                        <ng-container *ngIf="orderContract.heightTo">
+                            {{orderContract.weightTo}} {{'label.kg'|translate}}
+                        </ng-container>
+                    </td>
+                </tr>
+                <tr>
+                    <td><i class="fas fa-glasses"></i></td>
+                    <td>{{'label.eyeSight'|translate}}</td>
+                    <td *ngIf="orderContract.eyeSight;else elseContact">
+                        {{orderContract.eyeSight}} / 10
+                    </td>
+                </tr>
+                <tr>
+                    <td><i class="fas fa-hand-rock"></i></td>
+                    <td>{{'label.fancyHandsStatus'|translate}}</td>
+                    <td [ngSwitch]="orderContract.fancyHands" *ngIf="orderContract.fancyHands;else elseContact">
+                        <div *ngSwitchCase="'TAY_PHAI'">
+                            {{'label.rightHand'|translate}}
+                        </div>
+                        <div *ngSwitchCase="'TAY_TRAI'">
+                            {{'label.leftHand'|translate}}
+                        </div>
+                        <div *ngSwitchCase="'CA_HAI_TAY'">
+                            {{'label.allHand'|translate}}
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><i class="fas fa-smoking-ban"></i></td>
+                    <td>{{'label.notSmokingStatus'|translate}}</td>
+                    <td>
+                        <ng-container [ngSwitch]="orderContract.notSmoking">
+                            <ng-container *ngSwitchCase="true">
+                                {{'label.notSmoking'|translate}}
+                            </ng-container>
+                            <ng-container *ngSwitchDefault>
+                                Không bắt buộc
+                            </ng-container>
+                        </ng-container>
+                    </td>
+                </tr>
+                <tr>
+                    <td><i class="fas fa-wine-bottle"></i></td>
+                    <td>{{'label.notDrinkingStatus'|translate}}</td>
+                    <td>
+                        <ng-container [ngSwitch]="orderContract.notDrinking">
+                            <ng-container *ngSwitchCase="true">
+                                {{'label.notDrinking'|translate}}
+                            </ng-container>
+                            <ng-container *ngSwitchDefault>
+                                Không bắt buộc
+                            </ng-container>
+                        </ng-container>
+                    </td>
+                </tr>
+                <tr>
+                    <td><i class="fas fa-ring"></i></td>
+                    <td>{{'label.marriedStatus'|translate}}</td>
+                    <td *ngIf="orderContract.maritalStatus;else elseContact" [ngSwitch]="orderContract.maritalStatus">
+                        <div *ngSwitchCase="'DA_KET_HON'">
+                            {{'label.married'|translate}}
+                        </div>
+                        <div *ngSwitchCase="'DOC_THAN'">
+                            {{'label.single'|translate}}
+                        </div>
+                        <div *ngSwitchCase="'LY_DI'">
+                            {{'label.divorce'|translate}}
+                        </div>
+                    </td>
+                </tr>
+                <tr *ngIf="orderContract.representative">
+                    <td><i class="fab fa-black-tie"></i></td>
+                    <td>Yêu cầu đặc biệt khác</td>
+                    <td>
+                        {{orderContract.representative}}
+                    </td>
+                </tr>
+                <thead class="thead-dark">
+                    <tr>
+                        <th colspan="3">Chế độ phúc lợi</th>
+                    </tr>
+                </thead>
+                <tr>
+                    <td><i class="fas fa-yen-sign"></i></td>
+                    <td>{{'label.salaryRange'|translate}}</td>
+                    <td *ngIf="orderContract.contractSalaryFrom||orderContract.contractSalaryTo;else elseContact">
+                        <b *ngIf="orderContract.contractSalaryFrom">{{orderContract.contractSalaryFrom|number:'1.0-3'}}
+                            {{'label.yen'|translate}}</b>
+                        <span *ngIf="orderContract.contractSalaryFrom&&orderContract.contractSalaryTo"
+                            style="padding: 0 5px">-</span>
+                        <b *ngIf="orderContract.contractSalaryTo">
+                            {{orderContract.contractSalaryTo|number:'1.0-3'}} {{'label.yen'|translate}}
+                        </b>
+                    </td>
+                </tr>
+                <tr>
+                    <td><i class="fas fa-hand-holding-usd"></i></td>
+                    <td>{{'label.trainingAllowance'|translate}}</td>
+                    <td *ngIf="orderContract.trainingAllowance;else elseContact">
+                        {{orderContract.trainingAllowance|number:'1.0-3'}} {{'label.yen'|translate}}
+                    </td>
+                </tr>
+                <tr>
+                    <td><i class="fas fa-business-time"></i></td>
+                    <td>{{'label.workTime'|translate}}</td>
+                    <td *ngIf="orderContract.workTime;else elseContact">
+                        {{orderContract.workTime}} {{'label.hour'|translate}}/{{'label.day'|translate}}
+                    </td>
+                </tr>
+                <tr>
+                    <td><i class="fas fa-user-shield"></i></td>
+                    <td>{{'label.socialInsurance'|translate}}</td>
+                    <td *ngIf="orderContract.socialInsurance;else elseContact">
+                        {{orderContract.socialInsurance|number:'1.0-3'}} {{'label.yen'|translate}}
+                    </td>
+                </tr>
+                <tr>
+                    <td><i class="fas fa-file-invoice-dollar"></i></td>
+                    <td>{{'label.taxesAndInsurance'|translate}}</td>
+                    <td *ngIf="orderContract.taxesAndInsurance;else elseContact">
+                        {{orderContract.taxesAndInsurance|number:'1.0-3'}} {{'label.yen'|translate}}
+                    </td>
+                </tr>
+                <tr>
+                    <td><i class="fas fa-home"></i></td>
+                    <td>{{'label.dormitoryExpenses'|translate}}</td>
+                    <td *ngIf="orderContract.dormitoryExpenses;else elseContact">
+                        {{orderContract.dormitoryExpenses|number:'1.0-3'}} {{'label.yen'|translate}}
+                    </td>
+                </tr>
+                <tr>
+                    <td><i class="fas fa-shower"></i></td>
+                    <td>{{'label.utilityCosts'|translate}}</td>
+                    <td *ngIf="orderContract.utilityCosts;else elseContact">
+                        {{orderContract.utilityCosts|number:'1.0-3'}} {{'label.yen'|translate}}
+                    </td>
+                </tr>
+                <tr>
+                    <td><i class="fas fa-gift"></i></td>
+                    <td>{{'label.otherInfo'|translate}}</td>
+                    <td *ngIf="orderContract.otherInfo;else elseContact">
+                        {{orderContract.otherInfo}}
+                    </td>
+                </tr>
+                <thead class="thead-dark">
+                    <tr>
+                        <th colspan="3">Lịch trình dự kiến</th>
+                    </tr>
+                </thead>
+                <tr>
+                    <td><i class="fas fa-file-signature"></i></td>
+                    <td>Nhận form</td>
+                    <td *ngIf="orderContract.startFormDate;else elseContact">
+                        {{orderContract.startFormDate|date:'dd/MM/yyyy'}}
+                    </td>
+                </tr>
+                <tr>
+                    <td><i class="fas fa-gavel"></i></td>
+                    <td>Chốt form</td>
+                    <td *ngIf="orderContract.endFormDate;else elseContact">
+                        {{orderContract.endFormDate|date:'dd/MM/yyyy'}}
+                    </td>
+                </tr>
+                <tr>
+                    <td><i class="fas fa-calendar-alt"></i></td>
+                    <td>{{'label.exampDate'|translate}}</td>
+                    <td *ngIf="orderContract.examDate;else elseContact">
+                        {{orderContract.examDate|date:'dd/MM/yyyy'}}
+                    </td>
+                </tr>
+                <tr>
+                    <td><i class="fas fa-passport"></i></td>
+                    <td>{{'label.expectedDepartureDate'|translate}}</td>
+                    <td *ngIf="orderContract.expectedDepartureDate;else elseContact">
+                        {{orderContract.expectedDepartureDate|date:'dd/MM/yyyy'}}
+                    </td>
+                </tr>
+                <!-- <ng-container *ngIf="currentPartner">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th colspan="3">{{'label.sourceCost'|translate}}</th>
+                        </tr>
+                    </thead>
+                    <tr>
+                        <td><i class="fas fa-hand-holding-usd"></i></td>
+                        <td>{{'label.moneyBackOrigin'|translate}}</td>
+                        <td *ngIf="orderContract.moneyBackOrigin;else elseContact">
+                            ${{orderContract.moneyBackOrigin|number:'1.0-3'}}</td>
+                    </tr>
+                    <tr>
+                        <td><i class="fas fa-plane-departure"></i></td>
+                        <td>{{'label.moneyAfterFly'|translate}}</td>
+                        <td *ngIf="orderContract.moneyAfterFly;else elseContact">
+                            ${{orderContract.moneyAfterFly|number:'1.0-3'}}</td>
+                    </tr>
+                </ng-container> -->
+            </table>
+            <ng-template #elseContact>
+                <td class="text-danger"><b><i>{{'label.contact'|translate}}</i></b></td>
+            </ng-template>
+            <div class="meta">
+                <div class="container-fluid">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <app-socials-shared></app-socials-shared>
+                        <div class="info viewed">
+                            <small><i class="fas fa-eye"></i>&nbsp;{{orderContract.viewed}}</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div #pinPosition id="pin-position"></div>
+            <div class="container-fluid">
+                <div id="btn-apply-wrapper">
+                    <div [ngSwitch]="recStatus">
+                        <ng-container *ngSwitchCase="0">
+                            <button class="btn-apply-wait">{{'label.waitingApproval'|translate}}</button>
+                        </ng-container>
+                        <ng-container *ngSwitchCase="1">
+                            <button class="btn-apply-success">{{'label.checkedApproval'|translate}}</button>
+                        </ng-container>
+                        <div *ngSwitchDefault>
+                            <ng-container [ngSwitch]="orderContract.urlApply===null||orderContract.urlApply===''">
+                                <ng-container *ngSwitchCase="true">
+                                    <button class="btn-apply" [routerLink]="['/dang-ky-ung-tuyen', orderContract.id]">
+                                        {{'label.approveNow'|translate}}
+                                    </button>
+                                </ng-container>
+                                <ng-container *ngSwitchDefault>
+                                    <a class="btn-apply btn-link" [href]="orderContract.urlApply" target="_blank">
+                                        {{'label.approveNow'|translate}}
+                                    </a>
+                                </ng-container>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <app-fb-comment></app-fb-comment>
+        </div>
+    </div>
+</ng-container>

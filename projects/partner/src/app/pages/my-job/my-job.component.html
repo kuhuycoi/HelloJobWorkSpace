@@ -1,0 +1,238 @@
+<div id="filter">
+    <div class="container">
+        <div class="current-filter" (click)="advanceFilter()">
+            <b class="color-blue">
+                {{'label.myOrderContract'|translate}}
+            </b>
+        </div>
+    </div>
+</div>
+<div class="d-flex justify-content-center align-items-center" id="page-action">
+    <a routerLink="/doi-tac/dang-don-hang" class="btn-post-job">
+        {{'label.postsOrderContract'|translate}}
+    </a>
+    <a routerLink="/doi-tac/gioi-thieu-lao-dong" class="btn-post-job">
+        {{'label.registerReferral'|translate}}
+    </a>
+</div>
+<div class="result">
+    <div class="container">
+        <ng-container [ngSwitch]="pager?.totalResult">
+            <ng-container *ngSwitchCase="0">
+                <span class="text-danger">{{'label.foundNoOrderContract'|translate}}</span>
+            </ng-container>
+            <ng-container *ngSwitchDefault>
+                {{'label.page'|translate}}
+                <b class="color-blue">{{pager.currentPage}}/{{pager.totalPage}}</b>. {{'label.found'|translate}} <b
+                    class="color-blue">{{pager.totalResult}}</b> {{'label.orderContract'|translate}}
+            </ng-container>
+        </ng-container>
+    </div>
+</div>
+<div class="container">
+    <div class="contracts-list">
+        <div class="contract-item" [ngClass]="{'stopped': item.isStop}" *ngFor="let item of items">
+            <div class="contract-main" [routerLink]="['/don-hang',item.id]">
+                <div class="contract-name"><span class="flex-fill">{{item.name}}</span><span class="discount-percent" *ngIf="item.discount<item.preDeposit">-{{(item.preDeposit-item.discount)*100/item.preDeposit|number:'1.0-0'}}%</span></div>
+                <div class="contract-price-code d-flex justify-content-between align-items-start">
+                    <span class="contract-code">{{item.code}}</span>
+                    <!-- <span class="contract-need-deposit mr-auto">
+                        <ng-container *ngIf="item.preDeposit;else elseNotDeposit">
+                            Cọc {{item.preDeposit}} USD
+                        </ng-container>
+                    </span> -->
+                    <div class="contract-price" *ngIf="item.discount;else notDiscount">
+                        <div class="after-discount">{{item.discount}}</div>
+                        <div class="discount d-flex justify-content-end align-items-center" *ngIf="item.discount<item.preDeposit">                            
+                            <span class="before-discount">{{item.preDeposit}}</span>
+                        </div>
+                    </div>
+                    <ng-template #notDiscount>
+                        <div class="contract-price" *ngIf="item.discount;else notDiscount">
+                            <div class="after-discount">{{item.totalPrice}}</div>
+                        </div>
+                    </ng-template>
+                </div>
+                <div class="contract-infos">
+                    <table width="100%">
+                        <tr>
+                            <th>
+                                <img src="/assets/img/icon-contract/icon1.svg" alt="" />
+                            </th>
+                            <td *ngIf="item.jobProvinceID;else elseContact">{{item.jobProvinceID.name}}</td>
+                            <th>
+                                <img src="/assets/img/icon-contract/icon2.svg" alt="" />
+                            </th>
+                            <td *ngIf="item.contractSalaryFrom||item.contractSalaryTo;else elseContact"
+                                class="text-danger">
+                                <b *ngIf="item.contractSalaryFrom">{{item.contractSalaryFrom}}
+                                    {{'label.yen'|translate}}</b>
+                                <span *ngIf="item.contractSalaryFrom&&item.contractSalaryTo"
+                                    style="padding: 0 5px">-</span>
+                                <b *ngIf="item.contractSalaryTo">
+                                    <!-- <ng-container *ngIf="item.contractSalaryFrom">
+                                        {{'label.upTo'|translate}}
+                                    </ng-container> -->
+                                    {{item.contractSalaryTo}} {{'label.yen'|translate}}
+                                </b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                <img src="/assets/img/icon-contract/icon3.svg" alt="" />
+                            </th>
+                            <td *ngIf="item.contractQuantityMale||item.contractQuantityFemale;else elseGender">
+                                <ng-container *ngIf="item.contractQuantityMale">
+                                    {{item.contractQuantityMale}} {{'label.male'|translate}}
+                                </ng-container>
+                                <ng-container *ngIf="item.contractQuantityMale&&item.contractQuantityFemale"
+                                    style="padding: 0 5px"> - </ng-container>
+                                <ng-container *ngIf="item.contractQuantityFemale">
+                                    {{item.contractQuantityFemale}} {{'label.female'|translate}}
+                                </ng-container>
+                            </td>
+                            <th>
+                                <img src="/assets/img/icon-contract/icon4.svg" alt="" />
+                            </th>
+                            <td *ngIf="item.contractQuantityJoin;else elseContact">
+                                {{item.contractQuantityJoin}} form
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                <img src="/assets/img/icon-contract/icon5.svg" alt="" />
+                            </th>
+                            <td *ngIf="item.moduleIDs;else elseContact">
+                                {{getModuleName(item)}}
+                            </td>
+                            <th>
+                                <img src="/assets/img/icon-contract/icon6.svg" alt="" />
+                            </th>
+                            <td *ngIf="item.trainingRequired;else elseContact" class="text-danger">
+                                <ng-container [ngSwitch]="item.trainingRequired">
+                                    <div *ngSwitchCase="'ONLINE_WITH_FEE'">
+                                        {{'label.onlineWithFee'|translate}}
+                                    </div>
+                                    <div *ngSwitchCase="'ONLINE_WITHOUT_FEE'">
+                                        {{'label.onlineWithoutFee'|translate}}
+                                    </div>
+                                    <div *ngSwitchCase="'STUDY_AT_CENTER'">
+                                        {{'label.studyAtCenter'|translate}}
+                                    </div>
+                                </ng-container>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="contract-action">
+                <div class="contract-action-wrapper d-flex align-items-center justify-content-between">
+                    <a color="primary" mat-button [routerLink]="['/doi-tac/sua-don-hang',item.id]"
+                        class="d-flex align-items-center justify-content-center">
+                        <i class="fas fa-edit"></i> {{'label.edit'|translate}}
+                    </a>
+                    <button mat-button color="warn" (click)="delete(item.id)">
+                        <i class="fas fa-trash-alt"></i> {{'label.delete'|translate}}
+                    </button>
+                    <button mat-icon-button [matMenuTriggerFor]="menu">
+                        <mat-icon>more_horiz</mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu" class="top-action-menu">
+                        <a href="javascript:void(0)" [routerLink]="['/don-hang',item.id]" mat-menu-item>
+                            <i class="fas fa-eye"></i>Xem chi tiết
+                        </a>
+                        <a href="javascript:void(0)" [routerLink]="['/doi-tac/sua-don-hang',item.id]" mat-menu-item>
+                            <i class="fas fa-edit"></i>Chỉnh sửa đơn hàng
+                        </a>
+
+                        <ng-container [ngSwitch]="item.isStop">
+                            <a href="javascript:void(0)" *ngSwitchCase="true" (click)="stopRecruitment(item)"
+                                mat-menu-item>
+                                <i class="fas fa-stopwatch"></i>Tuyển dụng
+                            </a>
+                            <a href="javascript:void(0)" *ngSwitchCase="false" (click)="stopRecruitment(item)"
+                                mat-menu-item>
+                                <i class="fas fa-stopwatch"></i>Dừng tuyển
+                            </a>
+                        </ng-container>
+
+                        <!-- <a href="javascript:void(0)"  mat-menu-item  (click)="shareToMarket(item)">
+                            <i class="fas fa-shopping-cart"></i>Rao vặt
+                        </a> -->
+                        <mat-divider></mat-divider>
+                        <div class="mat-menu-item">
+                            <app-socials-shared></app-socials-shared>
+                        </div>
+                        <mat-divider></mat-divider>
+                        <a href="javascript:void(0)" (click)="delete(item.id)" mat-menu-item>
+                            <i class="fas fa-trash-alt"></i> Xóa đơn hàng
+                        </a>
+                    </mat-menu>
+                </div>
+            </div>
+            <ng-template #elseGender>
+                <td [ngSwitch]="!item.contractQuantity">
+                    <ng-container *ngSwitchCase="true"><b><i>{{'label.contact'|translate}}</i></b>
+                    </ng-container>
+                    <ng-container *ngSwitchDefault>{{item.contractQuantity}}
+                        {{'label.person'|translate}}</ng-container>
+                </td>
+            </ng-template>
+        </div>
+    </div>
+    <ng-template #elseContact>
+        <td class="text-danger"><b><i>{{'label.contact'|translate}}</i></b></td>
+    </ng-template>
+    <ng-template #elseNotDeposit>
+        <span class="text-uppercase">Không cọc</span>
+    </ng-template>
+    <div class="paginator" *ngIf="pager.totalResult>pager.displayPerPage">
+        <div class="container">
+            <ul>
+                <ng-container *ngIf="pager.currentPage>1">
+                    <li>
+                        <a (click)="changePage(1)"><i class="fas fa-angle-double-left"></i></a>
+                    </li>
+                    <li>
+                        <a (click)="changePage(pager.currentPage-1)"><i class="fas fa-angle-left"></i></a>
+                    </li>
+                </ng-container>
+                <li *ngIf="pager.currentPage===2">
+                    <a (click)="changePage(1)">1</a>
+                </li>
+                <ng-container *ngIf="pager.currentPage>2">
+                    <li>
+                        <a (click)="changePage(pager.currentPage-2)">{{pager.currentPage-2}}</a>
+                    </li>
+                    <li>
+                        <a (click)="changePage(pager.currentPage-1)">{{pager.currentPage-1}}</a>
+                    </li>
+                </ng-container>
+                <li>
+                    <a class="active">{{pager.currentPage}}</a>
+                </li>
+                <li *ngIf="pager.currentPage===pager.totalPage-1">
+                    <a (click)="changePage(pager.totalPage)">{{pager.totalPage}}</a>
+                </li>
+                <ng-container *ngIf="pager.currentPage<pager.totalPage-1">
+                    <li>
+                        <a (click)="changePage(pager.currentPage+1)">{{pager.currentPage+1}}</a>
+                    </li>
+                    <li>
+                        <a (click)="changePage(pager.currentPage+2)">{{pager.currentPage+2}}</a>
+                    </li>
+                </ng-container>
+                <ng-container *ngIf="pager.currentPage<pager.totalPage">
+                    <li>
+                        <a (click)="changePage(pager.currentPage+1)"><i class="fas fa-angle-right"></i></a>
+                    </li>
+                    <li>
+                        <a (click)="changePage(pager.totalPage)"><i class="fas fa-angle-double-right"></i></a>
+                    </li>
+                </ng-container>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<app-footer class="d-print-none"></app-footer>

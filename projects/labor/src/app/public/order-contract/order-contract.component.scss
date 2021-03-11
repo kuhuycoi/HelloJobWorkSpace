@@ -1,0 +1,31 @@
+.order-choices {
+    .choice {
+        position: relative;
+        display: block;
+        margin-bottom: 20px;
+        box-shadow: 0 0 5px 1px rgba(0,0,0,.2);
+        h3{
+            position: absolute;
+            bottom: 15px;
+            left: 15px;
+            z-index: 2;
+            background-color: rgba(0,0,0,.5);
+            color: #fff;
+            font-size: 15px;
+            font-weight: 500;
+            text-transform: uppercase;
+            padding: 5px 10px 0;
+            margin: 0;
+        }
+    }
+    .choice::after {
+        position: absolute;
+        top: 5px;
+        left: 5px;
+        right: 5px;
+        bottom: 5px;
+        border: 10px solid rgba(0,0,0,.5);
+        content: "";
+        z-index: 1;
+    }
+}

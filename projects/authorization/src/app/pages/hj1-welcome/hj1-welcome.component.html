@@ -1,0 +1,35 @@
+<div class="hj-page">
+    <div class="page-wrapper">
+        <mat-card>
+            <mat-card-content>
+                <div class="page-form">
+                    <div class="top-panel">
+                        <div class="logo">
+                            <img src="/assets/icons/logo.svg">
+                        </div>
+                    </div>
+                    <div class="commands">
+                        <div class="description">                                 
+                            Khi bấm <span class="accent">Lập tài khoản</span> hoặc <span class="accent">Đăng nhập</span>, bạn đồng ý với Điều khoản của chúng tôi. Tìm hiểu về cách chúng tôi xử lý dữ liệu của bạn trong <a href="#" class="accent">Chính sách Quyền riêng tư</a> và <a href="#" class="accent">Chính sách về Cookie</a> của chúng tôi.                                                                  
+                        </div>
+                        <div class="feature-buttons">
+                            <button mat-stroked-button (click)="registerAccount()" class="r-button">Lập tài khoản</button>
+                            <button mat-stroked-button [routerLink]="['/dang-nhap']" routerLinkActive="router-link-active"  class="r-button">Đăng nhập</button>
+                            <button mat-stroked-button (click)="loginWithGoogle()" class="image-button r-button">
+                                Đăng nhập với Google
+                                <img src="/assets/icons/google.jpg">
+                            </button>
+                            <button mat-stroked-button (click)="loginWithFacebook()" class="image-button r-button">
+                                Đăng nhập với Facebook
+                                <img src="/assets/icons/facebook.jpg">
+                            </button>
+                        </div>                    
+                        <div class="others">
+                            <a href="#" class="accent">Sự cố khi đăng nhập</a>
+                        </div>
+                    </div>
+                </div>                
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div> 

@@ -1,0 +1,71 @@
+<div class="hj-page">
+    <div class="page-wrapper">
+        <mat-card>
+            <mat-card-title>
+                <div class="nav">
+                    <ul>
+                        <li class="nav-control">
+                            <button mat-icon-button class="card-button">
+                                <mat-icon class="material-icons" (click)="goBack()">keyboard_arrow_left</mat-icon>                                                        
+                            </button>                       
+                        </li>                        
+                    </ul>
+                </div>
+                <div>
+                    <mat-progress-bar mode="determinate" [value]="processPercent" color="accent"></mat-progress-bar>      
+                </div>     
+            </mat-card-title>
+
+            <mat-card-content>
+                <div class="page-form">
+                    <div class="top-panel">
+                        <div class="logo">                        
+                        </div>
+                        <div class="title">
+                            <span>Mã của tôi là</span>                        
+                        </div>                    
+                        <div class="content">
+                            <form class="data-form">
+                                <div class="v-input-group">  
+                                    <div class="history-phone">
+                                        <span>{{phone}}</span>
+                                        <button mat-flat-button [disabled]="!isReady" (click)="reSend()">Gửi lại</button>
+                                    </div>                                                              
+                                    <ul>
+                                        <li>                                                                                                            
+                                            <input #inpNumber maxlength="1" type="number" (paste)="onPaste($event)" (keyup)="onKeyPress($event, 0)" (focus)="onFocus($event, 0)" matInput autofocus>                                    
+                                        </li>
+                                        <li>                                                                            
+                                            <input #inpNumber maxlength="1" type="number" (keyup)="onKeyPress($event, 1)" (focus)="onFocus($event, 1)" matInput>                                                                                              
+                                        </li>
+                                        <li>                                                                            
+                                            <input #inpNumber maxlength="1" type="number" (keyup)="onKeyPress($event, 2)" (focus)="onFocus($event, 2)" matInput>                                                                                                   
+                                        </li>
+                                        <li>                                                                            
+                                            <input #inpNumber maxlength="1" type="number" (keyup)="onKeyPress($event, 3)" (focus)="onFocus($event, 3)" matInput>                                                                                                 
+                                        </li>
+                                        <li>                                                                            
+                                            <input #inpNumber maxlength="1" type="number" (keyup)="onKeyPress($event, 4)" (focus)="onFocus($event, 4)" matInput>                                                                                                  
+                                        </li>
+                                        <li>                                                                            
+                                            <input #inpNumber maxlength="1" type="number" (keyup)="onKeyPress($event, 5)" (focus)="onFocus($event, 5)" matInput>                                                                                                   
+                                        </li>
+                                    </ul>                                                       
+                                </div>                                
+                                <div class="description">                                    
+                                </div>       
+                            </form>   
+                        </div>
+                    </div>        
+                    <div class="commands">
+                        <div class="feature-buttons"> 
+                            <button mat-stroked-button (click)="moveNext()" class="r-button" [disabled]="!isReady || !validate()">Tiếp tục</button>                                        
+                        </div>
+                        <div class="others">                        
+                        </div>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div> 

@@ -1,0 +1,238 @@
+<div class="container">
+    <div class="card">
+        <div class="card-content">
+            <div class="auth-wrapper" [ngStyle]="{'border-radius': '0'}">
+                <div>
+                    <h3 *ngIf="!isEdit">{{'label.postOrderContract'|translate}} trong nước</h3>
+                    <h3 *ngIf="isEdit">{{'label.editOrderContract'|translate}} trong nước</h3>
+                </div>
+                <form (submit)="onSubmit()" [formGroup]="form" novalidate>
+                    <div class="or">
+                        <span>
+                            <h3 class="text-primary">Thông tin cơ bản</h3>
+                        </span>
+                    </div>
+                    <br />
+                    <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                        <mat-label>{{'label.orderContractName'|translate}}</mat-label>
+                        <input matInput formControlName="name" required maxlength="500">
+                        <mat-error *ngIf="f.name.hasError('required')">
+                            {{'label.enterThisField'|translate}}
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                        <mat-label>{{'label.orderContractCode'|translate}}</mat-label>
+                        <input matInput formControlName="code" required readonly>
+                        <mat-error *ngIf="f.code.hasError('required')">
+                            {{'label.enterThisField'|translate}}
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                        <mat-label>{{'label.companyName'|translate}}</mat-label>
+                        <input matInput formControlName="factoryName" maxlength="200">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                        <mat-label>Địa chỉ công ty</mat-label>
+                        <input matInput formControlName="companyAddress">
+                    </mat-form-field>
+
+                    <div [ngClass]="{'d-none': !f.isAdvance.value}">
+                        <div class="or">
+                            <span>
+                                <h3 class="text-primary">Thông tin tuyển dụng</h3>
+                            </span>
+                        </div>
+                        <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                            <mat-label>{{'label.vacany'|translate}}</mat-label>
+                            <input matInput formControlName="vacany">
+                        </mat-form-field>
+                        <ng-container [ngSwitch]="requireGender.value">
+                            <ng-container *ngSwitchCase="false">
+                                <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                                    <mat-label>{{'label.numberLaborNeed'|translate}}</mat-label>
+                                    <input type="number" [readonly]="requireGender.value" min="0" matInput
+                                        formControlName="contractQuantity">
+                                    <small matSuffix [translate]="'label.person'">người</small>
+                                </mat-form-field>
+                            </ng-container>
+                            <ng-container *ngSwitchCase="true">
+                                <b class="mb-2 d-block">{{'label.numberLaborNeed'|translate}}</b>
+                                <div class="row">
+                                    <div class="col-md-6 col-12">
+                                        <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                                            <mat-label [translate]="'label.male'">Nam</mat-label>
+                                            <input type="number" (keyup)="matchGender()" matInput min="0"
+                                                formControlName="contractQuantityMale">
+                                            <small matSuffix [translate]="'label.person'">người</small>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                                            <mat-label [translate]="'label.female'">Nữ</mat-label>
+                                            <input type="number" (keyup)="matchGender()" matInput min="0"
+                                                formControlName="contractQuantityFemale">
+                                            <small matSuffix [translate]="'label.person'">người</small>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </ng-container>
+                        </ng-container>
+                        <div class="mb-2">
+                            <mat-checkbox [formControl]="requireGender" color="primary" class="mb-2">
+                                <b>{{'label.requiredMaleFemale'|translate}}</b>
+                            </mat-checkbox>
+                        </div>
+                        <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                            <mat-label>{{'label.workAddress'|translate}}</mat-label>
+                            <input matInput formControlName="contractAddress">
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                            <mat-label>{{'label.workInfo'|translate}}</mat-label>
+                            <textarea matInput formControlName="workInfo" rows="4" maxlength="500"></textarea>
+                        </mat-form-field>
+                        <b class="mb-2 d-block">Hình ảnh công việc ({{galleryPreview.length}}/15)</b>
+                        <div class="order-gallery mb-3" id="gallery">
+                            <div class="wrapper">
+                                <owl-carousel-o [options]="customOptions" #owl
+                                    (initialized)="owl.to(galleryPreview.length.toString())">
+                                    <ng-container *ngFor="let item of galleryPreview; let i = index">
+                                        <ng-template carouselSlide [id]="i" [width]="200">
+                                            <div class="item" (click)="selectedGalleryIndex=i"
+                                                [matMenuTriggerFor]="appMenu">
+                                                <div class="item-wrapper">
+                                                    <div *ngIf="item.fileType==='img';" class="img">
+                                                        <img [src]="item.url" />
+                                                    </div>
+                                                    <div *ngIf="item.fileType==='video'" class="img video">
+                                                        <i class="fas fa-play"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </ng-template>
+                                    </ng-container>
+                                    <ng-container *ngIf="galleryPreview.length<15">
+                                        <ng-template carouselSlide [id]="galleryPreview.length" [width]="200">
+                                            <div class="item item-add">
+                                                <div class="item-wrapper"
+                                                    (click)="selectedGalleryIndex=galleryPreview.length;changeGalleryItem()">
+                                                    <div class="img">
+                                                        <mat-icon>add_circle_outline</mat-icon>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </ng-template>
+                                    </ng-container>
+                                </owl-carousel-o>
+                            </div>
+                        </div>
+                        <p class="mt-1 text-danger">
+                            <small><i>{{'label.postJob.note'|translate}} {{invalidExtStr}}</i></small>
+                        </p>
+                        <mat-menu #appMenu="matMenu">
+                            <button mat-menu-item (click)="changeGalleryItem()"
+                                [translate]="'label.postJob.change'">Thay
+                                đổi</button>
+                            <!-- <button mat-menu-item>Sử dụng video</button> -->
+                            <button mat-menu-item (click)="deleteGalleryItem()"
+                                [translate]="'label.deleteReferal'">Xóa</button>
+                        </mat-menu>
+                        <input type="file" name="attachGalleryFile" id="attachGalleryFile"
+                            (change)="onChangeImage($event)" />
+                        <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                            <mat-label>{{'label.workTime'|translate}}</mat-label>
+                            <input type="number" matInput min="0" formControlName="workTime">
+                            <small matSuffix><span [translate]="'label.hour'"></span>/<span
+                                    [translate]="'label.day'"></span></small>
+                        </mat-form-field>
+                        <div class="mb-3">
+                            <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                                <mat-label>{{'label.educationLevel'|translate}}</mat-label>
+                                <mat-select formControlName="academicLevel">
+                                    <mat-option value="">
+                                        {{'label.postJob.NotMust'|translate}}
+                                    </mat-option>
+                                    <mat-option *ngFor="let item of educationLevelList" [value]="item.value">
+                                        {{'label.'+item.text|translate}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                            <mat-label>Yêu cầu đặc biệt</mat-label>
+                            <textarea matInput rows="4" formControlName="representative" maxlength="1000"></textarea>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                            <mat-label>Yêu cầu hồ sơ</mat-label>
+                            <textarea matInput rows="4" formControlName="profileRequired" maxlength="1000"></textarea>
+                        </mat-form-field>
+                        <div class="or">
+                            <span>
+                                <h3 class="text-primary">Chế độ phúc lợi</h3>
+                            </span>
+                        </div>
+                        <b class="mb-2 d-block">{{'label.salaryDescription'|translate}}</b>
+                        <div class="row">
+                            <div class="col-md-6 col-12">
+                                <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                                    <mat-label>{{'label.from'|translate}}</mat-label>
+                                    <input type="number" matInput min="0" formControlName="contractSalaryFrom">
+                                    <small matSuffix>vnđ</small>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                                    <mat-label>{{'label.to'|translate}}</mat-label>
+                                    <input type="number" matInput min="0" formControlName="contractSalaryTo">
+                                    <small matSuffix>vnđ</small>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                            <mat-label>{{'label.socialInsurance'|translate}}</mat-label>
+                            <textarea matInput rows="4" formControlName="insuranceInfo" maxlength="1000"></textarea>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                            <mat-label>{{'label.otherInfo'|translate}}</mat-label>
+                            <textarea matInput formControlName="otherInfo" rows="4" maxlength="500"></textarea>
+                        </mat-form-field>
+                        <div class="or">
+                            <span>
+                                <h3 class="text-primary">Lịch trình dự kiến</h3>
+                            </span>
+                        </div>
+                        <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                            <mat-label>{{'label.recruitmentDeadline'|translate}}</mat-label>
+                            <input matInput [matDatepicker]="datePicker" formControlName="contractDate">
+                            <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
+                            <mat-datepicker #datePicker touchUi></mat-datepicker>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                            <mat-label>{{'label.exampDate'|translate}}</mat-label>
+                            <input matInput [matDatepicker]="examDatePicker" formControlName="examDate">
+                            <mat-datepicker-toggle matSuffix [for]="examDatePicker"></mat-datepicker-toggle>
+                            <mat-datepicker #examDatePicker touchUi></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                    <button type="submit" class="mt-3">{{'label.save'|translate}}</button>
+                </form>
+            </div>
+            <div class="rules">
+                <div class="container">
+                    {{'label.postOrderContractPolicy'|translate}}
+                    <a href="#" class="color-blue">{{'label.termAndService'|translate}}</a>
+                    {{'label.accept'|translate}}
+                    <a href="#" class="color-blue">{{'label.cookiePolicy'|translate}}</a>
+                    {{'label.also'|translate}}
+                    <a href="#" class="color-blue">{{'label.securePolicy'|translate}}</a>
+                    {{'label.ofHelloJob'|translate}}<br />
+                    {{'label.captchaProtect'|translate}}
+                    <a href="#" class="color-blue">{{'label.privatePolicy'|translate}}</a>
+                    {{'label.and'|translate}}
+                    <a href="#" class="color-blue">{{'label.serviceRule'|translate}}</a>
+                    {{'label.ofGoogleApply'|translate}}
+                </div>
+            </div>
+            <app-footer class="d-print-none"></app-footer>
+        </div>
+    </div>
+</div>

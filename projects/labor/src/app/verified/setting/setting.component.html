@@ -1,0 +1,68 @@
+<div class="container">
+    <div class="auth-wrapper">
+        <app-profile-nav [currentCustomer]="currentCustomer" [activeText]="'label.setting'|translate"></app-profile-nav>
+        <div class="settings mb-3">
+            <div class="mb-3 d-flex align-items-center justify-content-between setting">
+                <div class="mr-2 flex-fill">
+                    <b>{{'label.publicPhonumberInfo'|translate}}</b>
+                    <small>{{'label.ifTurnOnPublicPhonenumber'|translate}}</small>
+                </div>
+                <mat-slide-toggle (change)="changePublicPhonenumber($event.checked)"
+                    [checked]="currentCustomer.isPublicPhonenumber" color="primary"></mat-slide-toggle>
+            </div>
+            <ng-container [ngSwitch]="currentCustomer.isPublicCV!=null">
+                <div *ngSwitchCase="true" class="d-flex align-items-center justify-content-between setting">
+                    <div class="mr-2 flex-fill">
+                        <ng-container [ngSwitch]="currentCustomer.isPublicCV">
+                            <ng-container *ngSwitchCase="'PUBLIC'">
+                                <b>{{'label.cv.peopleAreShare'|translate}}</b>
+                                <small>{{'label.cv.publicDescription'|translate}}</small>
+                            </ng-container>
+                            <ng-container *ngSwitchCase="'PUBLIC_SIMPLE'">
+                                <b>{{'label.cv.publicSimple'|translate}}</b>
+                                <small>{{'label.cv.publicSimpleDescription'|translate}}</small>
+                            </ng-container>
+                            <ng-container *ngSwitchCase="'WITH_LINK'">
+                                <b>{{'label.cv.withLink'|translate}}</b>
+                                <small>{{'label.cv.withLinkDescription'|translate}}</small>
+                            </ng-container>
+                            <ng-container *ngSwitchCase="'PRIVATE'">
+                                <b>{{'label.cv.private'|translate}}</b>
+                                <small>{{'label.cv.privateDescription'|translate}}</small>
+                            </ng-container>
+                        </ng-container>
+                    </div>
+                    <div>
+                        <a href="javascript:void(0)" (click)="changeRole()" style="white-space: nowrap;">
+                            <small>
+                                <span class="color-blue">{{'label.change'|translate}}</span>
+                            </small>
+                        </a>
+                    </div>
+                </div>
+                <div *ngSwitchCase="false">
+                    <b> Cần <a routerLink="/khai-phom/thong-tin" style="color: #33FFFF;">cập nhật CV</a> để sử dụng chức năng này</b>
+                    <br />
+                    <small>CV của bạn có quá ít thông tin. Vui lòng cập nhật CV để nhà tuyển dụng có thể tìm kiếm bạn</small>
+                </div>
+
+            </ng-container>
+        </div>
+    </div>
+</div>
+<div class="rules">
+    <div class="container">
+        {{'label.infoPolicy'|translate}}
+        <a href="#" class="color-blue">{{'label.termAndService'|translate}}</a>
+        {{'label.accept'|translate}}
+        <a href="#" class="color-blue">{{'label.cookiePolicy'|translate}}</a>
+        {{'label.also'|translate}}
+        <a href="#" class="color-blue">{{'label.securePolicy'|translate}}</a>
+        {{'label.ofHelloJob'|translate}}<br />
+        {{'label.captchaProtect'|translate}}
+        <a href="#" class="color-blue">{{'label.privatePolicy'|translate}}</a>
+        {{'label.and'|translate}}
+        <a href="#" class="color-blue">{{'label.serviceRule'|translate}}</a>
+        {{'label.ofGoogleApply'|translate}}
+    </div>
+</div>

@@ -1,0 +1,112 @@
+<div id="side-menu">
+    <div class="top">
+        <div class="container-fluid">
+            <div class="d-flex justify-content-between align-items-end">
+                <div style="width: 41px;"></div>
+                <a routerLink="/" (click)="closeSidenav()" title="Trang chủ" class="logo">
+                    <img src="/assets/img/logo-white-mb.png" width="100" />
+                </a>
+                <div class="pb-1">
+                    <a href="javascript:void(0)" class="btn-menu p-2" (click)="closeSidenav()">
+                        <img src="/assets/img/btn-close-menu.svg" alt="" width="20">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="socials">
+        <div class="container-fluid">
+            <div class="d-flex justify-content-around align-items-center">
+                <a href="" target="_blank"><img src="/assets/img/icon-facebook.svg" alt="" height="25"></a>
+                <a href="tel:0902045222"><img src="/assets/img/icon-phone.svg" alt="" height="25"></a>
+                <a href="javascript:void(0)" (click)="openSubiz()"><img src="/assets/img/icon-message.svg" alt=""
+                        height="25"></a>
+                <div>
+                    <a *ngFor="let item of websiteLanguages" [ngClass]="{'active': item.code===currentLang}"
+                        (click)="useLanguage(item.code)">
+                        <img [src]="item.uRLImage" [alt]="item.name" width="27" height="17">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="menu">
+        <div class="container-fluid">
+            <ul class="list-unstyled main-menu">
+                <li>
+                    <a href="javascript:void(0)" routerLink="/" (click)="closeSidenav()">Trang chủ</a>
+                </li>
+                <ng-container [ngSwitch]="isLoggedIn">
+                    <ng-container *ngSwitchCase="true">
+                        <li>
+                            <a href="javascrip:void(0)" (click)="closeSidenav()"
+                                [routerLink]="['/lao-dong-tim-viec']" routerLinkActive="active">Lao động tìm việc</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)" (click)="toggleParent($event)">Tuyển dụng <i
+                                    class="fas fa-angle-down"></i></a>
+                            <ul>
+                                <li><a href="javascript:void(0)" (click)="closeSidenav()"
+                                        routerLink="/tuyen-dung/don-hang-da-dang" routerLinkActive="active">Đơn
+                                        hàng đã đăng</a></li>
+                                <li>
+                                    <a href="javascript:void(0)" (click)="closeSidenav()"
+                                        routerLink="/tuyen-dung/gioi-thieu-lao-dong" routerLinkActive="active">Khai form cho lao động</a>
+                                </li>
+                                <li><a href="javascript:void(0)" (click)="closeSidenav()"
+                                        routerLink="/tuyen-dung/danh-sach-ung-tuyen" routerLinkActive="active">Lao
+                                        động ứng tuyển</a></li>
+                                <li><a href="javascript:void(0)" (click)="closeSidenav()"
+                                        routerLink="/tuyen-dung/lao-dong-cua-toi" routerLinkActive="active">Lao
+                                        động của tôi</a></li>
+                                <li><a href="javascript:void(0)" (click)="closeSidenav()"
+                                        routerLink="/tuyen-dung/form-duoc-chia-se" routerLinkActive="active">Lao
+                                        động được chia sẻ</a></li>
+                                <li><a href="javascript:void(0)" (click)="closeSidenav()"
+                                        routerLink="/tuyen-dung/lao-dong-quan-tam" routerLinkActive="active">Lao
+                                        động đã lưu</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)">Tìm hiểu thông tin</a>
+                        </li>
+                        <li>
+                            <a [href]="urlLabor" target="_blank">Dành cho người lao động</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)" (click)="toggleParent($event)">{{currentCustomer?.fullName}} <i
+                                    class="fas fa-angle-down"></i></a>
+                            <ul>
+                                <li>
+                                    <a href="javascript:void(0)" (click)="closeSidenav()"
+                                        routerLink="/tuyen-dung/gioi-thieu-tham-gia" routerLinkActive="active">Giới thiệu tham gia</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)" (click)="closeSidenav()"
+                                        routerLink="/tai-khoan/thong-tin" routerLinkActive="active">{{'label.personalInfo'|translate}}</a>
+                                </li>
+                                <li><a href="javascript:void(0)" (click)="signOut()">Đăng
+                                        xuất</a></li>
+                            </ul>
+                        </li>
+                    </ng-container>
+                    <ng-container *ngSwitchDefault>
+                        <li>
+                            <a href="javascrip:void(0)" (click)="closeSidenav()"
+                                [routerLink]="['/lao-dong-tim-viec']" routerLinkActive="active">Lao động tìm việc</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)">Tìm hiểu thông tin</a>
+                        </li>
+                        <li>
+                            <a [href]="urlLabor" target="_blank">Dành cho người lao động</a>
+                        </li>
+                        <li>
+                            <a [href]="urlAccount">Tài khoản</a>
+                        </li>
+                    </ng-container>
+                </ng-container>
+            </ul>
+        </div>
+    </div>
+</div>

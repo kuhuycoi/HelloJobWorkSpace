@@ -1,0 +1,204 @@
+:host {
+  display: block;
+  background-color: rgba(56, 121, 178, 0.95);
+  height: 100%;
+}
+::ng-deep .mat-list-base .mat-subheader {
+  color: #a2a2a2;
+  font-size: 12px;
+  font-weight: 500;
+}
+#side-bar {
+  color: #666;
+  height: 100%;
+  padding-top: 45px;
+  .mat-list {
+    overflow: auto;
+    padding-top: 0;
+  }
+  .mat-divider {
+    border-top-color: rgba(42, 42, 42, 0.05);
+  }
+  .top {
+    background-color: #eee;
+    height: 45px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    a {
+      height: 45px;
+      line-height: 45px;
+      text-align: center;
+      font-size: 13px;
+      color: #666;
+    }
+    a:last-child {
+      background-color: #650000;
+      color: #fff;
+    }
+    a:active,
+    a:focus,
+    a:hover {
+      color: #333;
+    }
+  }
+  .user {
+    padding: 5px 10px;
+    .img-cover {
+      width: 60px;
+      height: 60px;
+    }
+    .info {
+      padding-left: 5px;
+      h3 {
+        font-size: 16px;
+        font-weight: 400;
+        margin-bottom: 0;
+        color: #474747;
+        line-height: 1;
+      }
+      h4 {
+        font-size: 13px;
+        color: #c5c5c5;
+        margin-bottom: 0;
+        font-weight: 600;
+      }
+      h4.verified {
+        color: #269bff;
+      }
+      .btn-login {
+        background-color: #007bff;
+        color: #fff;
+        padding: 4px 7px;
+        display: inline-block;
+        border-radius: 3px;
+        font-size: 10px;
+        line-height: 1;
+      }
+      .btn-register {
+        display: inline-block;
+        font-size: 10px;
+      }
+    }
+  }
+  .mat-list-item {
+    cursor: pointer;
+    outline: none;
+    font-size: 14px;
+    height: 48px;
+    color: #1d1d1d;
+    padding: 0 10px;
+    ::ng-deep .mat-list-text {
+      padding-left: 10px;
+    }
+    ::ng-deep .mat-list-item-content {
+      padding: 0;
+    }
+    .mat-icon {
+      background-color: #000;
+      color: #fff;
+      line-height: 24px;
+      font-size: 22px;
+      text-align: center;
+    }
+    h4 {
+      color: inherit;
+    }
+  }
+  .mat-list-item.disabled {
+    /* Make the disabled links grayish*/
+    color: gray;
+    /* And disable the pointer events */
+  }
+  ::ng-deep .mat-list-base .mat-subheader:first-child {
+    margin-top: 0;
+  }
+}
+
+#side-menu {
+  .top {
+    padding: 15px 0 30px;
+  }
+  .menu {
+    text-align: center;
+    margin-top: 30px;
+    color: #fff;
+    ul {
+      list-style: none;
+      padding-left: 0;
+    }
+    .main-menu > li > a {
+      text-transform: uppercase;
+      color: #fff;
+      font-weight: 600;
+      padding: 5px 15px 0;
+      display: block;
+      position: relative;
+      transition: ease-in-out 0.3s;
+
+      .fa-angle-down {
+        transition: ease-in-out 0.3s;
+        margin-right: -12px;
+      }
+    }
+    .main-menu > li > a::after {
+      content: "";
+      display: block;
+      width: 74px;
+      margin: 0 3px 0 auto;
+      background-color: #f2b92a;
+      opacity: 0;
+      height: 3px;
+      transition: ease-in-out 0.3s;
+      position: absolute;
+      left: 50%;
+      margin-left: -37px;
+    }
+    .main-menu > li.active > a::after,
+    .main-menu > li > a.active::after,
+    .main-menu > li.open > a::after {
+      opacity: 1;
+    }
+    .main-menu > li.active > a,
+    .main-menu > li > a.active,
+    .main-menu > li.open > a {
+      color: #f2b92a;
+      .fa-angle-down {
+        transform: rotate(180deg);
+      }
+    }
+    .main-menu > li {
+      margin-bottom: 10px;
+      ul {
+        display: none;
+        li:first-child {
+          padding-top: 5px;
+        }
+        li:last-child {
+          padding-bottom: 5px;
+        }
+        a {
+          display: block;
+          padding: 3px 0;
+          // color: #f2b92a;
+          font-size: 95%;
+        }
+        a.active {
+          color: #f2b92a;
+        }
+        a:hover {
+          color: #f2b92a;
+        }
+      }
+      ul:after {
+        content: "";
+        display: block;
+        width: 74px;
+        margin: 0 auto;
+        background-color: #f2b92a;
+        height: 3px;
+      }
+    }
+  }
+}

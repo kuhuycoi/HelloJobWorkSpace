@@ -1,0 +1,131 @@
+#smart-form {
+    overflow: auto;
+    // background-color: #fff;
+    .mat-stepper-horizontal {
+      background-color: transparent;
+    }
+    ::ng-deep .mat-horizontal-stepper-header-container {
+      display: none !important;
+    }
+    ::ng-deep .mat-horizontal-content-container {
+      padding: 0;
+    }
+    .mat-form-field {
+      font-weight: 600;
+      font-size: 18px;
+    }
+    .mat-radio-button,.mat-checkbox {
+      font-weight: 600;
+      font-size: 16px;
+    }
+    .step-wrapper {
+    //   min-height: calc(100vh - 70px);
+      .question {
+        // height: 350px;
+        background: url('/assets/img/overlay-top.svg') no-repeat #067dbf;
+        background-position: top 45% right 7%;
+        background-size: auto 20%;
+        padding: 100px 15% 57px 20%;
+      }
+      .question-wrapper {
+        position: relative;
+        // min-height: 120px;
+        background-color: #fff;
+        width: 100%;
+        padding: 15px;
+        border-radius: 25px;
+        box-shadow: 15px 15px 0 0 rgba(0, 0, 0, 0.2);
+      }
+      .question-wrapper::before {
+        top: 100%;
+        left: 43px;
+        border: solid transparent;
+        content: " ";
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+        border-top-color: #fff;
+        border-left-color: #fff;
+        border-width: 12px;
+      }
+      .question-wrapper::after {
+        top: 100%;
+        left: 43px;
+        margin-left: 15px;
+        margin-top: 15px;
+        border: solid transparent;
+        content: " ";
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+        border-top-color: rgba(0, 0, 0, 0.2);
+        border-left-color: rgba(0, 0, 0, 0.2);
+        border-width: 12px;
+      }
+      .question-wrapper .robot {
+        position: absolute;
+        width: 100px;
+        height: 123px;
+        top: 100%;
+        left: 0;
+        margin-top: 15px;
+        margin-left: -30px;
+        background: url("/assets/img/robot-big.svg") center center/auto auto no-repeat;
+      }
+      .question-content {
+        font-weight: 800;
+        color: #19a6df;
+        font-size: 17px;
+        font-style: italic;
+        max-height: 100%;
+        overflow: auto;
+      }
+      .answer {
+        // background: url("/assets/img/overlay-bottom.svg") center center/97% auto no-repeat #fff;
+        padding: 100px 0 15px;
+        .answer-wrapper {
+          padding: 0 9%;
+        }
+        .btn-start {
+          background-color: #f2b92a;
+          font-weight: 800;
+          text-transform: uppercase;
+          font-size: 20px;
+          min-width: 200px;
+          line-height: 40px;
+          box-shadow: -10px 10px 0 0 #0c71a8;
+        }
+        .help {
+          margin-top: 20px;
+          font-weight: bold;
+          font-size: 12px;
+        }
+        .btn-mic {
+          color: #fff;
+          background-color: #f2b92a;
+          width: 100px;
+          height: 100px;
+          margin-top: 50px;
+          font-size: 25px;
+          .mat-icon {
+            width: 50px;
+            height: 50px;
+            font-size: 50px;
+          }
+        }
+      }
+      .action {
+        padding: 10px 0;
+      }
+      .first-action {
+        a {
+          font-size: 12px;
+          text-decoration: underline;
+          font-weight: 600;
+        }
+      }
+    }
+  }
+  

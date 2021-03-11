@@ -1,0 +1,198 @@
+<div id="filter">
+    <div class="container">
+        <div class="current-filter" (click)="advanceFilter()">
+            <b class="color-blue">
+                {{'label.myOrderContract'|translate}}
+            </b>
+        </div>
+    </div>
+</div>
+<div class="d-flex justify-content-center align-items-center" id="page-action">
+    <a routerLink="/doi-tac/dang-don-hang" class="btn-post-job">
+        {{'label.postsOrderContract'|translate}}
+    </a>
+    <a routerLink="/doi-tac/gioi-thieu-lao-dong" class="btn-post-job">
+        {{'label.registerReferral'|translate}}
+    </a>
+</div>
+<div class="result">
+    <div class="container">
+        <ng-container [ngSwitch]="pager?.totalResult">
+            <ng-container *ngSwitchCase="0">
+                <span class="text-danger">{{'label.foundNoOrderContract'|translate}}</span>
+            </ng-container>
+            <ng-container *ngSwitchDefault>
+                {{'label.page'|translate}}
+                <b class="color-blue">{{pager.currentPage}}/{{pager.totalPage}}</b>. {{'label.found'|translate}} <b
+                    class="color-blue">{{pager.totalResult}}</b> {{'label.orderContract'|translate}}
+            </ng-container>
+        </ng-container>
+    </div>
+</div>
+<div class="contracts">
+    <div class="contract" [ngClass]="{'stopped': item.isStop}" *ngFor="let item of items">
+        <div class="company-info d-flex align-items-center">
+            <div>
+                <div [ngSwitch]="isEmpty(item.partnerCompanyID?.urlAvartar)" class="img-cover">
+                    <img *ngSwitchCase="true" src="/assets/img/noimg.jpg" />
+                    <img *ngSwitchDefault [src]="localStorage.getItem('ServerUrl')+item.partnerCompanyID.urlAvartar" />
+                </div>
+            </div>
+            <div class="flex-fill desc">
+                <div class="company" [ngClass]="{'verified': item.partnerCompanyID?.isVerify}">
+                    <span
+                        [routerLink]="['/danh-gia-nha-moi-gioi', item.partnerCompanyID.id]">{{item.partnerCompanyID.name}}</span>
+                    <app-hj-verified *ngIf="item.partnerCompanyID?.isVerify"></app-hj-verified>
+                </div>
+                <div class="time">
+                    {{item.createdDate|date:'d \''+('label.month'|translate)+'\' M \''+('label.time'|translate)+'\' HH:mm'}}
+                </div>
+            </div>
+            <div class="top-action">
+                <button mat-icon-button [matMenuTriggerFor]="menu">
+                    <mat-icon>more_horiz</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu" class="top-action-menu">
+                    <a href="javascript:void(0)" [routerLink]="['/don-hang',item.id]" mat-menu-item>
+                        <i class="fas fa-eye"></i>Xem chi tiết
+                    </a>
+                    <a href="javascript:void(0)" [routerLink]="['/doi-tac/sua-don-hang',item.id]" mat-menu-item>
+                        <i class="fas fa-edit"></i>Chỉnh sửa đơn hàng
+                    </a>
+
+                    <ng-container [ngSwitch]="item.isStop">
+                        <a href="javascript:void(0)" *ngSwitchCase="true" (click)="stopRecruitment(item)" mat-menu-item>
+                            <i class="fas fa-stopwatch"></i>Tuyển dụng
+                        </a>
+                        <a href="javascript:void(0)" *ngSwitchCase="false" (click)="stopRecruitment(item)"
+                            mat-menu-item>
+                            <i class="fas fa-stopwatch"></i>Dừng tuyển
+                        </a>
+                    </ng-container>
+
+                    <!-- <a href="javascript:void(0)"  mat-menu-item  (click)="shareToMarket(item)">
+                        <i class="fas fa-shopping-cart"></i>Rao vặt
+                    </a> -->
+                    <mat-divider></mat-divider>
+                    <div class="mat-menu-item">
+                        <app-socials-shared></app-socials-shared>
+                    </div>
+                    <mat-divider></mat-divider>
+                    <a href="javascript:void(0)" (click)="delete(item.id)" mat-menu-item>
+                        <i class="fas fa-trash-alt"></i> Xóa đơn hàng
+                    </a>
+                </mat-menu>
+            </div>
+        </div>
+        <div *ngIf="item.websiteOrderBackgroundID;else elseTemplate">
+            <div class="bg-cover" [ngStyle]="{'background-image': 'url('+localStorage.getItem('ServerUrl')+item.websiteOrderBackgroundID.backgroundUrl+')',
+        'color':item.websiteOrderBackgroundID.color}">
+                <div class="inner-text" [innerHTML]="item.richTextWithBG"></div>
+            </div>
+        </div>
+        <ng-template #elseTemplate>
+            <div class="img-cover" *ngIf="!isEmpty(item.urlAvatar)"
+                [appZoomImage]="localStorage.getItem('ServerUrl')+item.urlAvatar" [zoomCaption]="item.name">
+                <img [src]="localStorage.getItem('ServerUrl')+item.urlAvatar">
+            </div>
+        </ng-template>
+        <app-order-contract-gallery *ngIf="item.isGallery" [gallery]="item.gallery"></app-order-contract-gallery>
+        <div class="contract-wrapper">
+            <h3 [routerLink]="['/don-hang', item.id]">{{item.name}}</h3>
+            <div class="d-flex align-items-end mb-1">
+                <a href="javascript:void(0)" class="info phone d-inline-flex align-items-end"
+                    href="tel:{{item.phonenumber}}" *ngIf="!isEmpty(item.phonenumber)">
+                    <app-icon-phone-animate class="mr-1"></app-icon-phone-animate> {{item.phonenumber}}
+                </a>
+                <a href="javascript:void(0)" class="info zalo ml-3" href="//zalo.me/{{item.zaloContact}}"
+                    target="_blank" *ngIf="!isEmpty(item.zaloContact)">
+                    <img src="/assets/img/icon-zalo.svg"> {{'label.contact'|translate}}
+                </a>
+            </div>
+            <!-- <button class="btn-expand ml-auto" (click)="expand($event,btnExpand,contractDesc)" #btnExpand><u>xem
+                    thêm</u></button>
+            <div #contractDesc class="d-none">
+            </div> -->
+            <div class="info salary" *ngIf="!isEmpty(item.contractSalary)"><i class="fas fa-yen-sign"></i>
+                {{item.contractSalary}}</div>
+            <div class="info location" *ngIf="!isEmpty(item.contractAddress)"><i class="fas fa-map-marker-alt"></i>
+                {{item.contractAddress}}</div>
+            <div class="info cv-type" *ngIf="isEmpty(item.urlApply)"><i class="fab fa-telegram"></i>
+                {{'label.applyWithHelloJobCV'|translate}}
+            </div>
+            <div class="info" *ngIf="item.moneyBackOrigin||item.moneyAfterFly">
+                <i class="fas fa-hand-holding-usd text-danger"></i>
+                <ng-container *ngIf="item.moneyBackOrigin">
+                    Back:&nbsp;<b class="text-danger">${{item.moneyBackOrigin | number:'1.0-3'}}</b>
+                </ng-container>
+                -
+                <ng-container *ngIf="item.moneyAfterFly">
+                    Sau Bay:&nbsp;<b class="text-danger">${{item.moneyAfterFly | number:'1.0-3'}}</b>
+                </ng-container>
+            </div>
+            <div class="info" *ngIf="item.examDate"><i class="far fa-calendar-alt"></i>
+                Thi tuyển:&nbsp;<b class="text-danger">{{item.examDate | date:'dd/MM/yyyy'}}</b>
+            </div>
+        </div>
+        <div class="contract-action">
+            <div class="contract-action-wrapper d-flex align-items-center justify-content-between">
+                <a color="primary" mat-button [routerLink]="['/doi-tac/sua-don-hang',item.id]"
+                    class="d-flex align-items-center justify-content-center">
+                    <i class="fas fa-edit"></i> {{'label.edit'|translate}}
+                </a>
+                <button mat-button color="warn" (click)="delete(item.id)">
+                    <i class="fas fa-trash-alt"></i> {{'label.delete'|translate}}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="paginator" *ngIf="pager.totalResult>pager.displayPerPage">
+    <div class="container">
+        <ul>
+            <ng-container *ngIf="pager.currentPage>1">
+                <li>
+                    <a (click)="changePage(1)"><i class="fas fa-angle-double-left"></i></a>
+                </li>
+                <li>
+                    <a (click)="changePage(pager.currentPage-1)"><i class="fas fa-angle-left"></i></a>
+                </li>
+            </ng-container>
+            <li *ngIf="pager.currentPage===2">
+                <a (click)="changePage(1)">1</a>
+            </li>
+            <ng-container *ngIf="pager.currentPage>2">
+                <li>
+                    <a (click)="changePage(pager.currentPage-2)">{{pager.currentPage-2}}</a>
+                </li>
+                <li>
+                    <a (click)="changePage(pager.currentPage-1)">{{pager.currentPage-1}}</a>
+                </li>
+            </ng-container>
+            <li>
+                <a class="active">{{pager.currentPage}}</a>
+            </li>
+            <li *ngIf="pager.currentPage===pager.totalPage-1">
+                <a (click)="changePage(pager.totalPage)">{{pager.totalPage}}</a>
+            </li>
+            <ng-container *ngIf="pager.currentPage<pager.totalPage-1">
+                <li>
+                    <a (click)="changePage(pager.currentPage+1)">{{pager.currentPage+1}}</a>
+                </li>
+                <li>
+                    <a (click)="changePage(pager.currentPage+2)">{{pager.currentPage+2}}</a>
+                </li>
+            </ng-container>
+            <ng-container *ngIf="pager.currentPage<pager.totalPage">
+                <li>
+                    <a (click)="changePage(pager.currentPage+1)"><i class="fas fa-angle-right"></i></a>
+                </li>
+                <li>
+                    <a (click)="changePage(pager.totalPage)"><i class="fas fa-angle-double-right"></i></a>
+                </li>
+            </ng-container>
+        </ul>
+    </div>
+</div>
+
+<app-footer class="d-print-none"></app-footer>

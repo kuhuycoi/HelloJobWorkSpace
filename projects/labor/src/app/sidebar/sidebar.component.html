@@ -1,0 +1,350 @@
+<!-- <div id="side-bar" class="d-flex flex-column">
+    <div class="top d-flex align-items-center">
+        <a href="javascript:void(0)" class="flex-fill"><i class="fab fa-facebook-f"></i></a>
+        <a href="javascript:void(0)" class="flex-fill"><i class="fas fa-phone-square-alt"></i></a>
+        <a href="javascript:void(0)" class="flex-fill" (click)="openSubiz()"><i class="fas fa-comment"></i></a>
+        <a href="javascript:void(0)" class="btn-select-lang flex-fill text-uppercase"
+            [matMenuTriggerFor]="langMenu"><u>{{currentLang}}</u></a>
+        <a href="javascript:void(0)" class="flex-fill" (click)="closeSidenav()"><i class="fas fa-times"></i></a>
+    </div>
+    <mat-menu #langMenu="matMenu" class="menu-lang">
+        <button mat-menu-item (click)="useLanguage(item.code)" class="select-lang justify-content-center"
+            *ngFor="let item of websiteLanguages">
+            {{item.name}}
+        </button>
+    </mat-menu>
+    <mat-list class="flex-fill">
+        <ng-container [ngSwitch]="isLoggedIn">
+            <ng-container *ngSwitchCase="true">
+                <div class="user d-flex align-items-center" *ngIf="currentCustomer" routerLink="/tai-khoan/thong-tin">
+                    <div class="avatar">
+                        <div class="img-cover">
+                            <ng-container [ngSwitch]="currentCustomer.urlAvatar">
+                                <ng-container *ngSwitchCase="null">
+                                    <img src="/assets/img/noimg.jpg" />
+                                </ng-container>
+                                <ng-container *ngSwitchDefault>
+                                    <img src="{{localStorage.getItem('ServerUrl')}}{{currentCustomer.urlAvatar}}">
+                                </ng-container>
+                            </ng-container>
+                        </div>
+                    </div>
+                    <div class="info flex-fill">
+                        <h3 class="text-capitalize">{{currentCustomer?.fullName}}</h3>
+                        <ng-container *ngIf="currentPartner;else worker">
+                            <ng-container [ngSwitch]="currentPartner.isVerify">
+                                <ng-container *ngSwitchCase="true">
+                                    <h4 class="verified">
+                                        <span>{{currentPartner.name}}</span>&nbsp;
+                                        <i class="fas fa-check-circle"></i>
+                                    </h4>
+                                </ng-container>
+                                <ng-container *ngSwitchDefault>
+                                    <h4>{{currentPartner.name}}</h4>
+                                </ng-container>
+                            </ng-container>
+                        </ng-container>
+                        <ng-template #worker>
+                            <h4>{{'label.labor'|translate}}</h4>
+                        </ng-template>
+                    </div>
+                </div>
+            </ng-container>
+            <ng-container *ngSwitchDefault>
+                <div class="user d-flex align-items-end justify-content-between">
+                    <div class="avatar" routerLink="/">
+                        <img src="/assets/img/logo.svg" width="80" />
+                    </div>
+                    <div class="info flex-fill d-flex align-items-center justify-content-end">
+                        <a routerLink="/tai-khoan/dang-nhap" class="btn-login"
+                            [translate]="'label.login'">{{'label.login'|translate}}</a>&nbsp;/&nbsp;
+                        <a routerLink="/tai-khoan/dang-nhap" class="btn-register"
+                            [translate]="'label.signup'">{{'label.signup'|translate}}</a>
+                    </div>
+                </div>
+            </ng-container>
+        </ng-container>
+        <mat-divider></mat-divider>
+        <mat-list-item routerLink="/">
+            <mat-icon mat-list-icon [ngStyle]="{'background-color': '#c0392b'}">home</mat-icon>
+            <h4 mat-line>{{'label.home'|translate}}</h4>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <ng-container [ngSwitch]="isLoggedIn">
+            <ng-container *ngSwitchCase="true">
+                <h3 mat-subheader>{{'label.forLabor'|translate}}</h3>
+                <mat-divider></mat-divider>
+                <mat-list-item routerLink="/don-hang" (click)="closeSidenav()">
+                    <mat-icon mat-list-icon [ngStyle]="{'background-color': '#002d22'}">insert_drive_file</mat-icon>
+                    <h4 mat-line>{{'label.listOrderContract'|translate}}</h4>
+                </mat-list-item>
+                <mat-list-item routerLink="/tai-khoan/nhu-cau-tim-viec" (click)="closeSidenav()">
+                    <mat-icon mat-list-icon [ngStyle]="{'background-color': '#16a085'}">save</mat-icon>
+                    <h4 mat-line>{{'label.needsToFindJob'|translate}}</h4>
+                </mat-list-item>
+                <mat-list-item routerLink="/tai-khoan/lich-su-ung-tuyen" (click)="closeSidenav()">
+                    <mat-icon mat-list-icon [ngStyle]="{'background-color': '#d35400'}">add_alert</mat-icon>
+                    <h4 mat-line>{{'label.orderContractsApplied'|translate}}</h4>
+                </mat-list-item>
+                <mat-list-item routerLink="/tai-khoan/don-hang-quan-tam" (click)="closeSidenav()">
+                    <mat-icon mat-list-icon [ngStyle]="{'background-color': '#4099ff'}">bookmark</mat-icon>
+                    <h4 mat-line>{{'label.orderContractsSaved'|translate}}</h4>
+                </mat-list-item>
+                <mat-list-item routerLink="/tai-khoan/thong-tin" (click)="closeSidenav()">
+                    <mat-icon mat-list-icon [ngStyle]="{'background-color': '#8e44ad'}">info</mat-icon>
+                    <h4 mat-line>{{'label.personalInfo'|translate}}</h4>
+                </mat-list-item>
+                <mat-list-item routerLink="/tai-khoan/doi-mat-khau" (click)="closeSidenav()">
+                    <mat-icon mat-list-icon [ngStyle]="{'background-color': '#ad000b'}">security</mat-icon>
+                    <h4 mat-line>{{'label.changePassword'|translate}}</h4>
+                </mat-list-item>
+                <mat-list-item routerLink="/khai-phom" (click)="closeSidenav()">
+                    <mat-icon mat-list-icon [ngStyle]="{'background-color': '#0056a9'}">perm_contact_calendar</mat-icon>
+                    <h4 mat-line>{{'label.updateHelloJobCV'|translate}}</h4>
+                </mat-list-item>
+                <mat-list-item routerLink="/tai-khoan/cv" (click)="closeSidenav()">
+                    <mat-icon mat-list-icon [ngStyle]="{'background-color': '#416700'}">pageview</mat-icon>
+                    <h4 mat-line>{{'label.previewHelloJobCV'|translate}}</h4>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+                <h3 mat-subheader>{{'label.forEmployer'|translate}}</h3>
+                <mat-divider></mat-divider>
+                <div [ngSwitch]="currentPartner==null">
+                    <div *ngSwitchCase="true">
+                        <mat-list-item routerLink="/doi-tac/thong-tin" (click)="closeSidenav()">
+                            <mat-icon mat-list-icon [ngStyle]="{'background-color': '#8e44ad'}">apartment</mat-icon>
+                            <h4 mat-line>{{'label.registerPartner'|translate}}</h4>
+                        </mat-list-item>
+                    </div>
+                    <div *ngSwitchDefault>
+                        <ng-container [ngSwitch]="currentPartner?.isCheck">
+                            <ng-container *ngSwitchCase="true">
+                                <mat-list-item routerLink="/lao-dong-tim-viec" (click)="closeSidenav()">
+                                    <mat-icon mat-list-icon [ngStyle]="{'background-color': '#002d22'}">home_work
+                                    </mat-icon>
+                                    <h4 mat-line>{{'placeholder.laborMarket'|translate}}</h4>
+                                </mat-list-item>
+                                <mat-list-item routerLink="/doi-tac/dang-don-hang" (click)="closeSidenav()">
+                                    <mat-icon mat-list-icon [ngStyle]="{'background-color': '#0061bd'}">gavel</mat-icon>
+                                    <h4 mat-line>{{'label.postsOrderContract'|translate}}</h4>
+                                </mat-list-item>
+                                <mat-list-item routerLink="/doi-tac/don-hang-da-dang" (click)="closeSidenav()">
+                                    <mat-icon mat-list-icon [ngStyle]="{'background-color': '#600088'}">history
+                                    </mat-icon>
+                                    <h4 mat-line>{{'label.postedOrderContract'|translate}}</h4>
+                                </mat-list-item>
+                                <mat-list-item routerLink="/doi-tac/danh-sach-ung-tuyen" (click)="closeSidenav()">
+                                    <mat-icon mat-list-icon [ngStyle]="{'background-color': '#229267'}">perm_phone_msg
+                                    </mat-icon>
+                                    <h4 mat-line>{{'label.listApplied'|translate}}</h4>
+                                </mat-list-item>
+                                <mat-list-item routerLink="/doi-tac/gioi-thieu-lao-dong" (click)="closeSidenav()">
+                                    <mat-icon mat-list-icon [ngStyle]="{'background-color': '#de002d'}">group_add
+                                    </mat-icon>
+                                    <h4 mat-line>{{'label.introLabor'|translate}}</h4>
+                                </mat-list-item>
+                                <mat-list-item routerLink="/doi-tac/lao-dong-cua-toi" (click)="closeSidenav()">
+                                    <mat-icon mat-list-icon [ngStyle]="{'background-color': '#00355f'}">
+                                        supervised_user_circle</mat-icon>
+                                    <h4 mat-line>{{'label.mylabor'|translate}}</h4>
+                                </mat-list-item>
+                                <mat-list-item routerLink="/doi-tac/gioi-thieu-tham-gia" (click)="closeSidenav()">
+                                    <mat-icon mat-list-icon [ngStyle]="{'background-color': '#ad8200'}">
+                                        link</mat-icon>
+                                    <h4 mat-line>{{'label.introduceParticipants'|translate}}</h4>
+                                </mat-list-item>
+                                <mat-list-item routerLink="/doi-tac/form-duoc-chia-se" (click)="closeSidenav()">
+                                    <mat-icon mat-list-icon [ngStyle]="{'background-color': '#b04e77'}">
+                                        share</mat-icon>
+                                    <h4 mat-line>{{'label.vocabularyShared'|translate}}</h4>
+                                </mat-list-item>
+                                <mat-list-item routerLink="/doi-tac/lao-dong-quan-tam" (click)="closeSidenav()">
+                                    <mat-icon mat-list-icon [ngStyle]="{'background-color': '#65ad44'}">favorite_border
+                                    </mat-icon>
+                                    <h4 mat-line>{{'label.laborCares'|translate}}</h4>
+                                </mat-list-item>
+                                <mat-list-item routerLink="/doi-tac/thong-tin" (click)="closeSidenav()">
+                                    <mat-icon mat-list-icon [ngStyle]="{'background-color': '#2222c5'}">apartment
+                                    </mat-icon>
+                                    <h4 mat-line>{{'label.updateInfo'|translate}}</h4>
+                                </mat-list-item>
+                            </ng-container>
+                            <ng-container *ngSwitchDefault>
+                                <mat-list-item (click)="waitingCheck()">
+                                    <mat-icon mat-list-icon [ngStyle]="{'background-color': '#ff4100'}">warning
+                                    </mat-icon>
+                                    <h4 mat-line>{{'label.pending'|translate}}</h4>
+                                </mat-list-item>
+                                <mat-list-item routerLink="/doi-tac/thong-tin" (click)="closeSidenav()">
+                                    <mat-icon mat-list-icon [ngStyle]="{'background-color': '#2222c5'}">apartment
+                                    </mat-icon>
+                                    <h4 mat-line>{{'label.updateInfo'|translate}}</h4>
+                                </mat-list-item>
+                            </ng-container>
+                        </ng-container>
+                    </div>
+                </div>
+                <mat-divider></mat-divider>
+                <mat-list-item (click)="signOut()">
+                    <mat-icon mat-list-icon [ngStyle]="{'background-color': '#b70000'}">exit_to_app</mat-icon>
+                    <h4 mat-line>{{'label.logout'|translate}}</h4>
+                </mat-list-item>
+            </ng-container>
+            <ng-container *ngSwitchDefault>
+                <h3 mat-subheader>{{'label.labor'|translate}}</h3>
+                <mat-divider></mat-divider>
+                <mat-list-item routerLink="/khai-phom" *ngIf="!isLoggedIn" (click)="closeSidenav()">
+                    <mat-icon mat-list-icon [ngStyle]="{'background-color': '#2abb67'}">perm_contact_calendar</mat-icon>
+                    <h4 mat-line>{{'label.createHelloJobCV'|translate}}</h4>
+                </mat-list-item>
+                <mat-list-item routerLink="/tai-khoan/dang-nhap" (click)="closeSidenav()">
+                    <mat-icon mat-list-icon [ngStyle]="{'background-color': '#d35400'}">person</mat-icon>
+                    <h4 mat-line>{{'label.login'|translate}}</h4>
+                </mat-list-item>
+                <mat-list-item routerLink="/tai-khoan/dang-ky" (click)="closeSidenav()">
+                    <mat-icon mat-list-icon [ngStyle]="{'background-color': '#2980b9'}">person_add</mat-icon>
+                    <h4 mat-line>{{'label.signup'|translate}}</h4>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+                <h3 mat-subheader>{{'label.forEmployer'|translate}}</h3>
+                <mat-divider></mat-divider>
+                <mat-list-item routerLink="/doi-tac" (click)="closeSidenav()">
+                    <mat-icon mat-list-icon [ngStyle]="{'background-color': '#8e44ad'}">apartment</mat-icon>
+                    <h4 mat-line>{{'label.registerPartner'|translate}}</h4>
+                </mat-list-item>
+            </ng-container>
+        </ng-container>
+        <mat-divider></mat-divider>
+        <mat-list-item routerLink="/thoa-thuan-su-dung" (click)="closeSidenav()">
+            <mat-icon mat-list-icon [ngStyle]="{'background-color': '#65ad44'}">grade</mat-icon>
+            <h4 mat-line>{{'label.termsOfUse'|translate}}</h4>
+        </mat-list-item>
+        <mat-list-item routerLink="/quy-dinh-bao-mat" (click)="closeSidenav()">
+            <mat-icon mat-list-icon [ngStyle]="{'background-color': '#de002d'}">verified_user</mat-icon>
+            <h4 mat-line>{{'label.privatePolicy'|translate}}</h4>
+        </mat-list-item>
+        <mat-list-item (click)="openSubiz()">
+            <mat-icon mat-list-icon [ngStyle]="{'background-color': '#7bb8ff'}">help</mat-icon>
+            <h4 mat-line>{{'label.support'|translate}}</h4>
+        </mat-list-item>
+    </mat-list>
+</div> -->
+<div id="side-menu">
+    <div class="top">
+        <div class="container-fluid">
+            <div class="d-flex justify-content-between align-items-end">
+                <div style="width: 41px;"></div>
+                <a routerLink="/" (click)="closeSidenav()" title="Trang chủ" class="logo">
+                    <img src="/assets/img/logo-white-mb.png" width="100" />
+                </a>
+                <div class="pb-1">
+                    <a href="javascript:void(0)" class="btn-menu p-2" (click)="closeSidenav()">
+                        <img src="/assets/img/btn-close-menu.svg" alt="" width="20">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="socials">
+        <div class="container-fluid">
+            <div class="d-flex justify-content-around align-items-center">
+                <a href="" target="_blank"><img src="/assets/img/icon-facebook.svg" alt="" height="25"></a>
+                <a href="tel:0902045222"><img src="/assets/img/icon-phone.svg" alt="" height="25"></a>
+                <a href="javascript:void(0)" (click)="openSubiz()"><img src="/assets/img/icon-message.svg" alt=""
+                        height="25"></a>
+                <div>
+                    <a *ngFor="let item of websiteLanguages" [ngClass]="{'active': item.code===currentLang}"
+                        (click)="useLanguage(item.code)">
+                        <img [src]="item.uRLImage" [alt]="item.name" width="27" height="17">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="menu">
+        <div class="container-fluid">
+            <ul class="list-unstyled main-menu">
+                <li>
+                    <a href="javascript:void(0)" routerLink="/" (click)="closeSidenav()">Trang chủ</a>
+                </li>
+                <ng-container [ngSwitch]="isLoggedIn">
+                    <ng-container *ngSwitchCase="true">
+                        <li>
+                            <a href="javascript:void(0)" (click)="toggleParent($event)">Đơn hàng <i
+                                    class="fas fa-angle-down"></i></a>
+                            <ul>
+                                <li><a href="javascript:void(0)" (click)="closeSidenav()" [queryParams]="{ct:'TN'}"
+                                        routerLink="/don-hang">Đơn hàng trong nước</a></li>
+                                <li><a href="javascript:void(0)" (click)="closeSidenav()" [queryParams]="{ct:'NB'}"
+                                        routerLink="/don-hang">Đơn hàng Nhật Bản</a></li>
+                                <li><a href="javascript:void(0)" (click)="closeSidenav()" [queryParams]="{ct:'DL'}"
+                                        routerLink="/don-hang">Đơn hàng Đài Loan</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)" (click)="toggleParent($event)">Tìm việc <i
+                                    class="fas fa-angle-down"></i></a>
+                            <ul>
+                                <li><a href="javascript:void(0)" (click)="closeSidenav()"
+                                        routerLink="/tai-khoan/lich-su-ung-tuyen">Đơn
+                                        hàng đã ứng tuyển</a></li>
+                                <li><a href="javascript:void(0)" (click)="closeSidenav()"
+                                        routerLink="/tai-khoan/don-hang-quan-tam">Đơn
+                                        hàng đã lưu</a></li>
+                                <li><a href="javascript:void(0)" (click)="closeSidenav()"
+                                        routerLink="/tai-khoan/nhu-cau-tim-viec">Nhu cầu
+                                        tìm việc</a></li>
+                                <li>
+                                    <a href="javascript:void(0)" (click)="closeSidenav()" routerLink="/khai-phom">Cập nhật CV</a>
+                                <li>
+                                    <a href="javascript:void(0)" (click)="closeSidenav()" routerLink="/tai-khoan/cv">Xem CV</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)">Tìm hiểu thông tin</a>
+                        </li>
+                        <li>
+                            <a [href]="urlPartner" target="_blank">Dành cho nhà tuyển dụng</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)" (click)="toggleParent($event)">{{currentCustomer?.fullName}} <i
+                                    class="fas fa-angle-down"></i></a>
+                            <ul>
+                                <li>
+                                    <a href="javascript:void(0)" (click)="closeSidenav()"
+                                        routerLink="/tai-khoan/thong-tin">{{'label.personalInfo'|translate}}</a>
+                                </li>
+                                <li><a href="javascript:void(0)" (click)="signOut()">Đăng
+                                        xuất</a></li>
+                            </ul>
+                        </li>
+                    </ng-container>
+                    <ng-container *ngSwitchDefault>
+                        <li>
+                            <a href="javascript:void(0)" (click)="toggleParent($event)">Đơn hàng <i
+                                    class="fas fa-angle-down"></i></a>
+                            <ul>
+                                <li><a href="javascript:void(0)" (click)="closeSidenav()"
+                                        routerLink="/don-hang-nhat-ban">Đơn hàng Nhật Bản</a></li>
+                                <li><a href="javascript:void(0)" (click)="closeSidenav()"
+                                        routerLink="/don-hang-dai-loan">Đơn hàng Đài Loan</a></li>
+                                <li><a href="javascript:void(0)" (click)="closeSidenav()"
+                                        routerLink="/don-hang-trong-nuoc">Đơn hàng trong nước</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)">Tìm hiểu thông tin</a>
+                        </li>
+                        <li>
+                            <a [href]="urlPartner" target="_blank">Dành cho nhà tuyển dụng</a>
+                        </li>
+                        <li>
+                            <a [href]="urlAccount">Tài khoản</a>
+                        </li>
+                    </ng-container>
+                </ng-container>
+            </ul>
+        </div>
+    </div>
+</div>

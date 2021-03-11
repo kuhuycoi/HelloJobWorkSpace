@@ -1,0 +1,65 @@
+<div class="hj-page">
+    <div class="page-wrapper">
+        <mat-card>
+            <mat-card-title>
+                <div class="nav">
+                    <ul>
+                        <li class="nav-control">
+                            <button mat-icon-button class="card-button">
+                                <mat-icon class="material-icons" (click)="goBack()">keyboard_arrow_left</mat-icon>
+                            </button>
+                        </li>
+                        <li class="nav-text">
+                            <span>Bấm quay lại để đăng nhập bằng Google hoặc Facebook nếu không có số điện thoại</span>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <mat-progress-bar mode="determinate" [value]="processPercent" color="accent"></mat-progress-bar>
+                </div>
+            </mat-card-title>
+
+            <mat-card-content>
+                <div class="page-form">
+                    <div class="top-panel">
+                        <div class="logo">
+                        </div>
+                        <div class="title">
+                            <span>Số điện thoại của tôi là</span>
+                        </div>
+                        <div class="content">
+                            <form class="data-form">
+                                <div class="h-input-group" *ngIf="isReady">
+                                    <mat-form-field class="country-code">
+                                        <mat-label>Code</mat-label>
+                                        <input type="text" value="+84" readonly matInput />
+                                    </mat-form-field>
+                                    <mat-form-field class="phone" appearance="fill">
+                                        <mat-label>Phone</mat-label>
+                                        <input [formControl]="formFields.number.control" required matInput placeholder="Số điện thoại" [(ngModel)]="phone_number">
+                                        <mat-hint></mat-hint>
+                                        <mat-error *ngIf="formFields.number.control.hasError('required')">{{formFields.number.errors.required}}</mat-error>
+                                        <mat-error *ngIf="formFields.number.control.hasError('minlength')">{{formFields.number.errors.minLength}}</mat-error>
+                                        <mat-error *ngIf="formFields.number.control.hasError('max')">{{formFields.number.errors.maxLength}}</mat-error>
+                                        <mat-error *ngIf="formFields.number.control.hasError('pattern')">{{formFields.number.errors.pattern}}</mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="description">
+                            <span>Chúng tôi sẽ gửi tin nhắn cùng mã xác minh. Bạn có thể phải trả phí tin nhắn và dữ liệu.</span>
+                            <span><a href="#">Tìm hiểu chuyện gì xẩy ra khi số điện thoại của bạn thay đổi</a></span>
+                        </div>
+                    </div>
+                    <div class="commands">
+                        <div class="feature-buttons">
+                            <button mat-stroked-button (click)="moveNext($event)" [disabled]="!validate()" class="r-button">Tiếp tục</button>
+                        </div>
+                        <div class="others">
+                        </div>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

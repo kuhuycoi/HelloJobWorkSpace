@@ -1,0 +1,75 @@
+#cv-wrapper {
+  background-color: #fff;
+}
+#cv-content {
+  width: 1000px;
+  margin: 0 auto;
+  transform-origin: top left;
+  table {
+    background-color: #fff;
+    border: 2px solid #97c708;
+  }
+  table td {
+    padding: 7px;
+    border-color: #97c708;
+  }
+}
+.auth-wrapper {
+  border-radius: 0;
+}
+@media print {
+  * {
+    -webkit-print-color-adjust: exact;
+  }
+  table {
+    background-color: transparent;
+  }
+  #cv-content {
+    transform: scale(1) !important;
+    padding-top: 20px;
+  }
+  .auth-wrapper {
+    background-color: transparent;
+    padding: 0;
+    border: none;
+  }
+}
+#cv-content {
+  position: relative;
+  // font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  line-height: 1.3;
+  color: #8b8b8b;
+  // font-weight: 500;
+  b {
+    font-weight: 600;
+  }
+}
+#cv-content * {
+  z-index: 1;
+  position: relative;
+}
+#cv-content #watermark {
+  position: absolute;
+  top: 250px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  z-index: 0;
+  // opacity: 0.05;
+  max-width: 100%;
+}
+.recruitment {
+  padding: 0;
+  box-shadow: none;
+  border-radius: 0;
+  margin: 0;
+  .recruitment-wrapper {
+    padding: 10px 0;
+    table {
+      td:first-child {
+        padding-left: 0;
+        width: 22px;
+      }
+    }
+  }
+}

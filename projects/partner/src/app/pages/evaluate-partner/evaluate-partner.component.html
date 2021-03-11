@@ -1,0 +1,114 @@
+<div class="auth-wrapper">
+    <div class="container">
+        <mat-card class="mb-2">
+            <ng-container>
+                <div class="avatar">
+                    <div class="avatar-cover">
+                        <img [src]="localStorage.getItem('ServerUrl') + partner?.urlAvartar" class="img-cover" />
+                    </div>
+                </div>
+            </ng-container>
+            <ng-container [ngSwitch]="partner?.isVerify">
+                <h3 class="text-primary" *ngSwitchCase="true">Thông tin đánh giá nhà môi giới <i
+                        class="fas fa-check-circle text-primary"></i></h3>
+                <h3 class="text-primary" *ngSwitchDefault>Thông tin đánh giá nhà môi giới</h3>
+            </ng-container>
+
+            <div class="d-block">
+                <ng-container>
+                    <div  [ngStyle]="{'background-color': '#ffffff'}">
+                        <mat-icon mat-list-icon [ngStyle]="{'background-color': '#ffffff'}">home_work
+                        </mat-icon>
+                    </div>
+                    <h4 mat-line>{{partner?.name}}</h4>
+                </ng-container>
+            </div>
+            <div class="d-block">
+                <ng-container>
+                    <span>
+                        Số điện thoại: {{partner?.mobile}}
+                    </span>
+                </ng-container>
+            </div>
+            <div class="d-block">
+                <ng-container>
+                    <span>
+                        Email: {{partner?.email}}
+                    </span>
+                </ng-container>
+            </div>
+            <div class="d-block">
+                <ng-container>
+                    <span>
+                        Zalo: {{partner?.zaloContact}}
+                    </span>
+                </ng-container>
+            </div>
+            <div class="d-block">
+                <ng-container>
+                    <span>
+                        Website: {{partner?.websiteLink}}
+                    </span>
+                </ng-container>
+            </div>
+            <div class="d-block">
+                <ng-container>
+                    <span>
+                        Địa chỉ: {{partner?.address}}
+                    </span>
+                </ng-container>
+            </div>
+            <div class="d-block">
+                <ng-container>
+                    <span>
+                        Mô tả: {{partner?.description}}
+                    </span>
+                </ng-container>
+            </div>
+        </mat-card>
+        <ng-container>
+            <h3 class="text-primary">NGƯỜI LAO ĐỘNG ĐÁNH GIÁ </h3>
+            {{average}} / 5 sao
+            <br />
+            vote 5* -- {{calculatorAverage(5)}}%<br />
+            vote 4* -- {{calculatorAverage(4)}}%<br />
+            vote 3* -- {{calculatorAverage(3)}}%<br />
+            vote 2* -- {{calculatorAverage(2)}}%<br />
+            vote 1* -- {{calculatorAverage(1)}}%<br />
+        </ng-container>
+        <div class="container-fluid">
+            <ng-container>
+                <button type="submit" (click)="addEvaluate()" mat-raised-button>Viết đánh giá</button>
+            </ng-container>
+        </div>
+        <mat-card>
+            <div class="evaluate">
+
+            </div>
+            <div class="comment" *ngFor="let item of items">
+                <ng-container>
+                    <span>
+                        vote -- {{item.vote}}
+                    </span>
+                </ng-container>
+                <ng-container>
+                    <span>
+                        {{item.content}}
+                    </span>
+                </ng-container>
+
+            </div>
+
+        </mat-card>
+    </div>
+    <div class="rules">
+        <div class="container">
+            Với việc đánh giá nhà môi giới, bạn đồng ý với <a href="#" class="color-blue">Điều khoản Dịch
+                vụ</a>
+            và chấp thuận <a href="#" class="color-blue">Chính sách Cookie</a> cũng như
+            <a href="#" class="color-blue">Chính sách Bảo mật</a> của Hello Job.<br />
+            Trang này được bảo vệ bằng reCAPTCHA. <a href="#" class="color-blue">Chính sách quyền riêng tư</a> và <a
+                href="#" class="color-blue">Điều khoản dịch vụ</a> của Google được áp dụng.
+        </div>
+    </div>
+</div>

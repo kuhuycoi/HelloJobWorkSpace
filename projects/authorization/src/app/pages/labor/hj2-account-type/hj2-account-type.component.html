@@ -1,0 +1,36 @@
+<div class="hj-page">
+    <div class="page-wrapper" fxLayout="column" fxLayoutAlign="center">
+        <mat-card>
+            <mat-card-title>
+                <button mat-icon-button>
+                    <mat-icon class="material-icons" (click)="goBack()">keyboard_arrow_left</mat-icon>                
+                </button>                
+            </mat-card-title>
+
+            <mat-card-content>
+                <div class="page-form">
+                    <div class="top-panel">
+                        <div class="logo">
+                            <img src="../../../assets/icons/logo.svg">
+                        </div>
+                        <div class="description">
+                            <span></span>                                            
+                        </div>                        
+                    </div>
+                    <div class="commands">
+                        <div class="title">
+                            <span>Bạn là</span>                        
+                        </div>
+                        <div class="feature-buttons">
+                            <button mat-stroked-button (click)="continueAsJobSeeker($event)" class="r-button">Người tìm việc</button>
+                            <button mat-stroked-button (click)="continueAsRecuiter($event)" class="r-button">Nhà tuyển dụng</button>
+                            <button mat-stroked-button (click)="continueAsCollaborator($event)" class="r-button">Cộng tác viên</button>                        
+                        </div>
+                        <div class="others">                        
+                        </div>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div> 

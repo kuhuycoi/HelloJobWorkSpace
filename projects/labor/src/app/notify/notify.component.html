@@ -1,0 +1,131 @@
+<div class="title">
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between align-items-center">
+            <span></span>
+            <h2 class="mb-0">Thông báo</h2>
+            <mat-icon (click)="closeNotify()">arrow_forward</mat-icon>
+        </div>
+    </div>
+</div>
+<div class="notices">
+    <ng-container *ngFor="let item of items">
+        <div (click)="check(item)" class="notice d-flex align-items-start" [ngClass]="{'new': !item.isCheck}">
+            <div><i class={{item.notificationType.iconClass}}></i></div>
+            <div class="info">
+                <h4>{{item.title}}</h4>
+                <p [innerHTML]="item.content"> </p>
+                <div class="time">{{item.createdDate | date:'dd/MM/yyyy HH:mm'}}</div>
+            </div>
+        </div>
+    </ng-container>
+    <!-- <div class="notice d-flex align-items-start" (click)="rejected()">
+        <div>
+            <i class="fas fa-exclamation bg-danger"></i>
+        </div>
+        <div class="info flex-fill">
+            <h4>Chợ giao dịch thông báo</h4>
+            <p>Đàm phán đơn hàng <b>Chế biến thuỷ sản</b> đã bị từ chối</p>
+            <div class="time">03/03/2020 20:30</div>
+        </div>
+    </div>
+    <div class="notice d-flex align-items-start" (click)="accepted()">
+        <div>
+            <i class="fas fa-clipboard-check bg-success"></i>
+        </div>
+        <div class="info flex-fill">
+            <h4>Chợ giao dịch thông báo</h4>
+            <p>Đàm phán đơn hàng <b>Chế biến thuỷ sản</b> đã nhận được sự đồng ý</p>
+            <div class="time">03/03/2020 21:21</div>
+        </div>
+    </div> -->
+    <!-- <div class="notice d-flex new align-items-start">
+        <div><i class="fas fa-bell bg-warning"></i></div>
+        <div class="info flex-fill">
+            <h4>Thông báo ứng tuyển</h4>
+            <p><b>Nguyễn Văn A</b> đã gửi CV ứng tuyển vào đơn hàng <b>Đơn nhặt trứng gà...</b></p>
+            <div class="time">05/03/2020 10:30</div>
+        </div>
+    </div>
+    <div class="notice d-flex align-items-start">
+        <div>
+            <i class="fas fa-user-shield bg-primary"></i>
+        </div>
+        <div class="info flex-fill">
+            <h4>Trở thành nhà môi giới chính thức</h4>
+            <p>Thông tin của bạn đã được xác thực bởi Hello Job</p>
+            <div class="time">04/03/2020 14:06</div>
+        </div>
+    </div>
+    <div class="notice d-flex align-items-start">
+        <div>
+            <i class="fas fa-clipboard-check bg-success"></i>
+        </div>
+        <div class="info flex-fill">
+            <h4>Chúc mừng</h4>
+            <p>Đơn ứng tuyển vào đơn hàng <b>Hoàn thiện nội thất Tokyo...</b> đã được duyệt</p>
+            <div class="time">03/03/2020 21:21</div>
+        </div>
+    </div>
+    <div class="notice d-flex align-items-start">
+        <div>
+            <i class="fas fa-exclamation bg-danger"></i>
+        </div>
+        <div class="info flex-fill">
+            <h4>Rất đáng tiếc</h4>
+            <p>Đơn ứng tuyển vào đơn hàng <b>Hoàn thiện nội thất Tokyo...</b> đã bị từ chối</p>
+            <div class="time">03/03/2020 20:30</div>
+        </div>
+    </div>
+    <div class="notice d-flex align-items-start">
+        <div><i class="fas fa-bell bg-warning"></i></div>
+        <div class="info">
+            <h4>Thông báo ứng tuyển</h4>
+            <p><b>Nguyễn Văn B</b> đã gửi CV ứng tuyển vào đơn hàng <b>Đơn nhặt trứng gà...</b></p>
+            <div class="time">05/03/2020 10:30</div>
+        </div>
+    </div>
+    <div class="notice d-flex align-items-start">
+        <div><i class="fas fa-bell bg-warning"></i></div>
+        <div class="info flex-fill">
+            <h4>Thông báo ứng tuyển</h4>
+            <p><b>Nguyễn Văn A</b> đã gửi CV ứng tuyển vào đơn hàng <b>Đơn nhặt trứng gà...</b></p>
+            <div class="time">05/03/2020 10:30</div>
+        </div>
+    </div>
+    <div class="notice d-flex align-items-start">
+        <div>
+            <i class="fas fa-user-shield bg-primary"></i>
+        </div>
+        <div class="info flex-fill">
+            <h4>Trở thành nhà môi giới chính thức</h4>
+            <p>Thông tin của bạn đã được xác thực bởi Hello Job</p>
+            <div class="time">04/03/2020 14:06</div>
+        </div>
+    </div>
+    <div class="notice d-flex align-items-start">
+        <div>
+            <i class="fas fa-clipboard-check bg-success"></i>
+        </div>
+        <div class="info flex-fill">
+            <h4>Chúc mừng</h4>
+            <p>Đơn ứng tuyển vào đơn hàng <b>Hoàn thiện nội thất Tokyo...</b> đã được duyệt</p>
+            <div class="time">03/03/2020 21:21</div>
+        </div>
+    </div>
+    <div class="notice d-flex align-items-start">
+        <div>
+            <i class="fas fa-exclamation bg-danger"></i>
+        </div>
+        <div class="info flex-fill">
+            <h4>Rất đáng tiếc</h4>
+            <p>Đơn ứng tuyển vào đơn hàng <b>Hoàn thiện nội thất Tokyo...</b> đã bị từ chối</p>
+            <div class="time">03/03/2020 20:30</div>
+        </div>
+    </div>-->
+    <div class="text-center mt-2" *ngIf="items.length>10">
+        <a href="javascript:void(0)" *ngIf="pager.currentPage!==pager.totalPage" class="text-primary btn-loadmore"
+            (click)="loadMore()">
+            {{'label.seeOlderNotification'|translate}}
+        </a>
+    </div>
+</div>

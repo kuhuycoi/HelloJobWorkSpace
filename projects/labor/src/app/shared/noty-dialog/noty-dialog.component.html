@@ -1,0 +1,19 @@
+<div class="text-right mt-2">
+    <a href="javascript:void(0)" (click)="dialogRef.close()">
+        <span class="material-icons">close </span>
+    </a>
+</div>
+<section class="d-flex flex-column justify-content-center align-items-center">
+    <div class="img-cover {{bgImgClass}}">
+        <img *ngIf="imgUrl" [src]="imgUrl">
+    </div>
+    <div class="d-flex">
+        <div class="m-2"><span class="{{iconClass}}"></span></div>
+        <div *ngIf="title" class="title {{titleClass}} mt-2" [innerHTML]="title"> </div>
+    </div>
+    <div *ngIf="notyMessage" class="noty mt-1" [innerHTML]="notyMessage"></div>
+</section>
+<div *ngIf="btnCancel||btnSubmit" class="d-flex action mt-3">
+    <button *ngIf="btnCancel" class="cancel" (click)="dialogRef.close(false)">TRỞ LẠI</button>
+    <button *ngIf="btnSubmit" class="submit" (click)="dialogRef.close(true)">TIẾP TỤC</button>
+</div>

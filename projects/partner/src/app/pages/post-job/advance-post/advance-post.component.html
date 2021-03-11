@@ -1,0 +1,143 @@
+<form (submit)="onSubmit()" [formGroup]="form" novalidate>
+    <mat-accordion>
+        <mat-expansion-panel expanded="true">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    {{'label.orderContractInfo'|translate}}
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                <mat-label>{{'label.orderContractName'|translate}}</mat-label>
+                <input matInput formControlName="name" required>
+                <mat-error *ngIf="f.name.hasError('required')">
+                    {{'label.enterThisField'|translate}}
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                <mat-label>{{'label.workAddress'|translate}}</mat-label>
+                <input matInput formControlName="contractAddress" required>
+                <mat-error *ngIf="f.contractAddress.hasError('required')">
+                    {{'label.enterThisField'|translate}}
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                <mat-label>{{'label.salaryDescription'|translate}}</mat-label>
+                <input matInput formControlName="contractSalary" required>
+                <mat-error *ngIf="f.contractSalary.hasError('required')">
+                    {{'label.enterThisField'|translate}}
+                </mat-error>
+            </mat-form-field>
+            <div class="row">
+                <div class="col-6">
+                    <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                        <mat-label>{{'label.from'|translate}}</mat-label>
+                        <input type="number" matInput min="0" formControlName="contractSalaryFrom">
+                        <small matSuffix>{{'label.yen'|translate}}</small>
+                    </mat-form-field>
+                </div>
+                <div class="col-6">
+                    <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                        <mat-label>{{'label.to'|translate}}</mat-label>
+                        <input type="number" matInput min="0" formControlName="contractSalaryTo">
+                        <small matSuffix>{{'label.yen'|translate}}</small>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="attach">
+                <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                    <mat-label>{{'label.avatar'|translate}}</mat-label>
+                    <input matInput [value]="fileName" required>
+                </mat-form-field>
+                <input type="file" name="attachFile" (change)="onFileChange($event)" />
+            </div>
+            <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                <mat-label>{{'label.careerGroup'|translate}}</mat-label>
+                <mat-select multiple formControlName="moduleIDs">
+                    <mat-option *ngFor="let item of this.websiteModules" [value]="item.id">{{item.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                <mat-label>{{'label.phoneNumber'|translate}}</mat-label>
+                <input matInput formControlName="phonenumber">
+                <mat-error *ngIf="f.phonenumber.hasError('pattern')">
+                    {{'label.wrongPhoneNumberFormat'|translate}}
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                <mat-label> {{'label.linkZalo'|translate}}</mat-label>
+                <div class="d-flex">
+                    <span>https://zalo.me/</span>
+                    <input type="tel" formControlName="zaloContact" matInput>
+                </div>
+            </mat-form-field>
+        </mat-expansion-panel>
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    {{'label.infoAddition'|translate}}
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                <mat-label> {{'label.numberLaborNeed'|translate}}</mat-label>
+                <input matInput formControlName="contractQuantity">
+            </mat-form-field>
+            <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                <mat-label>{{'label.duration'|translate}}</mat-label>
+                <input type="number" matInput formControlName="duration">
+                <small matSuffix>{{'label.month'|translate}}</small>
+            </mat-form-field>
+            <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                <mat-label>{{'label.recruitmentDeadline'|translate}}</mat-label>
+                <input matInput [matDatepicker]="datePicker" formControlName="contractDate">
+                <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
+                <mat-datepicker #datePicker touchUi></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                <mat-label>{{'label.recruitmentLink'|translate}}</mat-label>
+                <input matInput formControlName="urlApply">
+            </mat-form-field>
+        </mat-expansion-panel>
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    {{'label.companyDescription'|translate}}
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <quill-editor formControlName="contractPartnerInfo"></quill-editor>
+        </mat-expansion-panel>
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    {{'label.jobDescription'|translate}}
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <quill-editor formControlName="description"></quill-editor>
+        </mat-expansion-panel>
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    {{'label.jobRequirement'|translate}}
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <quill-editor formControlName="contractRequire"></quill-editor>
+        </mat-expansion-panel>
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    {{'label.welfare'|translate}}
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <quill-editor formControlName="contractWelfare"></quill-editor>
+        </mat-expansion-panel>
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    {{'label.scheduleExpected'|translate}}
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <quill-editor formControlName="contractTimeline"></quill-editor>
+        </mat-expansion-panel>
+    </mat-accordion>
+    <button type="submit" class="mt-3">{{'label.save'|translate}}</button>
+</form>

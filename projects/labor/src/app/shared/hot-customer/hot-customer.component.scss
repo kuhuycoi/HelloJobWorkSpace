@@ -1,0 +1,72 @@
+#hot-customer {
+  .customer {
+    outline: none;
+    padding-top: 2px;
+    .avatar-wrapper {
+      padding: 0px 15%;
+      margin-bottom: 5px;
+    }
+    .avatar {
+      width: 100%;
+      position: relative;
+      // outline: 2px solid #2ba8ff;
+      .star {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background-color: #fff;
+        text-align: center;
+      }
+      .bg {
+        filter: blur(1px);
+        height: 0;
+        padding-bottom: 100%;
+        background-position: center;
+        background-size: cover;
+        border-radius: 50%;
+        // outline: 2px solid #fff;
+        // border: 2px solid #2ba8ff;
+        background-color: gray;
+        // border: 2px solid #fff;
+      }
+    }
+    .avatar::before,
+    .avatar::after {
+      content: "";
+      position: absolute;
+      left: -1px;
+      top: -1px;
+      bottom: -1px;
+      right: -1px;
+      border-radius: 50%;
+      overflow: hidden;
+    }
+    .avatar::before {
+      z-index: 1;
+      border: 4px solid #fff;
+    }
+    .avatar::after {
+      z-index: 2;
+      // border: 2px solid #fff;
+      border: 2px solid #2ba8ff;
+    }
+    h3 {
+      width: 100%;
+      font-size: 13px;
+      line-height: 16px;
+      height: 32px;
+      overflow: hidden;
+      color: #1d1d1d;
+      text-transform: capitalize;
+      text-align: center;
+      font-weight: 500;
+      padding: 0 5px;
+      img {
+        display: inline-block;
+        vertical-align: baseline;
+        width: 11px;
+      }
+    }
+  }
+}

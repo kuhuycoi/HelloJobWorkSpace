@@ -1,0 +1,236 @@
+<div class="container">
+    <div id="index-banner">
+        <div class="d-flex align-items-center flex-column flex-md-row">
+            <div class="left flex-md-fill">
+                <div class="top">
+                    <h1><span class="d-block d-md-inline">HỖ TRỢ XKLĐ</span> MÙA COVID</h1>
+                    <h2><span class="d-block d-md-inline">CHỈ <span class="text-yellow">20 TRIỆU</span></span> ĐẾN KHI
+                        BAY !!!</h2>
+                </div>
+                <div class="bottom">
+                    <a href="" class="btn-play-video"><img src="/assets/img/index-banner-play.png" alt=""> play
+                        video</a>
+                    <img class="index-banner-human" src="/assets/img/index-banner-human.png" />
+                </div>
+            </div>
+            <div class="right">
+                <form class="form-affiliate" id="form-affiliate" [formGroup]="form" (submit)="onSubmit()" novalidate>
+                    <h2>ĐĂNG KÝ ĐI XUẤT KHẨU LAO ĐỘNG GIÁ RẺ</h2>
+                    <table width="100%">
+                        <tr>
+                            <td>Số điện thoại <span class="text-danger">*</span></td>
+                            <td><input type="text" [formControl]="phoneNumber"></td>
+                        </tr>
+                        <tr>
+                            <td>Họ và tên</td>
+                            <td><input type="text" [formControl]="fullName"></td>
+                        </tr>
+                        <tr>
+                            <td>Nguyện vọng</td>
+                            <td>
+                                <select [formControl]="wishlist">
+                                    <option value="" selected>--Nguyện vọng của bạn--</option>
+                                    <option value="Học tiếng Nhật">Học tiếng Nhật</option>
+                                    <option value="Xuất khẩu lao động">Xuất khẩu lao động</option>
+                                    <option value="Du học">Du học</option>
+                                    <option value="Quay lại Nhật Bản">Quay lại Nhật Bản</option>
+                                    <option value="Kỹ năng đặc định">Kỹ năng đặc định</option>
+                                    <option value="Khác">Khác</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+                    <button type="submit" class="btn-submit">ĐĂNG KÍ NGAY</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <!-- <div id="statistics">
+        <div class="row">
+            <div class="col-6 col-lg-3">
+                <div class="statistic">
+                    <div class="total">{{statistic?.orderPerDay}}+</div>
+                    <h3>{{'label.contract'|translate}}<br />
+                        {{'label.postDaily'|translate}}</h3>
+                </div>
+            </div>
+            <div class="col-6 col-lg-3">
+                <div class="statistic">
+                    <div class="total">{{statistic?.totalCustomer}}+</div>
+                    <h3>{{'label.form'|translate}}<br />
+                        {{'label.laborShortUp'|translate}}</h3>
+                </div>
+            </div>
+            <div class="col-6 col-lg-3">
+                <div class="statistic">
+                    <div class="total">{{statistic?.totalPartner}}+</div>
+                    <h3>{{'label.peopleOrigin'|translate}}<br />
+                        {{'label.joinned'|translate}}</h3>
+                </div>
+            </div>
+            <div class="col-6 col-lg-3">
+                <div class="statistic">
+                    <div class="total">{{statistic?.totalTransactionPerday}}+</div>
+                    <h3>{{'label.trade'|translate}}<br />
+                        {{'label.everyDay'|translate}}</h3>
+                </div>
+            </div>
+        </div>
+    </div> -->
+    <div id="about">
+        <div class="title">
+            <h2 class="text-uppercase"><span style="color: #1D9EDF;">Hellojob</span> LÀ DÀNH CHO BẠN</h2>
+        </div>
+        <div class="wrapper">
+            <div class="quote text-center">
+                <span [innerHtml]="'label.indexAboutLine1'|translate"></span><br /><br />
+                <span [innerHtml]="'label.indexAboutLine2'|translate"></span>
+            </div>
+            <div class="cal-btns d-flex justify-content-center">
+                <a class="background-blue btn-about color-white text-uppercase" href="javascript:void(0)"
+                    (click)="scrollToAffiliateForm()">{{'label.registerNow'|translate}}</a>
+            </div>
+        </div>
+    </div>
+    <div id="services">
+        <div class="title text-center">
+            <img src="/assets/img/robot-big.svg" width="80">
+            <h2 class="text-uppercase" [innerHtml]="'label.indexReasonHJ'|translate"></h2>
+        </div>
+        <div class="service">
+            <h3><strong>+</strong> <span>CHI PHÍ RẤT THẤP</span></h3>
+            <p>Giảm bớt nỗi lo về chi phí, <b>HELLOJOB</b> mang đến chương trình <b>giảm phí 20-50%</b> so với thông
+                thường.<br />
+                Thay vì mất hàng trăm triệu để đi xuất khẩu lao động, giờ đây mọi việc trở nên dễ dàng hơn nhiều.</p>
+        </div>
+        <div class="service">
+            <h3><strong>+</strong> <span>THỦ TỤC ĐƠN GIẢN, KHÔNG CẦN ĐI LẠI</span></h3>
+            <p>Chúng tôi tối giản quy trình giúp người lao động <b>hạn chế đi lại nhiều</b>. Bạn chỉ cần <b>test máu tại địa
+                phương</b> và gửi kết quả để được duyệt vào danh sách. Vào ngày thi tuyển tập trung, bạn sẽ được đi khám sức
+                khoẻ tại các cơ sở cấp phép.</p>
+        </div>
+        <div class="service">
+            <h3><strong>+</strong> <span>MIỄN PHÍ RÚT ĐƠN</span></h3>
+            <p>Bạn lo lắng dịch Covid bùng phát không nhận được visa, không xuất cảnh được.<br />
+                Không sao, chúng tôi bảo đảm bạn sẽ được <b>hoàn tiền phí 100%</b> trong các trường hợp dịch bệnh ảnh
+                hưởng không thể xuất cảnh, hoặc các lý do bất khả kháng hợp lý (có cơ sở xác minh cụ thể). </p>
+        </div>
+        <div class="service">
+            <h3><strong>+</strong> <span>CHO VAY XUẤT CẢNH ĐẾN 40 TRIỆU</span></h3>
+            <p>Nếu bạn thực sự khó khăn về tài chính và nhân thân tốt, chúng tôi có hệ thống xét hồ sơ và cho vay với
+                mức lãi suất hợp lý.</p>
+        </div>
+        <div class="service">
+            <h3><strong>+</strong> <span>LÀM SAO ĐỂ TRÚNG TUYỂN</span></h3>
+            <p>- Bạn lo lắng làm thế nào để vượt qua buổi phỏng vấn thi tuyển trước mặt nhà tuyển dụng <b>Nhật
+                    Bản</b>.<br />
+                - Chúng tôi đã thiết kế riêng cho bạn gói đào tạo tự giới thiệu bản thân <b>JIKOSHOKAI NÓI NHƯ NGƯỜI
+                    NHẬT</b>.<br />
+                - Bạn có tin mình có thể nói <b>như người bản xứ</b>, giống cả ngữ âm và văn phong, dù chưa bao giờ học
+                tiếng
+                Nhật không?<br />
+                - Bạn chỉ cần bỏ ra <b>30 phút mỗi tối trong vòng 5-7 ngày</b> để học riêng online với giáo viên giỏi
+                nhất(N1)
+                của chúng tôi để tự tin hạ gục nhà tuyển dụng chỉ trong 10 giây đầu tiên.<br />
+                - Trị giá khoá học là 1.000.000đ, nhưng bạn sẽ được giảm giá còn <b>200.000đ</b> nếu đăng ký trước ngày
+                <b>22/2/2021</b>.<br />
+                - Đặc biệt, nếu bạn đăng ký tham gia các đơn hàng, <b>HELLOJOB</b> sẽ tặng bạn MIỄN PHÍ.
+            </p>
+        </div>
+        <a (click)="scrollToAffiliateForm()" href="javascript:void(0)"
+            class="btn-register-now d-flex align-items-center justify-content-center"><img
+                src="/assets/img/robot-big.svg" /> <span>ĐĂNG KÍ NGAY</span> <img src="/assets/img/robot-big.svg" /></a>
+    </div>
+    <div id="services">
+        <div class="title text-center">
+            <img src="/assets/img/robot-big.svg" width="80">
+            <h2 class="text-uppercase">VÌ SAO NÊN TÌM KIẾM VIỆC LÀM TRONG NƯỚC QUA HELLOJOB</h2>
+        </div>
+        <div class="service">
+            <h4><strong>+</strong> <span>Bạn đang cần tìm một công việc tạm thời khi <b>có dự định khác, hoặc ngại phải làm các thủ tục hồ sơ rườm rà</b>?</span></h4>
+        </div>
+        <div class="service">
+            <h4><strong>+</strong> <span>Bạn đang cần tìm một công việc <b>thích hợp, ổn định, có cơ hội thăng tiến</b>?</span></h4>
+        </div>
+        <div class="service">
+            <h4><strong>+</strong> <span>Bạn đang cần tìm một công việc <b>gần nhà, hoặc công việc ở một nơi bạn sắp chuyển đến</b>?</span></h4>
+        </div>
+        <div class="service">
+            <h4><strong>+</strong> <span>Hãy đến với chúng tôi, <b>HELLOJOB</b> với mạng lưới tuyển dụng trong nước rộng khắp sẽ đáp ứng đúng
+                nhu cầu của bạn!</span></h4>
+        </div>
+        <a (click)="scrollToAffiliateForm()" href="javascript:void(0)"
+            class="btn-register-now d-flex align-items-center justify-content-center"><img
+                src="/assets/img/robot-big.svg" /> <span>ĐĂNG KÍ NGAY</span> <img src="/assets/img/robot-big.svg" /></a>
+    </div>
+    <div id="services">
+        <div class="title text-center">
+            <img src="/assets/img/robot-big.svg" width="80">
+            <h2 class="text-uppercase">KỸ SƯ, ĐẶC ĐỊNH, DU HỌC, QUAY LẠI, CHUYỂN VIỆC</h2>
+        </div>
+        <div class="service">
+            <h4><strong>+</strong> <span>Các bạn đi theo những diện đặc biệt này cũng yên tâm nhé. Chúng tôi có đầy đủ thông tin về những chương trình này cho các bạn.</span></h4>
+        </div>
+        <a (click)="scrollToAffiliateForm()" href="javascript:void(0)"
+            class="btn-register-now d-flex align-items-center justify-content-center"><img
+                src="/assets/img/robot-big.svg" /> <span>ĐĂNG KÍ NGAY</span> <img src="/assets/img/robot-big.svg" /></a>
+    </div>
+</div>
+<!-- <section id="comment">
+    <div class="wrapper">
+        <div class="comments">
+            <owl-carousel-o [options]="customOptions">
+                <ng-template carouselSlide>
+                    <div class="comment">
+                        <div>
+                            <div class="img"><img src="/assets/img/comment1.png" /></div>
+                        </div>
+                        <div class="desc">
+                            <div class="content">
+                                <div class="scroll">
+                                    {{'label.wantIntroduce'|translate}}
+                                </div>
+                            </div>
+                            <div class="user">Thu Phương<br />32 {{'label.age'|translate}}</div>
+                        </div>
+                    </div>
+                </ng-template>
+                <ng-template carouselSlide>
+                    <div class="comment">
+                        <div>
+                            <div class="img"><img src="/assets/img/comment2.png" /></div>
+                        </div>
+                        <div class="desc">
+                            <div class="content">
+                                <div class="scroll">
+                                    {{'label.indexHelp'|translate}}
+                                </div>
+                            </div>
+                            <div class="user">Văn Toàn<br />27 {{'label.age'|translate}}</div>
+                        </div>
+                    </div>
+                </ng-template>
+                <ng-template carouselSlide>
+                    <div class="comment">
+                        <div>
+                            <div class="img"><img src="/assets/img/comment3.png" /></div>
+                        </div>
+                        <div class="desc">
+                            <div class="content">
+                                <div class="scroll">
+                                    {{'label.laborQuality'|translate}}
+                                </div>
+                            </div>
+                            <div class="user">{{'label.productionManager'|translate}}<br />DAIHARU
+                                {{'label.company'|translate}} </div>
+                        </div>
+                    </div>
+                </ng-template>
+            </owl-carousel-o>
+        </div>
+    </div>
+</section> -->
+<app-hot-order></app-hot-order>
+<app-hot-customer></app-hot-customer>

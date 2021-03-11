@@ -1,0 +1,87 @@
+<div class="container">
+    <div class="auth-wrapper">
+        <h3>Thông tin {{'label.needsToFindJob'|translate}}</h3>
+        <form (submit)="onSubmit()" [formGroup]="form">
+            <div class="mb-3">
+                <mat-slide-toggle color="primary" [checked]="f.isActive.value"
+                    (change)="changePostType($event.checked)">
+                    <ng-container [ngSwitch]="f.isActive.value">
+                        <b *ngSwitchCase="true">
+                            {{'label.looking4Job'|translate}}
+                        </b>
+                        <b *ngSwitchDefault>
+                            {{'label.noLooking4Job'|translate}}
+                        </b>
+                    </ng-container>
+                </mat-slide-toggle>
+            </div>
+            <ng-container *ngIf="f.isActive.value">
+                <mat-form-field class="d-block" appearance="outline" color="primary" floatLabel="always">
+                    <mat-select formControlName="jobProvinceID">
+                        <mat-option value="">
+                            {{'label.areaFind'|translate}}
+                        </mat-option>
+                        <mat-option *ngFor="let item of jobProvinces" [value]="item.id">
+                            {{item.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-label>{{'label.wishSalaryRange'|translate}}</mat-label>
+                <div class="row">
+                    <div class="col-6">
+                        <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                            <mat-label>{{'label.from'|translate}}</mat-label>
+                            <input type="number" matInput formControlName="salaryFrom">
+                            <small matSuffix>{{'label.yen'|translate}}</small>
+                            <mat-error *ngIf="f.salaryFrom.hasError('min')">
+                                {{'label.wrongMoney'|translate}}
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-6">
+                        <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                            <mat-label>{{'label.to'|translate}}</mat-label>
+                            <input type="number" matInput formControlName="salaryTo">
+                            <small matSuffix>{{'label.yen'|translate}}</small>
+                            <mat-error *ngIf="f.salaryTo.hasError('min')">
+                                {{'label.wrongMoney'|translate}}
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                    <mat-label>{{'label.careerGroup'|translate}}</mat-label>
+                    <mat-select multiple formControlName="moduleIDs">
+                        <mat-option *ngFor="let item of this.websiteModules" [value]="item.id">{{item.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="d-block" appearance="outline" color="primary" floatLabel="always">
+                    <mat-label>{{'label.note'|translate}}</mat-label>
+                    <textarea matInput rows="3" formControlName="note"></textarea>
+                </mat-form-field>
+            </ng-container>
+
+            <mat-card-actions class="d-flex justify-content-between">
+                <button mat-raised-button color="primary">{{'label.update'|translate}}</button>
+                <button mat-raised-button type="reset" color="warn">{{'label.cancel'|translate}}</button>
+            </mat-card-actions>
+        </form>
+    </div>
+</div>
+<div class="rules">
+    <div class="container">
+        {{'label.needJobPolicy'|translate}}
+        <a href="#" class="color-blue">{{'label.termAndService'|translate}}</a>
+        {{'label.accept'|translate}}
+        <a href="#" class="color-blue">{{'label.cookiePolicy'|translate}}</a>
+        {{'label.also'|translate}}
+        <a href="#" class="color-blue">{{'label.securePolicy'|translate}}</a>
+        {{'label.ofHelloJob'|translate}}<br />
+        {{'label.captchaProtect'|translate}}
+        <a href="#" class="color-blue">{{'label.privatePolicy'|translate}}</a>
+        {{'label.and'|translate}}
+        <a href="#" class="color-blue">{{'label.serviceRule'|translate}}</a>
+        {{'label.ofGoogleApply'|translate}}
+    </div>
+</div>

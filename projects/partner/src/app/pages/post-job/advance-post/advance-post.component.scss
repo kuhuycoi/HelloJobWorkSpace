@@ -1,0 +1,61 @@
+:host ::ng-deep .ck-editor__editable_inline {
+  min-height: 200px;
+}
+.mat-form-field {
+  width: 100%;
+}
+
+.attach {
+  position: relative;
+  .mat-form-field {
+    position: relative;
+    z-index: 0;
+  }
+  input[type="file"] {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+  }
+}
+
+
+.avatar {
+  .avatar-content {
+    display: block;
+    background-color: #fff;
+    -webkit-box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
+    box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
+    .img-cover {
+      position: relative;
+    }
+    .btn-edit {
+      background-color: rgba(0, 144, 255, 0.8);
+      color: #fff;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      z-index: 1;
+      width: 100%;
+      padding: 5px;
+      text-align: center;
+      transition: ease-in-out 0.3s;
+    }
+    input[type="file"] {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      cursor: pointer;
+    }
+    .btn-edit:hover {
+        background-color: rgba(0, 144, 255, 1);
+    }
+  }
+}

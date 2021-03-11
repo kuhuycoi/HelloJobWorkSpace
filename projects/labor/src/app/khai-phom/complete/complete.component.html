@@ -1,0 +1,41 @@
+<div id="smart-form" class="step-confirm">
+    <div class="d-flex flex-column step-wrapper">
+        <div class="question text-justify d-flex align-items-end justify-content-center">
+            <div class="question-wrapper">
+                <div class="question-content text-center">
+                    <i class="material-icons text-success" style="font-size: 80px;">
+                        check
+                    </i><br />
+                    Cập nhật CV thành công
+                </div>
+                <span class="robot"></span>
+            </div>
+        </div>
+        <div class="answer flex-fill">
+            <div class="container">
+                <div class="answer-wrapper text-center">
+                    CV của bạn đã được cập nhật thành công. Bạn có thể sử dụng CV này để ứng tuyển vào các đơn hàng có
+                    hỗ trợ ứng tuyển trên Hello Job.
+                    <ng-container *ngIf="isNew">
+                        <hr />
+                        <b>Đồng thời Hello Job đã tự động tạo cho bạn một tài khoản với tên đăng nhập là số điện thoại
+                            của bạn: <strong class="text-success">{{currentUser.username}}</strong> <br>và
+                            mật
+                            khẩu mặc định: <strong class="text-success"><u>123456</u></strong>
+                        </b>
+                        <div class="text-danger"><i>Vì lý do bảo mật, bạn nên đổi mật khẩu tại</i>&nbsp;<a class="color-blue"
+                                routerLink="/tai-khoan/doi-mat-khau"><b>đây</b></a></div>.
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+        <div class="action">
+            <div class="container d-flex align-items-center justify-content-between">
+                <button mat-raised-button color="warn" routerLink="/" type="button">{{'label.home'|translate}}</button>
+                <a mat-raised-button
+                routerLink="/tai-khoan/cv"
+                    target="_blank" color="primary">{{'label.viewCV'|translate}}</a>
+            </div>
+        </div>
+    </div>
+</div>

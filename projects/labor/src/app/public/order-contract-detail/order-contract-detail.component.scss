@@ -1,0 +1,179 @@
+.contract-detail {
+  margin-bottom: 20px;
+  background-color: #fff;
+  display: block;
+  border-radius: 8px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  padding-bottom: 10px;
+  .img-cover {
+    border-bottom: 1px solid rgba(119, 118, 118, 0.1);
+  }
+}
+h1.title {
+  font-size: 20px;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-bottom: 0;
+  line-height: 24px;
+}
+
+.short-info {
+  margin-bottom: 5px;
+}
+.info {
+  font-size: 14px;
+  margin-bottom: 5px;
+  color: #666;
+}
+.info.phone {
+  color: #d80000;
+}
+.info.location {
+  color: #0090ff;
+  text-transform: uppercase;
+}
+.info.salary {
+  color: #d80000;
+}
+.info.viewed {
+  color: gray;
+  font-size: 13px;
+}
+.info.time {
+  color: gray;
+  font-size: 95%;
+}
+::ng-deep .contract-detail .desc ul {
+  padding-left: 18px;
+}
+.desc {
+  h3 {
+    font-size: 15px;
+    color: #0090ff;
+    font-weight: 600;
+    text-align: center;
+  }
+}
+.fixed {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1;
+  .btn-apply {
+    border-radius: 0;
+  }
+}
+.btn-apply {
+  display: block;
+  width: 100%;
+  margin-top: 15px;
+  height: 40px;
+  line-height: 40px;
+  border: none;
+  background-color: #d80000;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  text-transform: uppercase;
+  border-radius: 5px;
+  text-align: center;
+}
+.btn-apply.btn-link {
+  background-color: #0090ff;
+}
+.robot {
+  margin: 10px 0;
+}
+.btn-apply-wait {
+  display: block;
+  width: 100%;
+  margin-top: 15px;
+  height: 40px;
+  line-height: 40px;
+  border: none;
+  background-color: lightgrey;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  text-transform: uppercase;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.btn-apply-success {
+  display: block;
+  width: 100%;
+  margin-top: 15px;
+  height: 40px;
+  line-height: 40px;
+  border: none;
+  background-color: green;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  text-transform: uppercase;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.meta {
+  padding: 5px 0;
+  border: 1px solid #eee;
+  border-width: 1px 0;
+}
+.contract-detail {
+  thead th {
+    font-weight: 500;
+    font-size: 13px;
+    padding: 7px 10px;
+    background-image: linear-gradient(120deg, #002658 0, #003f8e 100%);
+    border: none;
+  }
+  td {
+    font-size: 13px;
+    color: #666;
+  }
+  tr {
+    td {
+      vertical-align: middle;
+      padding: 7px 5px;
+    }
+    td:first-child {
+      width: 1%;
+      padding-right: 0;
+      color: #003f8e;
+      text-align: center;
+    }
+    td:nth-child(2) {
+      width: 40%;
+      // white-space: nowrap;
+    }
+    td:last-child {
+      width: auto;
+      color: #940000;
+      font-weight: 500;
+    }
+  }
+}
+
+.bg-cover {
+  min-height: 270px;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  text-align: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  background-size: 100% 100%;
+  font-weight: 600;
+  line-height: 1.3;
+  font-size: 23px;
+  padding: 25px 20px;
+  border-bottom: 1px solid rgba(119, 118, 118, 0.1);
+  .inner-text {
+    white-space: pre-line;
+  }
+}

@@ -1,0 +1,187 @@
+<div id="filter">
+    <div class="container">
+        <div class="current-filter" (click)="advanceFilter()">
+            <ng-container [ngSwitch]="!pager.place">
+                <ng-container *ngSwitchCase="true">
+                    {{'label.looking4Wokrer'|translate}}
+                </ng-container>
+                <ng-container *ngSwitchDefault>
+                    {{'label.looking4Wokrer'|translate}}
+                    <ng-container *ngIf="pager.place">
+                        {{'label.at'|translate}} <b class="color-blue">{{pager.place}}</b>
+                    </ng-container>
+                </ng-container>
+            </ng-container>
+        </div>
+    </div>
+</div>
+<app-page-action></app-page-action>
+<div class="result">
+    <div class="container">
+        <ng-container [ngSwitch]="pager?.totalResult">
+            <ng-container *ngSwitchCase="0">
+                <span class="text-danger">{{'label.noLaborFound'|translate}}</span>
+            </ng-container>
+            <ng-container *ngSwitchDefault>
+                {{'label.page'|translate}} <b class="color-blue">{{pager.currentPage}}/{{pager.totalPage}}</b>.
+                {{'label.found'|translate}}<b class="color-blue">{{pager.totalResult}}</b> {{'label.labor'|translate}}
+            </ng-container>
+        </ng-container>
+    </div>
+</div>
+<div class="container">
+    <div class="recruitments">
+        <ng-container *ngFor="let item of items">
+            <div class="recruitment">
+                <div class="company-info d-flex align-items-center">
+                    <div>
+                        <div [ngSwitch]="isEmpty(item?.customerID?.urlAvatar)" class="img-cover"
+                            [routerLink]="['/cv',item.customerID?.id]">
+                            <img *ngSwitchCase="true" src="/assets/img/noimg.jpg" />
+                            <img *ngSwitchDefault
+                                [src]="localStorage.getItem('ServerUrl')+item?.customerID?.urlAvatar" />
+                        </div>
+                    </div>
+                    <div class="flex-fill desc">
+                        <div class="company" [routerLink]="['/cv',item.customerID?.id]">
+                            {{item?.customerID|nameI18n:lang}}
+                        </div>
+                        <div class="time">
+                            {{item.customerID?.createdDate|date:'d \''+('label.month'|translate)+'\' M \''+('label.time'|translate)+'\' HH:mm'}}
+                        </div>
+                    </div>
+                    <div class="top-action">
+                        <button mat-icon-button [matMenuTriggerFor]="menu">
+                            <mat-icon>more_horiz</mat-icon>
+                        </button>
+                        <mat-menu #menu="matMenu" class="top-action-menu">
+                            <a [routerLink]="['/cv',item.customerID?.id]" mat-menu-item>
+                                <i class="fas fa-eye"></i>{{'label.viewCV'|translate}}
+                            </a>
+                            <a [routerLink]="['/doi-tac/sua-lao-dong', item.customerID?.id]" mat-menu-item>
+                                <i class="fas fa-edit"></i>{{'label.editReferal'|translate}}
+                            </a>
+                            <mat-divider></mat-divider>
+                            <a href="javascript:void(0)" mat-menu-item (click)="shareReferral(item)">
+                                <i class="fas fa-user-plus"></i> {{'label.share'|translate}}
+                            </a>
+                            <mat-divider></mat-divider>
+                            <a href="javascript:void(0)" (click)="deleteReferral(item.customerID?.id)" mat-menu-item>
+                                <i class="fas fa-trash-alt"></i> {{'label.deleteReferal'|translate}}
+                            </a>
+                        </mat-menu>
+                    </div>
+                </div>
+                <div class="recruitment-wrapper" #recruitmentWrapper>
+                    <table>
+                        <tr *ngIf="item?.customerID?.phonenumber">
+                            <td>
+                                <app-icon-phone-animate class="text-danger"></app-icon-phone-animate>
+                            </td>
+                            <td>{{'label.contact'|translate}}:</td>
+                            <td>
+                                <a href="tel:{{item?.customerID?.phonenumber}}"
+                                    class="text-danger">{{item?.customerID?.phonenumber}}</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><i class="fas fa-transgender"></i></td>
+                            <td>{{'label.gender'|translate}}:</td>
+                            <td>
+                                <ng-container *ngIf="item.customerID?.gender;else notProvide">
+                                    {{item?.customerID?.gender}}
+                                </ng-container>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><i class="fas fa-birthday-cake"></i></td>
+                            <td>{{'label.age'|translate}}:</td>
+                            <td>
+                                <ng-container *ngIf="item.customerID?.dateOfBirth;else notProvide">
+                                    {{item.customerID?.dateOfBirth|age}}
+                                </ng-container>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><i class="fas fa-map-marker-alt"></i></td>
+                            <td>{{'label.address'|translate}}:</td>
+                            <td>
+                                <ng-container *ngIf="item.customerID?.address;else notProvide">
+                                    {{item?.customerID?.address}}
+                                </ng-container>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div>
+                    <app-order-contract-gallery *ngIf="item.customerID?.isGallery" [gallery]="item.customerID?.gallery">
+                    </app-order-contract-gallery>
+                </div>
+                <div class="contract-action">
+                    <div class="contract-action-wrapper d-flex align-items-center justify-content-between">
+                        <button color="primary" [routerLink]="[ '/doi-tac/sua-lao-dong', item.customerID?.id ]"
+                            mat-button class="flex-fill">
+                            <i class="fas fa-edit"></i> {{'label.editReferal'|translate}}
+                        </button>
+                        <button color="warn" (click)="deleteReferral(item.customerID?.id)" mat-button class="flex-fill">
+                            <i class="fas fa-trash-alt"></i> {{'label.deleteReferal'|translate}}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+    <ng-template #notProvide>
+        <i class="text-danger">({{'label.notProvided'|translate}})</i>
+    </ng-template>
+</div>
+<div class="paginator" *ngIf="pager.totalResult>pager.displayPerPage">
+    <div class="container">
+        <ul>
+            <ng-container *ngIf="pager.currentPage>1">
+                <li>
+                    <a (click)="changePage(1)"><i class="fas fa-angle-double-left"></i></a>
+                </li>
+                <li>
+                    <a (click)="changePage(pager.currentPage-1)"><i class="fas fa-angle-left"></i></a>
+                </li>
+            </ng-container>
+            <li *ngIf="pager.currentPage===2">
+                <a (click)="changePage(1)">1</a>
+            </li>
+            <ng-container *ngIf="pager.currentPage>2">
+                <li>
+                    <a (click)="changePage(pager.currentPage-2)">{{pager.currentPage-2}}</a>
+                </li>
+                <li>
+                    <a (click)="changePage(pager.currentPage-1)">{{pager.currentPage-1}}</a>
+                </li>
+            </ng-container>
+            <li>
+                <a class="active">{{pager.currentPage}}</a>
+            </li>
+            <li *ngIf="pager.currentPage===pager.totalPage-1">
+                <a (click)="changePage(pager.totalPage)">{{pager.totalPage}}</a>
+            </li>
+            <ng-container *ngIf="pager.currentPage<pager.totalPage-1">
+                <li>
+                    <a (click)="changePage(pager.currentPage+1)">{{pager.currentPage+1}}</a>
+                </li>
+                <li>
+                    <a (click)="changePage(pager.currentPage+2)">{{pager.currentPage+2}}</a>
+                </li>
+            </ng-container>
+            <ng-container *ngIf="pager.currentPage<pager.totalPage">
+                <li>
+                    <a (click)="changePage(pager.currentPage+1)"><i class="fas fa-angle-right"></i></a>
+                </li>
+                <li>
+                    <a (click)="changePage(pager.totalPage)"><i class="fas fa-angle-double-right"></i></a>
+                </li>
+            </ng-container>
+        </ul>
+    </div>
+</div>
+<br />
+
+<app-footer class="d-print-none"></app-footer>

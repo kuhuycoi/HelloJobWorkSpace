@@ -1,0 +1,50 @@
+<div class="hj-page">
+    <div class="page-wrapper">
+        <mat-card>
+            <mat-card-title>
+                <button mat-icon-button class="card-button">
+                    <mat-icon class="material-icons" (click)="goBack()">keyboard_arrow_left</mat-icon>
+                </button>
+                <mat-progress-bar mode="determinate" [value]="processPercent" color="warn"></mat-progress-bar>
+            </mat-card-title>
+
+            <mat-card-content>
+                <div class="page-form">
+                    <div class="top-panel">
+                        <div class="logo">
+                        </div>
+                        <div class="title">
+                            <span>Thêm ảnh đại diện</span>
+                        </div>
+                        <div class="description">
+                            <span>Thêm 1 ảnh để tiếp tục. Bạn nên chọn ảnh theo dạng ảnh thẻ, ảnh CMND, ảnh 3x4 để hồ sơ
+                                có tính nghiêm túc, tăng cao cơ hội tìm việc.</span>
+                            <span>Trong mục chỉnh sửa Hồ sơ chi tiết, bạn có thể đăng thêm nhiều ảnh hoặc video để giới
+                                thiệu, làm nổi bật bản thân với Nhà tuyển dụng</span>
+                        </div>
+                        <div class="content">
+                            <form class="data-form">
+                                <div class="flex-items">
+                                    <div class="upload-avatar img-cover">
+                                        <img *ngIf="previewUrl" [src]="previewUrl" alt="" />
+                                        <input type="file" (change)="onChangeImage($event)" #fileUpload>
+                                        <button mat-mini-fab color="warn" (click)="fileUpload.click()">
+                                            <mat-icon>add</mat-icon>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="commands">
+                        <div class="feature-buttons">
+                            <button mat-stroked-button (click)="moveNext()" class="r-button">Tiếp tục</button>
+                        </div>
+                        <div class="others">
+                        </div>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

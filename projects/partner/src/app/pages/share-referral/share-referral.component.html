@@ -1,0 +1,107 @@
+<div class="text-right mb-3">
+    <a href="javascript:void(0)" (click)="dialogRef.close()"><b [translate]="'label.exit'">{{'label.exit'|translate}}</b></a>
+</div>
+<h4 class="title" [translate]="'label.settingShareCV'">Cài đặt chia sẻ thông tin lao động <b
+        class="text-capitalize">{{data.referral.customerID.fullName}}</b></h4>
+<div class="link-share">
+    <label class="text-capitalize" [translate]="'label.settingShareCV'">Liên Kết Để Chia Sẻ (Chỉ người được chia sẻ mới Truy Cập Được)</label>
+    <input type="text" readonly
+        [value]="urlCV"
+        (focus)="$event.target.select()">
+</div>
+<div class="shared-users">
+    <label>{{'label.peopleHavePermission'|translate}}</label>
+    <table class="users">
+        <tr class="user d-flex align-items-center justify-content-between">
+            <ng-container [ngSwitch]="data.referral.customerID.isPublicCV">
+                <ng-container *ngSwitchCase="'PUBLIC'">
+                    <td class="icon">
+                        <i class="fas fa-lock"></i>
+                    </td>
+                    <td class="desc flex-fill">
+                        <div class="top">{{'label.cv.peopleAreShare'|translate}}</div>
+                        <div class="bottom" [translate]="'label.cv.public'">Bất kỳ ai truy cập vào Hello Job đều có thể tìm kiếm và xem CV lao động này</div>
+                    </td>
+                </ng-container>
+                <ng-container *ngSwitchCase="'PUBLIC_SIMPLE'">
+                    <td class="icon">
+                        <i class="fas fa-info"></i>
+                    </td>
+                    <td class="desc flex-fill">
+                        <div class="top" [translate]="'label.cv.publicSimple'">Công khai một phần thông tin</div>
+                        <div class="bottom" [translate]="'label.cv.publicSimpleDescription'">Hiển thị trên trang lao động nhưng chỉ những người được chia sẻ mới có thể xem CV lao động này</div>
+                    </td>
+                </ng-container>
+                <ng-container *ngSwitchCase="'WITH_LINK'">
+                    <td class="icon">
+                        <i class="fas fa-link"></i>
+                    </td>
+                    <td class="desc flex-fill">
+                        <div class="top" [translate]="'label.cv.withLink'">Bất cứ ai có liên kết</div>
+                        <div class="bottom" [translate]="'label.cv.withLinkDescription'">Không công khai trên web. Chỉ những ai có liên kết mới có thể xem lao động này</div>
+                    </td>
+                </ng-container>
+                <ng-container *ngSwitchCase="'PRIVATE'">
+                    <td class="icon">
+                        <i class="fas fa-user-shield"></i>
+                    </td>
+                    <td class="desc flex-fill">
+                        <div class="top" [translate]="'label.cv.private'">Những người được chia sẻ</div>
+                        <div class="bottom" [translate]="'label.cv.privateDescription'">Chỉ chia sẻ lao động này với những người cụ thể</div>
+                    </td>
+                </ng-container>
+            </ng-container>
+            <td class="action">
+                <a href="javascript:void(0)" (click)="changeRole()"><span class="color-blue"  [translate]="'label.change'">Thay đổi...</span></a>
+            </td>
+        </tr>
+        <tr *ngIf="currentPartner" class="user d-flex align-items-center justify-content-between">
+            <td class="icon">
+                <i class="fas fa-user-tie"></i>
+            </td>
+            <td class="desc flex-fill">
+                <div class="top"><span class="text-capitalize">{{currentPartner?.name}}</span> ({{'label.you'|translate}})</div>
+                <div class="bottom">
+                    <b>{{currentPartner?.mobile}}</b> - <span>{{'label.partnerCompany'|translate}}</span>
+                </div>
+            </td>
+            <td></td>
+        </tr>
+        <tr class="user d-flex align-items-center justify-content-between">
+            <td class="icon">
+                <i class="fas fa-user-edit"></i>
+            </td>
+            <td class="desc flex-fill">
+                <div class="top text-capitalize">{{data.referral.customerID.fullName}}</div>
+                <div class="bottom">
+                    <b>{{data.referral.customerID.phonenumber}}</b> - <span>{{'label.owner'|translate}}</span>
+                </div>
+            </td>
+            <td></td>
+        </tr>
+        <tr class="user d-flex align-items-center justify-content-between" *ngFor="let item of listShared">
+            <td class="icon">
+                <i class="fas fa-user-tie"></i>
+            </td>
+            <td class="desc flex-fill">
+                <div class="top"><span class="text-capitalize">{{item.sharedCustomerID.fullName}}</span> </div>
+                <div class="bottom">
+                    <b>{{item.sharedCustomerID.phonenumber}}</b> - <span [translate]="'label.toShared'">Được chia sẻ</span>
+                </div>
+            </td>
+            <td class="action">
+                <a href="javascript:void(0)" (click)="deleteShare(item)"><i class="fas fa-times"></i></a>
+            </td>
+        </tr>
+    </table>
+</div>
+<form (submit)="onSubmit()" [formGroup]="form" class="form-share">
+    <label>{{'label.invitePeople'|translate}}:</label>
+    <div class="mb-2">
+        <input type="text" placeholder="{{'label.enterPhonenumber'|translate}}" [formControl]="username" />
+    </div>
+    <div class="d-flex" *ngIf="username.value">
+        <button type="submit" class="mr-1">{{'label.request'|translate}}</button>
+        <button type="reset">{{'label.cancel'|translate}}</button>
+    </div>
+</form>

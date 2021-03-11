@@ -1,0 +1,19 @@
+.avatar {
+  background: linear-gradient(40deg, #45cafc, #303f9f);
+  text-align: center;
+  padding-top: 40px;
+  margin-bottom: 100px;
+  .avatar-cover {
+    display: inline-block;
+    margin-bottom: -70px;
+    padding: 3px;
+    background-color: #fff;
+    -webkit-box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
+    box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
+    .img-cover {
+      position: relative;
+      width: 100px;
+      height: 131px;
+    }
+  }
+}

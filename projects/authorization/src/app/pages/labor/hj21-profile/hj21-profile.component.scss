@@ -1,0 +1,62 @@
+.avatar {
+    background-color: #f0eff5;
+    padding: 15px;
+    margin-bottom: 5px;
+    .img-cover {
+        border-radius: 10px;
+        width: 200px;
+        height: 266px;
+        overflow: hidden;
+    }
+}
+.basic-info {
+    .name {
+        font-size: 25px;
+        text-transform: capitalize;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+    .dateOfBirth {
+        margin-bottom: 5px;
+    }
+}
+.info-block {
+    margin-bottom: 15px;
+}
+.info-box {
+    border: 1px solid #e85c67;
+    padding: 4px 15px;
+    border-radius: 15px;
+    display: inline-block;
+    margin: 5px;
+    color: #e85c67;
+}
+.info-box.info-gray {
+    border-color: #e2e1e7;
+    color: #000;
+    margin-bottom: 0;
+}
+.page-form {
+    .commands {
+        display: block;
+        width: 100%;
+        .feature-buttons {
+            display: block;
+        }
+    }
+
+    .feature-buttons a {
+        display: block;
+        border-top: 1px solid #ebebeb;
+        color: #7d7d7d;
+        font-weight: 600;
+        text-align: center;
+        padding: 8px 10px;
+    }
+    .feature-buttons a.feature-detail {
+        color: #e95d68;
+        span {
+            display: block;
+        }
+    }
+}

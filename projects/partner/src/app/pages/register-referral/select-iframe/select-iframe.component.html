@@ -1,0 +1,17 @@
+<div class="text-right">
+    <a href="javascript:void(0)" (click)="dialogRef.close()">
+        <b [translate]="'label.exit'">{{'label.exit'|translate}}</b></a>
+</div>
+<form [formGroup]="form">
+    <mat-form-field class="d-block mb-2" appearance="outline" floatLabel="always">
+        <mat-label [translate]="'placeholder.linkIframe'">Embed Iframe</mat-label>
+        <input [formControl]="linkIframe" [autofocus]="true" matInput required />
+        <i class="fab fa-youtube text-danger" matSuffix></i>
+        <mat-error *ngIf="linkIframe.invalid">{{getError(linkIframe)}}</mat-error>
+        <mat-hint><a href="/assets/img/hướng dẫn lấy iframe youtube.jpg" target="_blank" class="color-blue">Hướng dẫn lấy Iframe Youtube</a></mat-hint>
+    </mat-form-field>
+    <div class="text-right">
+        <button type="submit" (click)="onSubmit()" mat-raised-button
+            color="primary">{{'label.selectLink'|translate}}</button>
+    </div>
+</form>

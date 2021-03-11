@@ -1,0 +1,47 @@
+<div class="hj-page">
+    <div class="page-wrapper">
+        <mat-card>
+            <mat-card-title>
+                <div class="nav">
+                    <ul>
+                        <li class="nav-control">
+                            <button mat-icon-button class="card-button">
+                                <mat-icon class="material-icons" (click)="goBack()">keyboard_arrow_left</mat-icon>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <mat-progress-bar mode="determinate" [value]="processPercent" color="accent"></mat-progress-bar>
+                </div>
+            </mat-card-title>
+
+            <mat-card-content>
+                <div class="page-form">
+                    <div class="top-panel">
+                        <div class="logo">
+                        </div>
+                        <div class="title">
+                            <span>Giới tính</span>
+                        </div>
+                        <div class="content">
+                            <div class="feature-buttons">
+                                <mat-button-toggle (click)="moveNext(item)" [checked]="selectedGender===item"
+                                    *ngFor="let item of genders" class="r-button">{{item}}
+                                </mat-button-toggle>
+                            </div>
+                        </div>
+                        <div class="description">
+                        </div>
+                    </div>
+                    <div class="commands invisible">
+                        <div class="feature-buttons">
+                        </div>
+                        <div class="others">
+                        </div>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

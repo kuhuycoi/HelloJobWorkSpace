@@ -1,0 +1,58 @@
+:host{    
+    .page-form .flex-items button{
+        width: unset !important;
+    }
+
+    .flex-items{
+        mat-button-toggle {            
+            margin-top: 10px;          
+            
+        }
+    }
+    
+    button.mat-button-toggle-button{
+        width: unset !important;
+    }
+
+    .item-group{
+        max-height: calc(100vh - 250px);
+        overflow-x: hidden;
+        overflow-y: scroll hidden;        
+        padding-bottom: 10px;                
+        box-sizing: border-box;                
+        box-shadow: none;        
+        text-align: center;
+
+        mat-button-toggle{          
+            border:  solid 1px;
+            border-width: thin;
+            border-radius: 30px;
+            margin-left: 5px;
+            display: inline-block;
+            text-align: justify;
+        }   
+    }
+
+    .item-group:last-child{
+        border-bottom: none;
+    }
+  
+    .mat-ripple, .mat-button-toggle-ripple{
+        border-radius: 30px !important; 
+    }
+
+    .mat-button-toggle.mat-button-toggle-appearance-standard:hover { 
+        border-radius: 30px !important; 
+    }
+        
+        // And this will keep the background when the button is pressed:
+    .mat-button-toggle-checked.mat-button-toggle-appearance-standard {
+        border-radius: 30px !important; 
+    }
+
+    .mat-button-toggle-label-content{
+        height: unset !important;
+    }    
+}
+
+

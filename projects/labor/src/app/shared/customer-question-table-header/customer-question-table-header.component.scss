@@ -1,0 +1,52 @@
+:host {
+  display: block;
+  width: 100%;
+}
+table.table-edit {
+  margin-bottom: 5px;
+  .thead-dark {
+    th {
+      font-size: 14px;
+      font-weight: 500;
+      padding: 5px 10px;
+    }
+  }
+  td {
+    vertical-align: middle;
+    font-size: 13px;
+    padding: 5px 0;
+    .mat-icon {
+      height: 20px;
+      width: 20px;
+      font-size: 20px;
+    }
+  }
+  tr:last-child {
+    td {
+      border-bottom: 1px solid #dee2e6;
+    }
+  }
+  .mat-form-filed {
+    font-size: 13px;
+  }
+}
+.form-group,
+.form-group .form-control {
+  font-size: 13px;
+}
+.form-group .form-control {
+  color: #000;
+}
+.table-readonly {
+  background-color: #eee;
+  border-bottom: 0;
+  b {
+    font-weight: 600;
+  }
+  .info + .info {
+    border-top: 1px dashed #ddd;
+  }
+  tr > td {
+    padding: 5px;
+  }
+}

@@ -1,0 +1,33 @@
+#filter {
+  margin-bottom: 20px;
+  .current-filter {
+    border: 1px solid #4e90db;
+    border-radius: 5px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 14px;
+    color: #000;
+    padding: 0 34px 0 15px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    background: url(/assets/img/search.svg) right 5px center/23px auto no-repeat #fff;
+    margin-bottom: 10px;
+  }
+  .btn-filter {
+    border-radius: 5px;
+    background-image: url(/assets/img/caret-down.png);
+    background-position: right 10px center;
+    background-size: auto;
+    background-repeat: no-repeat;
+    padding-right: 25px;
+  }
+}
+.result {
+  color: #000000;
+  margin-bottom: 10px;
+}
+
+.paginator {
+  margin-bottom: 25px;
+}

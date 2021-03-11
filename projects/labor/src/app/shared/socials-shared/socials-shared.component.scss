@@ -1,0 +1,32 @@
+a {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  i {
+    width: 20px;
+    height: 20px;
+    color: #fff;
+    line-height: 20px;
+    text-align: center;
+    font-size: 11px;
+    margin-right: 5px;
+  }
+}
+.horizontal a + a {
+  margin-left: 5px;
+}
+.horizontal a i {
+  margin-right: 0;
+}
+a.btn-facebook i {
+  background-color: #3b5998;
+}
+a.btn-google i {
+  background-color: #d62d20;
+}
+a.btn-twitter i {
+  background-color: #1da1f2;
+}
+a.btn-email i {
+  background-color: gray;
+}

@@ -1,0 +1,24 @@
+:host ::ng-deep .ck-editor__editable_inline {
+    min-height: 200px;
+  }
+  .mat-form-field {
+    width: 100%;
+  }
+  
+  .attach {
+    position: relative;
+    .mat-form-field {
+      position: relative;
+      z-index: 0;
+    }
+    input[type="file"] {
+      position: absolute;
+      z-index: 1;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+    }
+  }
+  

@@ -1,0 +1,192 @@
+<app-hot-order></app-hot-order>
+<div class="container">
+    <section id="search-form">
+        <div class="container-fluid">
+            <form (submit)="onSubmit()" [formGroup]="form">
+                <mat-form-field class="d-block" appearance="outline" floatLabel="always">
+                    <mat-label [translate]="'label.search'">Tìm kiếm</mat-label>
+                    <input type="text" [formControl]="keyword" [autofocus]="true" matInput
+                        [placeholder]="'placeholder.jobCompany'|translate" />
+                    <mat-icon matSuffix>search</mat-icon>
+                </mat-form-field>
+                <mat-form-field class="d-block" appearance="outline" floatLabel="always">
+                    <mat-label [translate]="'label.place'">Địa điểm</mat-label>
+                    <input type="text" [formControl]="place" [autofocus]="true" matInput
+                        [placeholder]="'placeholder.hiroshimaTokyo'|translate" />
+                    <mat-icon matSuffix>location_on</mat-icon>
+                </mat-form-field>
+                <button type="submit" mat-raised-button
+                    [translate]="'label.searchContract'">{{'label.searchContract'|translate}}</button>
+            </form>
+        </div>
+    </section>
+</div>
+<app-hot-customer></app-hot-customer>
+<div class="container">
+    <section id="contract-group" *ngIf="groupContracts.length">
+        <div class="container-fluid">
+            <h3 [translate]="'placeholder.jobMarket'">Chợ việc làm</h3>
+            <h4 [translate]="'label.hotCareer'">Các nhóm ngành nghề nổi bật</h4>
+            <ul>
+                <li *ngFor="let item of groupContracts">
+                    <a title="{{item.name}}" [routerLink]="['/don-hang']" [queryParams]="{m:item.id}"
+                        class="d-flex justify-content-between align-items-center">
+                        <span>{{item.name}}</span>
+                        <span class="total ml-auto">{{item.total}}&nbsp;</span><small
+                            [translate]="'label.order'">{{'label.order'|translate}}</small>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <div id="recruitments">
+        <div class="container-fluid">
+            <h3>{{'placeholder.laborMarket'|translate}}</h3>
+            <h4 [translate]="'label.hotWorker'">{{'label.hotWorker'|translate}}</h4>
+            <div class="recruitments">
+                <ng-container *ngFor="let item of listCustomerWish">
+                    <div class="recruitment" *ngIf="item.customerID">
+                        <div class="company-info d-flex align-items-center">
+                            <div>
+                                <div [ngSwitch]="isEmpty(item.customerID.urlAvatar)" class="img-cover"
+                                    [routerLink]="['/cv',item.customerID?.id]">
+                                    <img *ngSwitchCase="true" src="/assets/img/noimg.jpg" />
+                                    <img *ngSwitchDefault
+                                        [src]="localStorage.getItem('ServerUrl')+item.customerID.urlAvatar" />
+                                </div>
+                            </div>
+                            <div class="flex-fill desc">
+                                <div class="company" [routerLink]="['/cv',item.customerID?.id]">
+                                    {{item.customerID.fullName}}</div>
+                                <div class="time">
+                                    {{item.createdDate|date:'d \''+('label.month'|translate)+'\' M \''+('label.time'|translate)+'\' HH:mm'}}</div>
+                            </div>
+                            <div>
+                                <ng-container [ngSwitch]="isSaved(item.id)" *ngIf="isLoggedIn">
+                                    <mat-icon *ngSwitchCase="true" class="color-blue" (click)="save(item.id)">bookmark
+                                    </mat-icon>
+                                    <mat-icon *ngSwitchDefault (click)="save(item.id)">bookmark_border</mat-icon>
+                                </ng-container>
+                            </div>
+                        </div>
+                        <div class="recruitment-wrapper" #recruitmentWrapper>
+                            <table>
+                                <tr>
+                                    <ng-container *ngIf="item?.partnerCompanyID;else noReferral">
+                                        <td><i class="fas fa-user-shield"></i></td>
+                                        <td>{{'label.origin'|translate}}:</td>
+                                        <td>
+                                            <span [routerLink]="['/danh-gia-nha-moi-gioi', item?.partnerCompanyID?.id]"
+                                                [ngClass]="{'color-blue': item?.partnerCompanyID?.isVerify}">{{item?.partnerCompanyID?.name}}</span>
+                                            <app-hj-verified class="color-blue"
+                                                *ngIf="item?.partnerCompanyID?.isVerify">
+                                            </app-hj-verified>
+                                        </td>
+                                    </ng-container>
+                                </tr>
+                                <tr *ngIf="getPublicPhonenumber(item.customerID)">
+                                    <td>
+                                        <app-icon-phone-animate class="text-danger"></app-icon-phone-animate>
+                                    </td>
+                                    <td>{{'label.gender'|translate}}</td>
+                                    <td>
+                                        <a class="text-danger"
+                                            href="tel:{{getPublicPhonenumber(item.customerID)}}">{{getPublicPhonenumber(item.customerID)}}</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><i class="fas fa-transgender"></i></td>
+                                    <td>{{'label.gender'|translate}}:</td>
+                                    <td>
+                                        <ng-container *ngIf="item.customerID.gender;else notProvide">
+                                            {{item.customerID.gender}}
+                                        </ng-container>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><i class="fas fa-birthday-cake"></i></td>
+                                    <td>{{'label.age'|translate}}:</td>
+                                    <td>
+                                        <ng-container *ngIf="item.customerID.dateOfBirth;else notProvide">
+                                            {{item.customerID.dateOfBirth|age}}
+                                        </ng-container>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table *ngIf="item.isActive">
+                                <tr>
+                                    <td colspan="3" class="bg-gray">
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <span>{{'label.needsToFindJob'|translate}}</span>
+                                            <i class="fas fa-caret-down"></i>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><i class="fas fa-yen-sign text-danger"></i></td>
+                                    <td>{{'label.salaryRange'|translate}}:</td>
+                                    <td>
+                                        <ng-container [ngSwitch]="!item.salaryFrom&&!item.salaryTo">
+                                            <ng-container *ngSwitchCase="true">
+                                                <i class="text-danger">({{'label.noRequirement'|translate}})</i>
+                                            </ng-container>
+                                            <ng-container *ngSwitchDefault>
+                                                <span
+                                                    *ngIf="item.salaryFrom"><small>{{'label.from'|translate}}</small>&nbsp;<b
+                                                        class="text-danger">{{item.salaryFrom}}</b>&nbsp;<small>{{'label.yen'|translate}}</small></span>
+                                                <b *ngIf="item.salaryFrom&&item.salaryTo">&nbsp;-&nbsp;</b>
+                                                <span
+                                                    *ngIf="item.salaryTo"><small>{{'label.to'|translate}}</small>&nbsp;<b
+                                                        class="text-danger">{{item.salaryTo}}</b>&nbsp;<small>{{'label.yen'|translate}}</small></span>
+                                            </ng-container>
+                                        </ng-container>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><i class="fas fa-map-marker-alt"></i></td>
+                                    <td>{{'label.workAddress'|translate}}:</td>
+                                    <td>
+                                        <ng-container [ngSwitch]="isEmpty(item.address)">
+                                            <ng-container *ngSwitchCase="true">
+                                                <i class="text-danger">({{'label.noRequirement'|translate}})</i>
+                                            </ng-container>
+                                            <ng-container *ngSwitchDefault>
+                                                <span class="text-primary">{{item.address}}</span>
+                                            </ng-container>
+                                        </ng-container>
+                                    </td>
+                                </tr>
+                                <tr *ngIf="item.note">
+                                    <td><i class="fas fa-quote-left"></i></td>
+                                    <td colspan="2">{{item.note}}</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="contract-action">
+                            <div class="contract-action-wrapper d-flex align-items-center justify-content-between">
+                                <button mat-button [routerLink]="['/cv',item.customerID?.id]" class="flex-fill">
+                                    <i class="fas fa-external-link-alt"></i> {{'label.viewCV'|translate}}
+                                </button>
+                                <button mat-button class="flex-fill" (click)="recruitmentChoose(item.id)">
+                                    <i class="fab fa-telegram"></i> {{'label.recruitment'|translate}}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+            <ng-template #noReferral>
+                <td><i class="fas fa-user-tie"></i></td>
+                <td>{{'label.origin'|translate}}</td>
+                <td class="text-muted text-left"><i>{{'label.freelancerLabor'|translate}}</i></td>
+                <!-- <div class="time">{{'label.freelancerLabor'|translate}}</div> -->
+            </ng-template>
+            <ng-template #notProvide>
+                <i class="text-danger">({{'label.noProvide'|translate}})</i>
+            </ng-template>
+
+            <a mat-button routerLink="/lao-dong-tim-viec" class="btn-block"><u>{{'label.viewAll'|translate}}</u></a>
+        </div>
+    </div>
+</div>

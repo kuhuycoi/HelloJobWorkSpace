@@ -1,0 +1,234 @@
+<div id="smart-form" class="step-confirm">
+    <div class="d-flex flex-column step-wrapper">
+        <div class="question text-justify d-flex align-items-end justify-content-center">
+            <div class="question-wrapper">
+                <div class="question-content text-center">{{'label.introLabor'|translate}}</div>
+                <span class="robot"></span>
+            </div>
+        </div>
+        <div class="answer flex-fill">
+            <div class="container">
+                <div class="answer-wrapper row">
+                    <ng-container [ngSwitch]="item.usingType?.code" *ngFor="let item of formControls; let i = index">
+                        <div class="form-group col-12 col-md-6" *ngSwitchCase="'QUESTION_SELECT'">
+                            <mat-form-field style="width: 100%" multiple appearance="outline" color="primary"
+                                floatLabel="always">
+                                <mat-label>{{item.placeholder}}</mat-label>
+                                <mat-select [formControl]="item" [required]="item.required">
+                                    <mat-option [value]="null">-- Vui lòng chọn --</mat-option>
+                                    <ng-container [ngSwitch]="isProvinceQuestion(item.indexkey)">
+                                        <ng-container *ngSwitchCase="true">
+                                            <mat-option *ngFor="let elm of provinces" [value]="elm.Name">
+                                                {{elm.Name}}
+                                            </mat-option>
+                                        </ng-container>
+                                        <ng-container *ngSwitchDefault>
+                                            <mat-option *ngFor="let elm of item.answers" [value]="elm">
+                                                {{elm}}
+                                            </mat-option>
+                                        </ng-container>
+                                    </ng-container>
+                                </mat-select>
+                                <mat-hint *ngIf="item.hint">{{item.hint}}</mat-hint>
+                                <mat-error *ngIf="item.invalid">{{getErrorMessage(item)}}
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="form-group col-12 col-md-6" *ngSwitchCase="'QUESTION_ONE_ANSWER'">
+                            <p style="font-weight: 500;font-size: 14px; color: #000">{{item.placeholder}}</p>
+                            <mat-radio-group [formControl]="item" [required]="item.required" class="d-flex flex-column">
+                                <mat-radio-button *ngFor="let elm of item.answers" [value]="elm" class="mb-2"
+                                    color="primary">
+                                    {{elm}}
+                                </mat-radio-button>
+                            </mat-radio-group>
+                            <mat-hint *ngIf="item.hint">{{item.hint}}</mat-hint>
+                            <mat-error *ngIf="item.invalid">{{getErrorMessage(item)}}</mat-error>
+                        </div>
+                        <div class="form-group col-12 col-md-6" *ngSwitchCase="'QUESTION_CHECK_BOX'">
+                            <p style="font-weight: 600;font-size: 14px;color: #000">{{item.placeholder}}</p>
+                            <mat-checkbox *ngFor="let elm of item.answers"
+                                (change)="checkboxChange(item,elm,$event.checked)" class="mb-2 d-block" [value]="elm"
+                                color="primary" [checked]="isChecked(elm,item.value)">{{elm}}
+                            </mat-checkbox>
+                        </div>
+                        <ng-container *ngSwitchCase="'QUESTION_TABLE'">
+                            <br />
+                            <app-customer-question-table-header [question]="item.placeholder" [dataSource]="item.value"
+                                class="col-12" (changeAnswer)="changeAnswer($event,item)" [suggestions]="suggestions"
+                                [provinces]="provinces" [columns]="item.columns">
+                            </app-customer-question-table-header>
+                        </ng-container>
+                        <div class="form-group col-12 col-md-6" *ngSwitchCase="'QUESTION_ATTACH'">
+                            <mat-form-field style="width: 100%" appearance="outline" color="primary"
+                                floatLabel="always">
+                                <mat-label>{{item.placeholder}}</mat-label>
+                                <input matInput required [value]="item.value?.name" (click)="hiddenInput.click()"
+                                    readonly style="cursor: pointer" [required]="item.required"
+                                    [placeholder]="item.placeholder">
+                                <mat-hint *ngIf="item.hint">{{item.hint}}</mat-hint>
+                                <mat-error *ngIf="item.invalid">{{getErrorMessage(item)}}
+                                </mat-error>
+                            </mat-form-field>
+                            <input type="file" #hiddenInput class="d-none" accept="image/*"
+                                (change)="onFileChange($event,item)" class="d-none">
+                        </div>
+                        <div class="form-group col-12 col-md-6" *ngSwitchCase="'QUESTION_DATE'">
+                            <mat-form-field style="width: 100%" appearance="outline" color="primary"
+                                floatLabel="always">
+                                <mat-label>{{item.placeholder}}</mat-label>
+                                <input matInput [matDatepicker]="picker" [formControl]="item" [required]="item.required"
+                                    [placeholder]="item.placeholder">
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
+                                <mat-hint *ngIf="item.hint">{{item.hint}}</mat-hint>
+                                <mat-error *ngIf="item.invalid">{{getErrorMessage(item)}}
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="form-group col-12 col-md-6" *ngSwitchCase="'QUESTION'">
+                            <div class="d-flex flex-column justify-content-start">
+                                <mat-form-field style="width: 100%" appearance="outline" color="primary"
+                                    floatLabel="always">
+                                    <mat-label>{{item.placeholder}}</mat-label>
+                                    <input matInput [formControl]="item" [matAutocomplete]="matAuto"
+                                        [required]="item.required" autocomplete="off">
+                                    <mat-autocomplete #matAuto="matAutocomplete">
+                                        <mat-option *ngFor="let suggestion of item.filteredSuggestions | async"
+                                            [value]="suggestion.content">
+                                            {{suggestion.content}}
+                                        </mat-option>
+                                    </mat-autocomplete>
+                                    <a href="javascript:void(0)" matSuffix (click)="record($event,item)">
+                                        <mat-icon>mic</mat-icon>
+                                    </a>
+                                    <mat-hint *ngIf="item.hint">{{item.hint}}
+                                    </mat-hint>
+                                    <mat-error *ngIf="item.invalid&&item.required">
+                                        {{getErrorMessage(item)}}
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="form-group col-12 col-md-6" *ngSwitchCase="'QUESTION_NUMBER'">
+                            <div class="d-flex flex-column justify-content-start">
+                                <mat-form-field style="width: 100%" appearance="outline" color="primary"
+                                    floatLabel="always">
+                                    <mat-label>{{item.placeholder}}</mat-label>
+                                    <input matInput type="number" [formControl]="item" [required]="item.required"
+                                        autocomplete="off">
+                                    <span matSuffix *ngIf="item.suffix">{{item.suffix}}</span>
+                                    <mat-hint *ngIf="item.hint">{{item.hint}}
+                                    </mat-hint>
+                                    <mat-error *ngIf="item.invalid&&item.required">
+                                        {{getErrorMessage(item)}}
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </ng-container>
+                    <div class="w-100"></div>
+                    <div class="col-12 col-md-6">
+                        <mat-form-field style="width: 100%" appearance="outline" color="primary" floatLabel="always">
+                            <mat-label>{{'label.dateOfInput'|translate}}</mat-label>
+                            <input matInput [matDatepicker]="createdPicker" [formControl]="createdDate">
+                            <mat-datepicker-toggle matSuffix [for]="createdPicker"></mat-datepicker-toggle>
+                            <mat-datepicker #createdPicker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <mat-form-field style="width: 100%" appearance="outline" color="primary" floatLabel="always">
+                            <mat-label>{{'label.exampDate'|translate}}</mat-label>
+                            <input matInput [matDatepicker]="timePassPicker" [formControl]="timePass">
+                            <mat-datepicker-toggle matSuffix [for]="timePassPicker"></mat-datepicker-toggle>
+                            <mat-datepicker #timePassPicker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-12">
+                        <mat-checkbox value="isPublicPhonenumber.value" (change)="changePublicPhone($event)"
+                            [checked]="isPublicPhonenumber.value" class="mb-2 d-block" color="primary">
+                            {{'label.publicPhonenumber'|translate}}
+                        </mat-checkbox>
+                    </div>
+                    <!-- <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                        <mat-label>{{'label.price'|translate}}</mat-label>
+                        <input type="number" matInput min="0"  [formControl]="price">
+                        <small matSuffix>VNĐ</small>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                        <mat-label>{{'label.moneyBackOrigin'|translate}}</mat-label>
+                        <input type="number" matInput min="0"  [formControl]="moneyBackOrigin">
+                        <small matSuffix>VNĐ</small>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" color="primary" floatLabel="always">
+                        <mat-label>{{'label.moneyAfterFly'|translate}}</mat-label>
+                        <input type="number" matInput min="0"  [formControl]="moneyAfterFly">
+                        <small matSuffix>VNĐ</small>
+                    </mat-form-field> -->
+                    <div class="col-12">
+                        <hr>
+                        <mat-label class="mb-2">Thư viện ảnh/video ({{galleryPreview.length}}/15)</mat-label>
+                        <div class="order-gallery mb-3" id="gallery">
+                            <div class="wrapper">
+                                <owl-carousel-o [options]="customOptions" #owl (initialized)="owl.to(galleryPreview.length.toString())">
+                                    <ng-container *ngFor="let item of galleryPreview; let i = index">
+                                        <ng-template carouselSlide [id]="i" [width]="200">
+                                            <div class="item" (click)="selectedGalleryIndex=i"
+                                                [matMenuTriggerFor]="appMenu">
+                                                <div class="item-wrapper">
+                                                    <div *ngIf="item.fileType==='img';" class="img">
+                                                        <img [src]="item.url" />
+                                                    </div>
+                                                    <div *ngIf="item.fileType==='video'" class="img video">
+                                                        <i class="fas fa-play"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </ng-template>
+                                    </ng-container>
+                                    <ng-container *ngIf="galleryPreview.length<15">
+                                        <ng-template carouselSlide [id]="galleryPreview.length" [width]="200">
+                                            <div class="item item-add">
+                                                <div class="item-wrapper"
+                                                    (click)="selectedGalleryIndex=galleryPreview.length;changeGalleryItem()">
+                                                    <div class="img">
+                                                        <mat-icon>add_circle_outline</mat-icon>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </ng-template>
+                                    </ng-container>
+                                </owl-carousel-o>
+                            </div>
+                        </div>
+                        <mat-menu #selectMenu="matMenu">
+                            <button mat-menu-item
+                                (click)="selectedGalleryIndex=galleryPreview.length;changeGalleryItem()">Chọn
+                                tệp</button>
+                            <button mat-menu-item
+                                (click)="selectedGalleryIndex=galleryPreview.length;selectIframe()">Sử dụng video
+                                youtube</button>
+                        </mat-menu>
+                        <mat-menu #appMenu="matMenu">
+                            <button mat-menu-item (click)="changeGalleryItem()"
+                                [translate]="'label.postJob.change'">Thay
+                                đổi</button>
+                            <!-- <button mat-menu-item>Sử dụng video</button> -->
+                            <button mat-menu-item (click)="deleteGalleryItem()"
+                                [translate]="'label.deleteReferal'">Xóa</button>
+                        </mat-menu>
+                        <input type="file" name="attachGalleryFile" id="attachGalleryFile"
+                            (change)="onChangeImage($event)" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="action">
+            <div class="container d-flex align-items-center justify-content-between">
+                <button mat-raised-button type="button" (click)="resetForm()">{{'label.reset'|translate}}</button>
+                <button mat-raised-button color="warn" (click)="save()">{{'label.complete'|translate}}</button>
+            </div>
+        </div>
+    </div>
+</div>

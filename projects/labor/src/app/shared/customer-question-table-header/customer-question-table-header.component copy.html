@@ -1,0 +1,46 @@
+<ng-container [ngSwitch]="readonly">
+  <ng-container *ngSwitchCase="false">
+    <table class="table table-edit">
+      <thead class="thead-dark" *ngIf="question">
+        <tr>
+          <th colspan=2>{{question}}</th>
+        </tr>
+      </thead>
+      <tr *ngFor="let item of dataSource; let i = index">
+        <td class="pl-0 pd-1">{{findFirstData(item)}}</td>
+        <td style="width: 1%;white-space: nowrap;">
+          <a href="javascript:void(0)" (click)="edit(i,item)">
+            <mat-icon color="primary">edit</mat-icon>
+          </a>
+          <a href="javascript:void(0)" (click)="delete(item)">
+            <mat-icon color="warn">delete_forever</mat-icon>
+          </a>
+        </td>
+      </tr>
+    </table>
+    <div class="row">
+      <div class="col-6 align-self-end" *ngFor="let column of displayedColumns; let i = index">
+        <mat-form-field style="width: 100%" appearance="outline" color="primary" floatLabel="always">
+          <mat-label>{{displayedColumns[i]}}</mat-label>
+          <input matInput [formControl]="form.get('c_' + i.toString())">
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="form-group text-center">
+      <button class="btn btn-sm btn-primary" (click)="create()">Lưu</button>
+    </div>
+    <hr />
+  </ng-container>
+  <ng-container *ngSwitchDefault>
+    <table width="100%" class="table-readonly">
+      <tr *ngFor="let item of dataSource; let i = index">
+        <td>
+          <div class="info d-flex justify-content-between" *ngFor="let column of displayedColumns; let i = index">
+            <b>{{column}}</b>
+            <span>{{item[column]}}</span>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </ng-container>
+</ng-container>

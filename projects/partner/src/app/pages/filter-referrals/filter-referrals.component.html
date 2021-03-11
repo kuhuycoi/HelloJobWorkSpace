@@ -1,0 +1,38 @@
+<div class="text-right">
+    <a href="javascript:void(0)" (click)="dialogRef.close()"><b>{{'label.exit'|translate}}</b></a>
+</div>
+<section id="search-form">
+    <form (submit)="onSubmit()" [formGroup]="form">
+        <div class="form-group">
+            <label>{{'label.search'|translate}}</label>
+            <div class="form-item">
+                <input formControlName="keyword" type="text" class="form-control"
+                    placeholder="{{'placeholder.nameOrPhoneLabor'|translate}}" />
+                <img src="/assets/img/search.svg" alt="">
+            </div>
+        </div>
+        <div class="robot text-center">
+            <img src="/assets/img/robot.svg" alt="">
+        </div>
+        <div class="form-group">
+            <ul class="filter-options list-unstyled">
+                <li><a [ngClass]="{'active': pager?.orderColumn==='fullName'}"
+                        (click)="changeOrderColumn('fullName')">{{'label.orderByName'|translate}}</a></li>
+                <li><a [ngClass]="{'active': pager?.orderColumn==='createdDate'}"
+                        (click)="changeOrderColumn('createdDate')">{{'label.orderByCreatedDate'|translate}}</a></li>
+            </ul>
+        </div>
+        <div class="robot text-center">
+            <img src="/assets/img/robot.svg" alt="">
+        </div>
+        <div class="form-group mb-3">
+            <ul class="filter-options list-unstyled">
+                <li><a [ngClass]="{'active': pager.asc}" (click)="changeAsc(true)">{{'label.orderAsc'|translate}}</a>
+                </li>
+                <li><a [ngClass]="{'active': !pager.asc}" (click)="changeAsc(false)">{{'label.orderDesc'|translate}}</a>
+                </li>
+            </ul>
+        </div>
+        <button type="submit" mat-raised-button>{{'label.update'|translate}}</button>
+    </form>
+</section>

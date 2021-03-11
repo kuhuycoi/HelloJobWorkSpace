@@ -1,0 +1,44 @@
+:host {
+  display: inline-block;
+  font-size: 25px;
+  width: 1em;
+  height: 1em;
+  line-height: 1;
+}
+.icon {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  stroke-width: 0;
+  stroke: currentColor;
+  fill: currentColor;
+}
+
+.wave {
+  animation: waveIn 1.2s infinite ease-out;
+  transform-origin: 50% 50%;
+}
+
+.wave-sm {
+  animation-delay: 0.3s;
+}
+
+.wave-md {
+  animation-delay: 0.45s;
+}
+
+.wave-lg {
+  animation-delay: 0.6s;
+}
+
+@keyframes waveIn {
+  from {
+    opacity: 0;
+    transform: scale(0.3) translate(-20px, 10px);
+  }
+
+  50% {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+}
